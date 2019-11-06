@@ -6,7 +6,7 @@
 #include <QDebug>
 #include <QTextEdit>
 
-class MereStickyNote : public QTextEdit, public MereResizeableWidget
+class MereStickyNote : public QTextEdit, public MereResizeable
 {
     Q_OBJECT
 public:

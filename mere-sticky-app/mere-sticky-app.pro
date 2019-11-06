@@ -17,29 +17,21 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += src/main.cpp \
     src/merestickyapp.cpp \
+    src/merestickythemepicker.cpp \
     src/merestickywin.cpp \
-    src/merestickymore.cpp \
     src/merestickynote.cpp \
-    src/merestickytitle.cpp \
     src/merestickythemeaction.cpp \
-    src/merestickytitlewidget.cpp \
-    src/merestickymorewidget.cpp \
     src/merestickynotewidget.cpp \
-    src/merestickytitleleftcontrolwidget.cpp \
-    src/merestickytitlerightcontrolwidget.cpp
+    src/merestickywinheader.cpp
 
 HEADERS += \
     src/merestickyapp.h \
+    src/merestickythemepicker.h \
     src/merestickywin.h \
-    src/merestickymore.h \
     src/merestickynote.h \
-    src/merestickytitle.h \
     src/merestickythemeaction.h \
-    src/merestickytitlewidget.h \
-    src/merestickymorewidget.h \
     src/merestickynotewidget.h \
-    src/merestickytitleleftcontrolwidget.h \
-    src/merestickytitlerightcontrolwidget.h
+    src/merestickywinheader.h
 
 RESOURCES += \
     res/sticky.qrc

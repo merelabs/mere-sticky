@@ -1,4 +1,4 @@
-#include "merestickytitleleftcontrolwidget.h"
+#include "merestickythemepicker.h"
 #include "mere/sticky/merestickytheme.h"
 #include "merestickythemeaction.h"
 
@@ -7,15 +7,13 @@
 #include <QLabel>
 #include <QAction>
 #include <QWidgetAction>
-#include <QPushButton>
-
 #include <QHBoxLayout>
 
-MereStickyTitleLeftControlWidget::~MereStickyTitleLeftControlWidget()
+MereStickyThemePicker::~MereStickyThemePicker()
 {
 }
 
-MereStickyTitleLeftControlWidget::MereStickyTitleLeftControlWidget(QWidget *parent)
+MereStickyThemePicker::MereStickyThemePicker(QWidget *parent)
     : QWidget(parent)
 {
     resize(116, 35);
@@ -28,7 +26,7 @@ MereStickyTitleLeftControlWidget::MereStickyTitleLeftControlWidget(QWidget *pare
     initUI();
 }
 
-void MereStickyTitleLeftControlWidget::initUI()
+void MereStickyThemePicker::initUI()
 {
     m_stickyTitleLeftMenu = new QPushButton(this);
     m_stickyTitleLeftMenu->setObjectName(QString::fromUtf8("stickyTitleLeftMenu"));
@@ -77,10 +75,10 @@ void MereStickyTitleLeftControlWidget::initUI()
     connect(themeFourAction, SIGNAL(triggered(MereStickyTheme *)), this, SIGNAL(themeSelected(MereStickyTheme *)));
     priority->addAction(themeFourAction);
 
-    priority->addSeparator();
-    QIcon themeNoteIcon(":/sticky/theme.png");
-    QAction* themeNoteAction = new QAction(themeNoteIcon, tr("&Manage..."), this);
-    priority->addAction(themeNoteAction);
+//    priority->addSeparator();
+//    QIcon themeNoteIcon(":/sticky/theme.png");
+//    QAction* themeNoteAction = new QAction(themeNoteIcon, tr("&Manage..."), this);
+//    priority->addAction(themeNoteAction);
 
     m_stickyTitleLeftMenu->setMenu(priority);
 }

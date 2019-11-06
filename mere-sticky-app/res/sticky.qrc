@@ -1,13 +1,6 @@
 <RCC>
     <qresource prefix="/sticky">
-        <file>more.png</file>
-        <file>new.png</file>
-        <file>question.png</file>
-        <file>resize.png</file>
         <file>down.png</file>
         <file>sticky.qss</file>
-        <file>quit.png</file>
-        <file>config.png</file>
-        <file>theme.png</file>
     </qresource>
 </RCC>

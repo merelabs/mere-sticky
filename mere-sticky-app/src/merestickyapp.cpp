@@ -9,18 +9,19 @@ MereStickyApp::~MereStickyApp()
 }
 
 MereStickyApp::MereStickyApp(int &argc, char **argv)
-    : QApplication(argc, argv),
+    : MereDefaultApp(argc, argv),
       m_win(new MereStickyWin)
 {
-    QFile File(":/sticky/sticky.qss");
-    File.open(QFile::ReadOnly);
-    QString StyleSheet = QLatin1String(File.readAll());
-
-    qApp->setStyleSheet(StyleSheet);
+    setObjectName("MereStickyApp");
+    setAppCode(Mere::Sticky::AppCode);
+    setApplicationName(Mere::Sticky::AppName);
+    setApplicationVersion(Mere::Sticky::AppVersion);
 }
 
 void MereStickyApp::init()
 {
+    MereDefaultApp::init();
+
     m_win->init();
 }
 

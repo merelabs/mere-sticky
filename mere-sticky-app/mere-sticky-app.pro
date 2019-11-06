@@ -3,7 +3,7 @@ include(../../mere-widgets/mere-widgets-lib/mere-widgets-lib.pri)
 include(../../mere-utils/mere-utils-lib/mere-utils-lib.pri)
 include(../../mere-config/mere-config-lib/mere-config-lib.pri)
 
-QT       += core gui
+QT      = core gui
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET  = mere-sticky

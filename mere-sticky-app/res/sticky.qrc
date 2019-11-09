@@ -2,5 +2,6 @@
     <qresource prefix="/sticky">
         <file>down.png</file>
         <file>sticky.qss</file>
+        <file>sticky.conf</file>
     </qresource>
 </RCC>

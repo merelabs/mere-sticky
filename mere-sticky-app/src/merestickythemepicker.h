@@ -1,7 +1,6 @@
 #ifndef MERESTHEMEPICKER_H
 #define MERESTHEMEPICKER_H
 
-#include <QPushButton>
 #include <QWidget>
 #include <QDebug>
 
@@ -21,7 +20,6 @@ signals:
     void themeSelected(MereStickyTheme *theme);
 
 private:
-    QPushButton *m_stickyTitleLeftMenu;
 };
 
 #endif // MERESTHEMEPICKER_H

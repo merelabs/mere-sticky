@@ -36,7 +36,10 @@ HEADERS += \
 RESOURCES += \
     res/sticky.qrc
 
-DESTDIR = $$PWD/../lib
+OTHER_FILES += \
+    ../etc/sticky.conf
+
+DESTDIR = $$PWD/../bin
 INCLUDEPATH += /usr/local/include
 
 #

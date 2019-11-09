@@ -3,17 +3,14 @@
 
 #include "mere/widgets/meresimplewinheader.h"
 
-#include <QWidget>
-
 class MereStickyTheme;
-class MereStickyThemePicker;
 
 class MereStickyWinHeader : public MereSimpleWinHeader
 {
     Q_OBJECT
 public:
-    ~MereStickyWinHeader();
-    explicit MereStickyWinHeader(QWidget *parent = 0);
+    ~MereStickyWinHeader() override;
+    explicit MereStickyWinHeader(QWidget *parent = nullptr);
 
 protected:
     void initLeftPanel() override;
@@ -24,7 +21,7 @@ signals:
     void themeSelected(MereStickyTheme *theme);
 
 private:
-    MereStickyThemePicker *m_stickyThemePickerWidget;
+
 };
 
 #endif // MERESTICKYWINHEADER_H

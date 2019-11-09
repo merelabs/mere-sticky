@@ -30,3 +30,14 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical
 {
     background: transparent;
 }
+
+QTextEdit
+{
+    background: transparent;
+}
+
+#MereStickyThemePicker
+{
+    border-radious: 8px;
+    background:white;
+}

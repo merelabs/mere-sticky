@@ -4,10 +4,6 @@
 #include <QTextEdit>
 #include <QWidget>
 
-//namespace Ui {
-//class MereStickyNoteWidget;
-//}
-
 class MereStickyNote ;
 
 class MereStickyNoteWidget : public QWidget
@@ -19,14 +15,10 @@ public:
     ~MereStickyNoteWidget();
 
 private:
-    void setupContextMenu();
-
-private slots:
-    void showContextMenu(const QPoint &pt);
+    void initUI();
 
 private:
-//    Ui::MereStickyNoteWidget *ui;
-        MereStickyNote *stickyNote;
+    MereStickyNote *stickyNote;
 };
 
 #endif // MERESTICKYNOTEWIDGET_H

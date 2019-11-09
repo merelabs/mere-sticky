@@ -1,25 +1,15 @@
 #ifndef MERESTICKYNOTE_H
 #define MERESTICKYNOTE_H
 
-#include "mere/widgets/merewidgetresizer.h"
+#include "mere/widgets/merenoteeditor.h"
 
 #include <QDebug>
-#include <QTextEdit>
 
-class MereStickyNote : public QTextEdit, public MereResizeable
+class MereStickyNote : public MereNoteEditor
 {
     Q_OBJECT
 public:
     explicit MereStickyNote(QWidget *parent = nullptr);
-    void setResizer(MereWidgetResizer *resizer);
-    void adjustSize(const QSize &size);
-
-signals:
-
-public slots:
-private:
-    MereWidgetResizer *m_resizer;
-
 };
 
 #endif // MERESTICKYNOTE_H

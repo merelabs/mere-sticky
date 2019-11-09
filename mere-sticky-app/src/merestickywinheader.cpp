@@ -35,24 +35,13 @@ MereStickyWinHeader::MereStickyWinHeader(QWidget *parent)
 
 void MereStickyWinHeader::initLeftPanel()
 {
-    m_stickyThemePickerWidget = new MereStickyThemePicker(this);
-    m_stickyThemePickerWidget->setObjectName(QString::fromUtf8("stickyThemePickerWidget"));
-    QSizePolicy sizePolicy1(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    sizePolicy1.setHorizontalStretch(0);
-    sizePolicy1.setVerticalStretch(0);
-    sizePolicy1.setHeightForWidth(m_stickyThemePickerWidget->sizePolicy().hasHeightForWidth());
-    m_stickyThemePickerWidget->setSizePolicy(sizePolicy1);
-    m_stickyThemePickerWidget->setMinimumSize(QSize(18, 18));
-    m_stickyThemePickerWidget->setMaximumSize(QSize(18, 18));
-    m_stickyThemePickerWidget->setStyleSheet(QString::fromUtf8("#stickyThemePickerWidget\n"
-"{\n"
-"border-radious: 8px;\n"
-"background-color:white;\n"
-"}"));
+    MereStickyThemePicker *themePicker = new MereStickyThemePicker(this);
+    themePicker->setObjectName("MereStickyThemePicker");
+    themePicker->setMinimumSize(QSize(18, 18));
+    themePicker->setMaximumSize(QSize(18, 18));
+    layout()->addWidget(themePicker);
 
-    layout()->addWidget(m_stickyThemePickerWidget);
-
-    connect(m_stickyThemePickerWidget, SIGNAL(themeSelected(MereStickyTheme*)), this, SIGNAL(themeSelected(MereStickyTheme*)));
+    connect(themePicker, SIGNAL(themeSelected(MereStickyTheme*)), this, SIGNAL(themeSelected(MereStickyTheme*)));
 }
 
 void MereStickyWinHeader::initCenterPanel()

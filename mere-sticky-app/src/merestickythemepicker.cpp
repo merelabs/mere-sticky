@@ -6,8 +6,11 @@
 #include <QMenu>
 #include <QLabel>
 #include <QAction>
+#include <QPushButton>
 #include <QWidgetAction>
 #include <QHBoxLayout>
+#include <QStyleOption>
+#include <QPainter>
 
 MereStickyThemePicker::~MereStickyThemePicker()
 {
@@ -16,7 +19,8 @@ MereStickyThemePicker::~MereStickyThemePicker()
 MereStickyThemePicker::MereStickyThemePicker(QWidget *parent)
     : QWidget(parent)
 {
-    resize(116, 35);
+    setObjectName("MereStickyThemePicker");
+//    setStyleSheet("border-radius:8px;");
 
     QHBoxLayout *layout = new QHBoxLayout(this);
     layout->setContentsMargins(1, 1, 1, 1);
@@ -28,17 +32,27 @@ MereStickyThemePicker::MereStickyThemePicker(QWidget *parent)
 
 void MereStickyThemePicker::initUI()
 {
-    m_stickyTitleLeftMenu = new QPushButton(this);
-    m_stickyTitleLeftMenu->setObjectName(QString::fromUtf8("stickyTitleLeftMenu"));
+    QPushButton *themeMenu = new QPushButton(this);
+    themeMenu->setObjectName(QString::fromUtf8("stickyTitleLeftMenu"));
 
-    m_stickyTitleLeftMenu->setMinimumSize(QSize(16, 16));
-    m_stickyTitleLeftMenu->setMaximumSize(QSize(16, 16));
-    m_stickyTitleLeftMenu->setFlat(true);
+    themeMenu->setMinimumSize(QSize(16, 16));
+    themeMenu->setMaximumSize(QSize(16, 16));
+    themeMenu->setFlat(true);
 
-    layout()->addWidget(m_stickyTitleLeftMenu);
+    layout()->addWidget(themeMenu);
 
 
-//    MereStickyTheme *theme = new MereStickyTheme(this);
+//    MereStickyConfig config;
+//    MereStickyTheme theme = config.theme();
+//    QList<MereStickyThemeGroup> groups = theme.groups();
+//    foreach (MereStickyThemeGroup group, groups)
+//    {
+//        MereStickyThemeUnit unit = group.units();
+//        foreach (MereStickyThemeUnit unit, units)
+//        {
+
+//        }
+//    }
 
     QMenu *priority= new QMenu(this);
     priority->setIcon(QIcon(":/sticky/down.png"));
@@ -75,10 +89,5 @@ void MereStickyThemePicker::initUI()
     connect(themeFourAction, SIGNAL(triggered(MereStickyTheme *)), this, SIGNAL(themeSelected(MereStickyTheme *)));
     priority->addAction(themeFourAction);
 
-//    priority->addSeparator();
-//    QIcon themeNoteIcon(":/sticky/theme.png");
-//    QAction* themeNoteAction = new QAction(themeNoteIcon, tr("&Manage..."), this);
-//    priority->addAction(themeNoteAction);
-
-    m_stickyTitleLeftMenu->setMenu(priority);
+    themeMenu->setMenu(priority);
 }

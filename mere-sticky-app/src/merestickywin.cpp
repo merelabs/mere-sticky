@@ -12,6 +12,8 @@ MereStickyWin::MereStickyWin(QWidget *parent)
     setObjectName(QString::fromUtf8("MereStickyWin"));
     resize(300, 175);
 
+    layout()->setSpacing(0);
+    layout()->setContentsMargins(5, 5, 5, 5);
     initUI();
 }
 

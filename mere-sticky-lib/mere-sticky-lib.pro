@@ -14,12 +14,18 @@ DEFINES += QT_DEPRECATED_WARNINGS MERE_STICKY_LIB
 
 SOURCES += \
     src/meresticky.cpp \
-    src/merestickytheme.cpp
+    src/merestickyconfig.cpp \
+    src/merestickytheme.cpp \
+    src/merestickythemegroup.cpp \
+    src/merestickythemeunit.cpp
 
 HEADERS += \
+    src/merestickyconfig.h \
     src/merestickyglobal.h \
     src/meresticky.h \
-    src/merestickytheme.h \
+    src/merestickytheme.h \ \
+    src/merestickythemegroup.h \
+    src/merestickythemeunit.h
 
 DESTDIR = $$PWD/../lib
 INCLUDEPATH += $$PWD/../include

@@ -17,7 +17,7 @@ CXX           = clang++
 DEFINES       = -DQT_DEPRECATED_WARNINGS -DMERE_STICKY_LIB -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -O2 -Wall -W -pthread -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -O2 -std=gnu++11 -Wall -W -pthread -fPIC $(DEFINES)
-INCPATH       = -I. -I../../mere-utils/include -I../../mere-config/include -I../include -I/usr/local/include -I/usr/local/include/qt5 -I/usr/local/include/qt5/QtGui -I/usr/local/include/qt5/QtCore -I. -I/usr/local/include/libdrm -I/usr/local/include -I/usr/local/lib/qt5/mkspecs/freebsd-clang
+INCPATH       = -I. -I../include -I/usr/local/include -I/usr/local/include/qt5 -I/usr/local/include/qt5/QtGui -I/usr/local/include/qt5/QtCore -I. -I/usr/local/include/libdrm -I/usr/local/include -I/usr/local/lib/qt5/mkspecs/freebsd-clang
 QMAKE         = /usr/local/lib/qt5/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -40,7 +40,7 @@ DISTNAME      = mere-sticky0.0.1b
 DISTDIR = /usr/home/iklash/workspace/merelab/mere-sticky/mere-sticky-lib/.tmp/mere-sticky0.0.1b
 LINK          = clang++
 LFLAGS        = -pthread -Wl,-rpath,/usr/local/lib/qt5 -shared -Wl,-soname,libmere-sticky.so.0
-LIBS          = $(SUBLIBS) -L/usr/local/lib -L/usr/home/iklash/workspace/merelab/mere-utils/mere-utils-lib/../lib -lmere-utils -L/usr/home/iklash/workspace/merelab/mere-config/mere-config-lib/../lib -lmere-config /usr/local/lib/qt5/libQt5Gui.so /usr/local/lib/qt5/libQt5Core.so /usr/local/lib/libGL.so   
+LIBS          = $(SUBLIBS) -L/usr/local/lib -lmere-utils -lmere-config /usr/local/lib/qt5/libQt5Gui.so /usr/local/lib/qt5/libQt5Core.so /usr/local/lib/libGL.so   
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -53,12 +53,24 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = src/meresticky.cpp \
-		src/merestickytheme.cpp moc_meresticky.cpp \
-		moc_merestickytheme.cpp
+		src/merestickyconfig.cpp \
+		src/merestickytheme.cpp \
+		src/merestickythemegroup.cpp \
+		src/merestickythemeunit.cpp moc_merestickyconfig.cpp \
+		moc_meresticky.cpp \
+		moc_merestickytheme.cpp \
+		moc_merestickythemegroup.cpp \
+		moc_merestickythemeunit.cpp
 OBJECTS       = meresticky.o \
+		merestickyconfig.o \
 		merestickytheme.o \
+		merestickythemegroup.o \
+		merestickythemeunit.o \
+		moc_merestickyconfig.o \
 		moc_meresticky.o \
-		moc_merestickytheme.o
+		moc_merestickytheme.o \
+		moc_merestickythemegroup.o \
+		moc_merestickythemeunit.o
 DIST          = /usr/local/lib/qt5/mkspecs/features/spec_pre.prf \
 		/usr/local/lib/qt5/mkspecs/common/unix.conf \
 		/usr/local/lib/qt5/mkspecs/common/bsd/bsd.conf \
@@ -239,12 +251,10 @@ DIST          = /usr/local/lib/qt5/mkspecs/features/spec_pre.prf \
 		/usr/local/lib/qt5/mkspecs/features/qt_config.prf \
 		/usr/local/lib/qt5/mkspecs/freebsd-clang/qmake.conf \
 		/usr/local/lib/qt5/mkspecs/features/spec_post.prf \
-		.qmake.stash \
+		../.qmake.stash \
 		/usr/local/lib/qt5/mkspecs/features/exclusive_builds.prf \
 		/usr/local/lib/qt5/mkspecs/features/toolchain.prf \
 		/usr/local/lib/qt5/mkspecs/features/default_pre.prf \
-		../../mere-utils/mere-utils-lib/mere-utils-lib.pri \
-		../../mere-config/mere-config-lib/mere-config-lib.pri \
 		/usr/local/lib/qt5/mkspecs/features/resolve_config.prf \
 		/usr/local/lib/qt5/mkspecs/features/default_post.prf \
 		/usr/local/lib/qt5/mkspecs/features/warn_on.prf \
@@ -259,10 +269,17 @@ DIST          = /usr/local/lib/qt5/mkspecs/features/spec_pre.prf \
 		/usr/local/lib/qt5/mkspecs/features/exceptions.prf \
 		/usr/local/lib/qt5/mkspecs/features/yacc.prf \
 		/usr/local/lib/qt5/mkspecs/features/lex.prf \
-		mere-sticky-lib.pro src/merestickyglobal.h \
+		mere-sticky-lib.pro src/merestickyconfig.h \
+		src/merestickyglobal.h \
 		src/meresticky.h \
-		src/merestickytheme.h src/meresticky.cpp \
-		src/merestickytheme.cpp
+		src/merestickytheme.h \
+		/ \
+		src/merestickythemegroup.h \
+		src/merestickythemeunit.h src/meresticky.cpp \
+		src/merestickyconfig.cpp \
+		src/merestickytheme.cpp \
+		src/merestickythemegroup.cpp \
+		src/merestickythemeunit.cpp
 QMAKE_TARGET  = mere-sticky
 DESTDIR       = ../lib/
 TARGET        = libmere-sticky.so.0.0.1b
@@ -292,11 +309,19 @@ first: all
 	-$(MOVE) $(TARGET1) ../lib/$(TARGET1)
 	-$(MOVE) $(TARGET2) ../lib/$(TARGET2)
 	mkdir -p /usr/home/iklash/workspace/merelab/mere-sticky/mere-sticky-lib/../include/mere/sticky 
+	 cp -f src/merestickyconfig.h /usr/home/iklash/workspace/merelab/mere-sticky/mere-sticky-lib/../include/mere/sticky 
+	 mkdir -p /usr/home/iklash/workspace/merelab/mere-sticky/mere-sticky-lib/../include/mere/sticky 
 	 cp -f src/merestickyglobal.h /usr/home/iklash/workspace/merelab/mere-sticky/mere-sticky-lib/../include/mere/sticky 
 	 mkdir -p /usr/home/iklash/workspace/merelab/mere-sticky/mere-sticky-lib/../include/mere/sticky 
 	 cp -f src/meresticky.h /usr/home/iklash/workspace/merelab/mere-sticky/mere-sticky-lib/../include/mere/sticky 
 	 mkdir -p /usr/home/iklash/workspace/merelab/mere-sticky/mere-sticky-lib/../include/mere/sticky 
 	 cp -f src/merestickytheme.h /usr/home/iklash/workspace/merelab/mere-sticky/mere-sticky-lib/../include/mere/sticky 
+	 mkdir -p /usr/home/iklash/workspace/merelab/mere-sticky/mere-sticky-lib/../include/mere/sticky 
+	 cp -f \ /usr/home/iklash/workspace/merelab/mere-sticky/mere-sticky-lib/../include/mere/sticky 
+	 mkdir -p /usr/home/iklash/workspace/merelab/mere-sticky/mere-sticky-lib/../include/mere/sticky 
+	 cp -f src/merestickythemegroup.h /usr/home/iklash/workspace/merelab/mere-sticky/mere-sticky-lib/../include/mere/sticky 
+	 mkdir -p /usr/home/iklash/workspace/merelab/mere-sticky/mere-sticky-lib/../include/mere/sticky 
+	 cp -f src/merestickythemeunit.h /usr/home/iklash/workspace/merelab/mere-sticky/mere-sticky-lib/../include/mere/sticky 
 	
 
 
@@ -307,11 +332,19 @@ staticlib: ../lib/libmere-sticky.a
 	-$(DEL_FILE) $(TARGETA) 
 	$(AR) $(TARGETA) $(OBJECTS)
 	mkdir -p /usr/home/iklash/workspace/merelab/mere-sticky/mere-sticky-lib/../include/mere/sticky 
+	 cp -f src/merestickyconfig.h /usr/home/iklash/workspace/merelab/mere-sticky/mere-sticky-lib/../include/mere/sticky 
+	 mkdir -p /usr/home/iklash/workspace/merelab/mere-sticky/mere-sticky-lib/../include/mere/sticky 
 	 cp -f src/merestickyglobal.h /usr/home/iklash/workspace/merelab/mere-sticky/mere-sticky-lib/../include/mere/sticky 
 	 mkdir -p /usr/home/iklash/workspace/merelab/mere-sticky/mere-sticky-lib/../include/mere/sticky 
 	 cp -f src/meresticky.h /usr/home/iklash/workspace/merelab/mere-sticky/mere-sticky-lib/../include/mere/sticky 
 	 mkdir -p /usr/home/iklash/workspace/merelab/mere-sticky/mere-sticky-lib/../include/mere/sticky 
 	 cp -f src/merestickytheme.h /usr/home/iklash/workspace/merelab/mere-sticky/mere-sticky-lib/../include/mere/sticky 
+	 mkdir -p /usr/home/iklash/workspace/merelab/mere-sticky/mere-sticky-lib/../include/mere/sticky 
+	 cp -f \ /usr/home/iklash/workspace/merelab/mere-sticky/mere-sticky-lib/../include/mere/sticky 
+	 mkdir -p /usr/home/iklash/workspace/merelab/mere-sticky/mere-sticky-lib/../include/mere/sticky 
+	 cp -f src/merestickythemegroup.h /usr/home/iklash/workspace/merelab/mere-sticky/mere-sticky-lib/../include/mere/sticky 
+	 mkdir -p /usr/home/iklash/workspace/merelab/mere-sticky/mere-sticky-lib/../include/mere/sticky 
+	 cp -f src/merestickythemeunit.h /usr/home/iklash/workspace/merelab/mere-sticky/mere-sticky-lib/../include/mere/sticky 
 	
 
 Makefile: mere-sticky-lib.pro /usr/local/lib/qt5/mkspecs/freebsd-clang/qmake.conf /usr/local/lib/qt5/mkspecs/features/spec_pre.prf \
@@ -494,12 +527,10 @@ Makefile: mere-sticky-lib.pro /usr/local/lib/qt5/mkspecs/freebsd-clang/qmake.con
 		/usr/local/lib/qt5/mkspecs/features/qt_config.prf \
 		/usr/local/lib/qt5/mkspecs/freebsd-clang/qmake.conf \
 		/usr/local/lib/qt5/mkspecs/features/spec_post.prf \
-		.qmake.stash \
+		../.qmake.stash \
 		/usr/local/lib/qt5/mkspecs/features/exclusive_builds.prf \
 		/usr/local/lib/qt5/mkspecs/features/toolchain.prf \
 		/usr/local/lib/qt5/mkspecs/features/default_pre.prf \
-		../../mere-utils/mere-utils-lib/mere-utils-lib.pri \
-		../../mere-config/mere-config-lib/mere-config-lib.pri \
 		/usr/local/lib/qt5/mkspecs/features/resolve_config.prf \
 		/usr/local/lib/qt5/mkspecs/features/default_post.prf \
 		/usr/local/lib/qt5/mkspecs/features/warn_on.prf \
@@ -696,12 +727,10 @@ Makefile: mere-sticky-lib.pro /usr/local/lib/qt5/mkspecs/freebsd-clang/qmake.con
 /usr/local/lib/qt5/mkspecs/features/qt_config.prf:
 /usr/local/lib/qt5/mkspecs/freebsd-clang/qmake.conf:
 /usr/local/lib/qt5/mkspecs/features/spec_post.prf:
-.qmake.stash:
+../.qmake.stash:
 /usr/local/lib/qt5/mkspecs/features/exclusive_builds.prf:
 /usr/local/lib/qt5/mkspecs/features/toolchain.prf:
 /usr/local/lib/qt5/mkspecs/features/default_pre.prf:
-../../mere-utils/mere-utils-lib/mere-utils-lib.pri:
-../../mere-config/mere-config-lib/mere-config-lib.pri:
 /usr/local/lib/qt5/mkspecs/features/resolve_config.prf:
 /usr/local/lib/qt5/mkspecs/features/default_post.prf:
 /usr/local/lib/qt5/mkspecs/features/warn_on.prf:
@@ -732,8 +761,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/local/lib/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents src/merestickyglobal.h src/meresticky.h src/merestickytheme.h $(DISTDIR)/
-	$(COPY_FILE) --parents src/meresticky.cpp src/merestickytheme.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents src/merestickyconfig.h src/merestickyglobal.h src/meresticky.h src/merestickytheme.h / src/merestickythemegroup.h src/merestickythemeunit.h $(DISTDIR)/
+	$(COPY_FILE) --parents src/meresticky.cpp src/merestickyconfig.cpp src/merestickytheme.cpp src/merestickythemegroup.cpp src/merestickythemeunit.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -744,7 +773,6 @@ clean: compiler_clean
 distclean: clean 
 	-$(DEL_FILE) ../lib/$(TARGET) 
 	-$(DEL_FILE) ../lib/$(TARGET0) ../lib/$(TARGET1) ../lib/$(TARGET2) $(TARGETA)
-	-$(DEL_FILE) .qmake.stash
 	-$(DEL_FILE) Makefile
 
 
@@ -766,9 +794,78 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/local/lib/qt5/mkspecs/features/data/dummy.cpp
 	clang++ -pipe -O2 -std=gnu++11 -Wall -W -dM -E -o moc_predefs.h /usr/local/lib/qt5/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_meresticky.cpp moc_merestickytheme.cpp
+compiler_moc_header_make_all: moc_merestickyconfig.cpp moc_meresticky.cpp moc_merestickytheme.cpp moc_merestickythemegroup.cpp moc_merestickythemeunit.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_meresticky.cpp moc_merestickytheme.cpp
+	-$(DEL_FILE) moc_merestickyconfig.cpp moc_meresticky.cpp moc_merestickytheme.cpp moc_merestickythemegroup.cpp moc_merestickythemeunit.cpp
+moc_merestickyconfig.cpp: src/merestickyconfig.h \
+		src/merestickytheme.h \
+		/usr/local/include/qt5/QtCore/QObject \
+		/usr/local/include/qt5/QtCore/qobject.h \
+		/usr/local/include/qt5/QtCore/qobjectdefs.h \
+		/usr/local/include/qt5/QtCore/qnamespace.h \
+		/usr/local/include/qt5/QtCore/qglobal.h \
+		/usr/local/include/qt5/QtCore/qconfig-bootstrapped.h \
+		/usr/local/include/qt5/QtCore/qconfig.h \
+		/usr/local/include/qt5/QtCore/qconfig-modules.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-core.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-concurrent.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-dbus.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-network.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-gui.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-widgets.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-declarative.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-printsupport.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-opengl.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-multimedia.h \
+		/usr/local/include/qt5/QtCore/qtcore-config.h \
+		/usr/local/include/qt5/QtCore/qsystemdetection.h \
+		/usr/local/include/qt5/QtCore/qprocessordetection.h \
+		/usr/local/include/qt5/QtCore/qcompilerdetection.h \
+		/usr/local/include/qt5/QtCore/qtypeinfo.h \
+		/usr/local/include/qt5/QtCore/qsysinfo.h \
+		/usr/local/include/qt5/QtCore/qlogging.h \
+		/usr/local/include/qt5/QtCore/qflags.h \
+		/usr/local/include/qt5/QtCore/qatomic.h \
+		/usr/local/include/qt5/QtCore/qbasicatomic.h \
+		/usr/local/include/qt5/QtCore/qatomic_bootstrap.h \
+		/usr/local/include/qt5/QtCore/qgenericatomic.h \
+		/usr/local/include/qt5/QtCore/qatomic_cxx11.h \
+		/usr/local/include/qt5/QtCore/qatomic_msvc.h \
+		/usr/local/include/qt5/QtCore/qglobalstatic.h \
+		/usr/local/include/qt5/QtCore/qmutex.h \
+		/usr/local/include/qt5/QtCore/qnumeric.h \
+		/usr/local/include/qt5/QtCore/qversiontagging.h \
+		/usr/local/include/qt5/QtCore/qobjectdefs_impl.h \
+		/usr/local/include/qt5/QtCore/qstring.h \
+		/usr/local/include/qt5/QtCore/qchar.h \
+		/usr/local/include/qt5/QtCore/qbytearray.h \
+		/usr/local/include/qt5/QtCore/qrefcount.h \
+		/usr/local/include/qt5/QtCore/qarraydata.h \
+		/usr/local/include/qt5/QtCore/qstringliteral.h \
+		/usr/local/include/qt5/QtCore/qstringalgorithms.h \
+		/usr/local/include/qt5/QtCore/qstringview.h \
+		/usr/local/include/qt5/QtCore/qstringbuilder.h \
+		/usr/local/include/qt5/QtCore/qlist.h \
+		/usr/local/include/qt5/QtCore/qalgorithms.h \
+		/usr/local/include/qt5/QtCore/qiterator.h \
+		/usr/local/include/qt5/QtCore/qhashfunctions.h \
+		/usr/local/include/qt5/QtCore/qpair.h \
+		/usr/local/include/qt5/QtCore/qvector.h \
+		/usr/local/include/qt5/QtCore/qpoint.h \
+		/usr/local/include/qt5/QtCore/qbytearraylist.h \
+		/usr/local/include/qt5/QtCore/qstringlist.h \
+		/usr/local/include/qt5/QtCore/qregexp.h \
+		/usr/local/include/qt5/QtCore/qstringmatcher.h \
+		/usr/local/include/qt5/QtCore/qcoreevent.h \
+		/usr/local/include/qt5/QtCore/qscopedpointer.h \
+		/usr/local/include/qt5/QtCore/qmetatype.h \
+		/usr/local/include/qt5/QtCore/qvarlengtharray.h \
+		/usr/local/include/qt5/QtCore/qcontainerfwd.h \
+		/usr/local/include/qt5/QtCore/qobject_impl.h \
+		moc_predefs.h \
+		/usr/local/lib/qt5/bin/moc
+	/usr/local/lib/qt5/bin/moc $(DEFINES) --include /usr/home/iklash/workspace/merelab/mere-sticky/mere-sticky-lib/moc_predefs.h -I/usr/local/lib/qt5/mkspecs/freebsd-clang -I/usr/home/iklash/workspace/merelab/mere-sticky/mere-sticky-lib -I/usr/home/iklash/workspace/merelab/mere-sticky/include -I/usr/local/include -I/usr/local/include/qt5 -I/usr/local/include/qt5/QtGui -I/usr/local/include/qt5/QtCore -I/usr/include/c++/v1 -I/usr/lib/clang/8.0.0/include -I/usr/include src/merestickyconfig.h -o moc_merestickyconfig.cpp
+
 moc_meresticky.cpp: src/meresticky.h \
 		src/merestickyglobal.h \
 		/usr/local/include/qt5/QtCore/qglobal.h \
@@ -841,9 +938,145 @@ moc_meresticky.cpp: src/meresticky.h \
 		/usr/local/include/qt5/QtCore/qhash.h \
 		moc_predefs.h \
 		/usr/local/lib/qt5/bin/moc
-	/usr/local/lib/qt5/bin/moc $(DEFINES) --include /usr/home/iklash/workspace/merelab/mere-sticky/mere-sticky-lib/moc_predefs.h -I/usr/local/lib/qt5/mkspecs/freebsd-clang -I/usr/home/iklash/workspace/merelab/mere-sticky/mere-sticky-lib -I/usr/home/iklash/workspace/merelab/mere-utils/include -I/usr/home/iklash/workspace/merelab/mere-config/include -I/usr/home/iklash/workspace/merelab/mere-sticky/include -I/usr/local/include -I/usr/local/include/qt5 -I/usr/local/include/qt5/QtGui -I/usr/local/include/qt5/QtCore -I/usr/include/c++/v1 -I/usr/lib/clang/8.0.0/include -I/usr/include src/meresticky.h -o moc_meresticky.cpp
+	/usr/local/lib/qt5/bin/moc $(DEFINES) --include /usr/home/iklash/workspace/merelab/mere-sticky/mere-sticky-lib/moc_predefs.h -I/usr/local/lib/qt5/mkspecs/freebsd-clang -I/usr/home/iklash/workspace/merelab/mere-sticky/mere-sticky-lib -I/usr/home/iklash/workspace/merelab/mere-sticky/include -I/usr/local/include -I/usr/local/include/qt5 -I/usr/local/include/qt5/QtGui -I/usr/local/include/qt5/QtCore -I/usr/include/c++/v1 -I/usr/lib/clang/8.0.0/include -I/usr/include src/meresticky.h -o moc_meresticky.cpp
 
 moc_merestickytheme.cpp: src/merestickytheme.h \
+		/usr/local/include/qt5/QtCore/QObject \
+		/usr/local/include/qt5/QtCore/qobject.h \
+		/usr/local/include/qt5/QtCore/qobjectdefs.h \
+		/usr/local/include/qt5/QtCore/qnamespace.h \
+		/usr/local/include/qt5/QtCore/qglobal.h \
+		/usr/local/include/qt5/QtCore/qconfig-bootstrapped.h \
+		/usr/local/include/qt5/QtCore/qconfig.h \
+		/usr/local/include/qt5/QtCore/qconfig-modules.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-core.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-concurrent.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-dbus.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-network.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-gui.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-widgets.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-declarative.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-printsupport.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-opengl.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-multimedia.h \
+		/usr/local/include/qt5/QtCore/qtcore-config.h \
+		/usr/local/include/qt5/QtCore/qsystemdetection.h \
+		/usr/local/include/qt5/QtCore/qprocessordetection.h \
+		/usr/local/include/qt5/QtCore/qcompilerdetection.h \
+		/usr/local/include/qt5/QtCore/qtypeinfo.h \
+		/usr/local/include/qt5/QtCore/qsysinfo.h \
+		/usr/local/include/qt5/QtCore/qlogging.h \
+		/usr/local/include/qt5/QtCore/qflags.h \
+		/usr/local/include/qt5/QtCore/qatomic.h \
+		/usr/local/include/qt5/QtCore/qbasicatomic.h \
+		/usr/local/include/qt5/QtCore/qatomic_bootstrap.h \
+		/usr/local/include/qt5/QtCore/qgenericatomic.h \
+		/usr/local/include/qt5/QtCore/qatomic_cxx11.h \
+		/usr/local/include/qt5/QtCore/qatomic_msvc.h \
+		/usr/local/include/qt5/QtCore/qglobalstatic.h \
+		/usr/local/include/qt5/QtCore/qmutex.h \
+		/usr/local/include/qt5/QtCore/qnumeric.h \
+		/usr/local/include/qt5/QtCore/qversiontagging.h \
+		/usr/local/include/qt5/QtCore/qobjectdefs_impl.h \
+		/usr/local/include/qt5/QtCore/qstring.h \
+		/usr/local/include/qt5/QtCore/qchar.h \
+		/usr/local/include/qt5/QtCore/qbytearray.h \
+		/usr/local/include/qt5/QtCore/qrefcount.h \
+		/usr/local/include/qt5/QtCore/qarraydata.h \
+		/usr/local/include/qt5/QtCore/qstringliteral.h \
+		/usr/local/include/qt5/QtCore/qstringalgorithms.h \
+		/usr/local/include/qt5/QtCore/qstringview.h \
+		/usr/local/include/qt5/QtCore/qstringbuilder.h \
+		/usr/local/include/qt5/QtCore/qlist.h \
+		/usr/local/include/qt5/QtCore/qalgorithms.h \
+		/usr/local/include/qt5/QtCore/qiterator.h \
+		/usr/local/include/qt5/QtCore/qhashfunctions.h \
+		/usr/local/include/qt5/QtCore/qpair.h \
+		/usr/local/include/qt5/QtCore/qvector.h \
+		/usr/local/include/qt5/QtCore/qpoint.h \
+		/usr/local/include/qt5/QtCore/qbytearraylist.h \
+		/usr/local/include/qt5/QtCore/qstringlist.h \
+		/usr/local/include/qt5/QtCore/qregexp.h \
+		/usr/local/include/qt5/QtCore/qstringmatcher.h \
+		/usr/local/include/qt5/QtCore/qcoreevent.h \
+		/usr/local/include/qt5/QtCore/qscopedpointer.h \
+		/usr/local/include/qt5/QtCore/qmetatype.h \
+		/usr/local/include/qt5/QtCore/qvarlengtharray.h \
+		/usr/local/include/qt5/QtCore/qcontainerfwd.h \
+		/usr/local/include/qt5/QtCore/qobject_impl.h \
+		moc_predefs.h \
+		/usr/local/lib/qt5/bin/moc
+	/usr/local/lib/qt5/bin/moc $(DEFINES) --include /usr/home/iklash/workspace/merelab/mere-sticky/mere-sticky-lib/moc_predefs.h -I/usr/local/lib/qt5/mkspecs/freebsd-clang -I/usr/home/iklash/workspace/merelab/mere-sticky/mere-sticky-lib -I/usr/home/iklash/workspace/merelab/mere-sticky/include -I/usr/local/include -I/usr/local/include/qt5 -I/usr/local/include/qt5/QtGui -I/usr/local/include/qt5/QtCore -I/usr/include/c++/v1 -I/usr/lib/clang/8.0.0/include -I/usr/include src/merestickytheme.h -o moc_merestickytheme.cpp
+
+moc_merestickythemegroup.cpp: src/merestickythemegroup.h \
+		/usr/local/include/qt5/QtCore/QObject \
+		/usr/local/include/qt5/QtCore/qobject.h \
+		/usr/local/include/qt5/QtCore/qobjectdefs.h \
+		/usr/local/include/qt5/QtCore/qnamespace.h \
+		/usr/local/include/qt5/QtCore/qglobal.h \
+		/usr/local/include/qt5/QtCore/qconfig-bootstrapped.h \
+		/usr/local/include/qt5/QtCore/qconfig.h \
+		/usr/local/include/qt5/QtCore/qconfig-modules.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-core.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-concurrent.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-dbus.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-network.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-gui.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-widgets.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-declarative.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-printsupport.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-opengl.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-multimedia.h \
+		/usr/local/include/qt5/QtCore/qtcore-config.h \
+		/usr/local/include/qt5/QtCore/qsystemdetection.h \
+		/usr/local/include/qt5/QtCore/qprocessordetection.h \
+		/usr/local/include/qt5/QtCore/qcompilerdetection.h \
+		/usr/local/include/qt5/QtCore/qtypeinfo.h \
+		/usr/local/include/qt5/QtCore/qsysinfo.h \
+		/usr/local/include/qt5/QtCore/qlogging.h \
+		/usr/local/include/qt5/QtCore/qflags.h \
+		/usr/local/include/qt5/QtCore/qatomic.h \
+		/usr/local/include/qt5/QtCore/qbasicatomic.h \
+		/usr/local/include/qt5/QtCore/qatomic_bootstrap.h \
+		/usr/local/include/qt5/QtCore/qgenericatomic.h \
+		/usr/local/include/qt5/QtCore/qatomic_cxx11.h \
+		/usr/local/include/qt5/QtCore/qatomic_msvc.h \
+		/usr/local/include/qt5/QtCore/qglobalstatic.h \
+		/usr/local/include/qt5/QtCore/qmutex.h \
+		/usr/local/include/qt5/QtCore/qnumeric.h \
+		/usr/local/include/qt5/QtCore/qversiontagging.h \
+		/usr/local/include/qt5/QtCore/qobjectdefs_impl.h \
+		/usr/local/include/qt5/QtCore/qstring.h \
+		/usr/local/include/qt5/QtCore/qchar.h \
+		/usr/local/include/qt5/QtCore/qbytearray.h \
+		/usr/local/include/qt5/QtCore/qrefcount.h \
+		/usr/local/include/qt5/QtCore/qarraydata.h \
+		/usr/local/include/qt5/QtCore/qstringliteral.h \
+		/usr/local/include/qt5/QtCore/qstringalgorithms.h \
+		/usr/local/include/qt5/QtCore/qstringview.h \
+		/usr/local/include/qt5/QtCore/qstringbuilder.h \
+		/usr/local/include/qt5/QtCore/qlist.h \
+		/usr/local/include/qt5/QtCore/qalgorithms.h \
+		/usr/local/include/qt5/QtCore/qiterator.h \
+		/usr/local/include/qt5/QtCore/qhashfunctions.h \
+		/usr/local/include/qt5/QtCore/qpair.h \
+		/usr/local/include/qt5/QtCore/qvector.h \
+		/usr/local/include/qt5/QtCore/qpoint.h \
+		/usr/local/include/qt5/QtCore/qbytearraylist.h \
+		/usr/local/include/qt5/QtCore/qstringlist.h \
+		/usr/local/include/qt5/QtCore/qregexp.h \
+		/usr/local/include/qt5/QtCore/qstringmatcher.h \
+		/usr/local/include/qt5/QtCore/qcoreevent.h \
+		/usr/local/include/qt5/QtCore/qscopedpointer.h \
+		/usr/local/include/qt5/QtCore/qmetatype.h \
+		/usr/local/include/qt5/QtCore/qvarlengtharray.h \
+		/usr/local/include/qt5/QtCore/qcontainerfwd.h \
+		/usr/local/include/qt5/QtCore/qobject_impl.h \
+		moc_predefs.h \
+		/usr/local/lib/qt5/bin/moc
+	/usr/local/lib/qt5/bin/moc $(DEFINES) --include /usr/home/iklash/workspace/merelab/mere-sticky/mere-sticky-lib/moc_predefs.h -I/usr/local/lib/qt5/mkspecs/freebsd-clang -I/usr/home/iklash/workspace/merelab/mere-sticky/mere-sticky-lib -I/usr/home/iklash/workspace/merelab/mere-sticky/include -I/usr/local/include -I/usr/local/include/qt5 -I/usr/local/include/qt5/QtGui -I/usr/local/include/qt5/QtCore -I/usr/include/c++/v1 -I/usr/lib/clang/8.0.0/include -I/usr/include src/merestickythemegroup.h -o moc_merestickythemegroup.cpp
+
+moc_merestickythemeunit.cpp: src/merestickythemeunit.h \
 		/usr/local/include/qt5/QtCore/QUuid \
 		/usr/local/include/qt5/QtCore/quuid.h \
 		/usr/local/include/qt5/QtCore/qstring.h \
@@ -925,7 +1158,7 @@ moc_merestickytheme.cpp: src/merestickytheme.h \
 		/usr/local/include/qt5/QtCore/QObject \
 		moc_predefs.h \
 		/usr/local/lib/qt5/bin/moc
-	/usr/local/lib/qt5/bin/moc $(DEFINES) --include /usr/home/iklash/workspace/merelab/mere-sticky/mere-sticky-lib/moc_predefs.h -I/usr/local/lib/qt5/mkspecs/freebsd-clang -I/usr/home/iklash/workspace/merelab/mere-sticky/mere-sticky-lib -I/usr/home/iklash/workspace/merelab/mere-utils/include -I/usr/home/iklash/workspace/merelab/mere-config/include -I/usr/home/iklash/workspace/merelab/mere-sticky/include -I/usr/local/include -I/usr/local/include/qt5 -I/usr/local/include/qt5/QtGui -I/usr/local/include/qt5/QtCore -I/usr/include/c++/v1 -I/usr/lib/clang/8.0.0/include -I/usr/include src/merestickytheme.h -o moc_merestickytheme.cpp
+	/usr/local/lib/qt5/bin/moc $(DEFINES) --include /usr/home/iklash/workspace/merelab/mere-sticky/mere-sticky-lib/moc_predefs.h -I/usr/local/lib/qt5/mkspecs/freebsd-clang -I/usr/home/iklash/workspace/merelab/mere-sticky/mere-sticky-lib -I/usr/home/iklash/workspace/merelab/mere-sticky/include -I/usr/local/include -I/usr/local/include/qt5 -I/usr/local/include/qt5/QtGui -I/usr/local/include/qt5/QtCore -I/usr/include/c++/v1 -I/usr/lib/clang/8.0.0/include -I/usr/include src/merestickythemeunit.h -o moc_merestickythemeunit.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -1013,7 +1246,206 @@ meresticky.o: src/meresticky.cpp src/meresticky.h \
 		/usr/local/include/qt5/QtCore/qhash.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o meresticky.o src/meresticky.cpp
 
+merestickyconfig.o: src/merestickyconfig.cpp src/merestickyconfig.h \
+		src/merestickytheme.h \
+		/usr/local/include/qt5/QtCore/QObject \
+		/usr/local/include/qt5/QtCore/qobject.h \
+		/usr/local/include/qt5/QtCore/qobjectdefs.h \
+		/usr/local/include/qt5/QtCore/qnamespace.h \
+		/usr/local/include/qt5/QtCore/qglobal.h \
+		/usr/local/include/qt5/QtCore/qconfig-bootstrapped.h \
+		/usr/local/include/qt5/QtCore/qconfig.h \
+		/usr/local/include/qt5/QtCore/qconfig-modules.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-core.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-concurrent.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-dbus.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-network.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-gui.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-widgets.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-declarative.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-printsupport.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-opengl.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-multimedia.h \
+		/usr/local/include/qt5/QtCore/qtcore-config.h \
+		/usr/local/include/qt5/QtCore/qsystemdetection.h \
+		/usr/local/include/qt5/QtCore/qprocessordetection.h \
+		/usr/local/include/qt5/QtCore/qcompilerdetection.h \
+		/usr/local/include/qt5/QtCore/qtypeinfo.h \
+		/usr/local/include/qt5/QtCore/qsysinfo.h \
+		/usr/local/include/qt5/QtCore/qlogging.h \
+		/usr/local/include/qt5/QtCore/qflags.h \
+		/usr/local/include/qt5/QtCore/qatomic.h \
+		/usr/local/include/qt5/QtCore/qbasicatomic.h \
+		/usr/local/include/qt5/QtCore/qatomic_bootstrap.h \
+		/usr/local/include/qt5/QtCore/qgenericatomic.h \
+		/usr/local/include/qt5/QtCore/qatomic_cxx11.h \
+		/usr/local/include/qt5/QtCore/qatomic_msvc.h \
+		/usr/local/include/qt5/QtCore/qglobalstatic.h \
+		/usr/local/include/qt5/QtCore/qmutex.h \
+		/usr/local/include/qt5/QtCore/qnumeric.h \
+		/usr/local/include/qt5/QtCore/qversiontagging.h \
+		/usr/local/include/qt5/QtCore/qobjectdefs_impl.h \
+		/usr/local/include/qt5/QtCore/qstring.h \
+		/usr/local/include/qt5/QtCore/qchar.h \
+		/usr/local/include/qt5/QtCore/qbytearray.h \
+		/usr/local/include/qt5/QtCore/qrefcount.h \
+		/usr/local/include/qt5/QtCore/qarraydata.h \
+		/usr/local/include/qt5/QtCore/qstringliteral.h \
+		/usr/local/include/qt5/QtCore/qstringalgorithms.h \
+		/usr/local/include/qt5/QtCore/qstringview.h \
+		/usr/local/include/qt5/QtCore/qstringbuilder.h \
+		/usr/local/include/qt5/QtCore/qlist.h \
+		/usr/local/include/qt5/QtCore/qalgorithms.h \
+		/usr/local/include/qt5/QtCore/qiterator.h \
+		/usr/local/include/qt5/QtCore/qhashfunctions.h \
+		/usr/local/include/qt5/QtCore/qpair.h \
+		/usr/local/include/qt5/QtCore/qvector.h \
+		/usr/local/include/qt5/QtCore/qpoint.h \
+		/usr/local/include/qt5/QtCore/qbytearraylist.h \
+		/usr/local/include/qt5/QtCore/qstringlist.h \
+		/usr/local/include/qt5/QtCore/qregexp.h \
+		/usr/local/include/qt5/QtCore/qstringmatcher.h \
+		/usr/local/include/qt5/QtCore/qcoreevent.h \
+		/usr/local/include/qt5/QtCore/qscopedpointer.h \
+		/usr/local/include/qt5/QtCore/qmetatype.h \
+		/usr/local/include/qt5/QtCore/qvarlengtharray.h \
+		/usr/local/include/qt5/QtCore/qcontainerfwd.h \
+		/usr/local/include/qt5/QtCore/qobject_impl.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o merestickyconfig.o src/merestickyconfig.cpp
+
 merestickytheme.o: src/merestickytheme.cpp src/merestickytheme.h \
+		/usr/local/include/qt5/QtCore/QObject \
+		/usr/local/include/qt5/QtCore/qobject.h \
+		/usr/local/include/qt5/QtCore/qobjectdefs.h \
+		/usr/local/include/qt5/QtCore/qnamespace.h \
+		/usr/local/include/qt5/QtCore/qglobal.h \
+		/usr/local/include/qt5/QtCore/qconfig-bootstrapped.h \
+		/usr/local/include/qt5/QtCore/qconfig.h \
+		/usr/local/include/qt5/QtCore/qconfig-modules.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-core.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-concurrent.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-dbus.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-network.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-gui.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-widgets.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-declarative.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-printsupport.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-opengl.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-multimedia.h \
+		/usr/local/include/qt5/QtCore/qtcore-config.h \
+		/usr/local/include/qt5/QtCore/qsystemdetection.h \
+		/usr/local/include/qt5/QtCore/qprocessordetection.h \
+		/usr/local/include/qt5/QtCore/qcompilerdetection.h \
+		/usr/local/include/qt5/QtCore/qtypeinfo.h \
+		/usr/local/include/qt5/QtCore/qsysinfo.h \
+		/usr/local/include/qt5/QtCore/qlogging.h \
+		/usr/local/include/qt5/QtCore/qflags.h \
+		/usr/local/include/qt5/QtCore/qatomic.h \
+		/usr/local/include/qt5/QtCore/qbasicatomic.h \
+		/usr/local/include/qt5/QtCore/qatomic_bootstrap.h \
+		/usr/local/include/qt5/QtCore/qgenericatomic.h \
+		/usr/local/include/qt5/QtCore/qatomic_cxx11.h \
+		/usr/local/include/qt5/QtCore/qatomic_msvc.h \
+		/usr/local/include/qt5/QtCore/qglobalstatic.h \
+		/usr/local/include/qt5/QtCore/qmutex.h \
+		/usr/local/include/qt5/QtCore/qnumeric.h \
+		/usr/local/include/qt5/QtCore/qversiontagging.h \
+		/usr/local/include/qt5/QtCore/qobjectdefs_impl.h \
+		/usr/local/include/qt5/QtCore/qstring.h \
+		/usr/local/include/qt5/QtCore/qchar.h \
+		/usr/local/include/qt5/QtCore/qbytearray.h \
+		/usr/local/include/qt5/QtCore/qrefcount.h \
+		/usr/local/include/qt5/QtCore/qarraydata.h \
+		/usr/local/include/qt5/QtCore/qstringliteral.h \
+		/usr/local/include/qt5/QtCore/qstringalgorithms.h \
+		/usr/local/include/qt5/QtCore/qstringview.h \
+		/usr/local/include/qt5/QtCore/qstringbuilder.h \
+		/usr/local/include/qt5/QtCore/qlist.h \
+		/usr/local/include/qt5/QtCore/qalgorithms.h \
+		/usr/local/include/qt5/QtCore/qiterator.h \
+		/usr/local/include/qt5/QtCore/qhashfunctions.h \
+		/usr/local/include/qt5/QtCore/qpair.h \
+		/usr/local/include/qt5/QtCore/qvector.h \
+		/usr/local/include/qt5/QtCore/qpoint.h \
+		/usr/local/include/qt5/QtCore/qbytearraylist.h \
+		/usr/local/include/qt5/QtCore/qstringlist.h \
+		/usr/local/include/qt5/QtCore/qregexp.h \
+		/usr/local/include/qt5/QtCore/qstringmatcher.h \
+		/usr/local/include/qt5/QtCore/qcoreevent.h \
+		/usr/local/include/qt5/QtCore/qscopedpointer.h \
+		/usr/local/include/qt5/QtCore/qmetatype.h \
+		/usr/local/include/qt5/QtCore/qvarlengtharray.h \
+		/usr/local/include/qt5/QtCore/qcontainerfwd.h \
+		/usr/local/include/qt5/QtCore/qobject_impl.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o merestickytheme.o src/merestickytheme.cpp
+
+merestickythemegroup.o: src/merestickythemegroup.cpp src/merestickythemegroup.h \
+		/usr/local/include/qt5/QtCore/QObject \
+		/usr/local/include/qt5/QtCore/qobject.h \
+		/usr/local/include/qt5/QtCore/qobjectdefs.h \
+		/usr/local/include/qt5/QtCore/qnamespace.h \
+		/usr/local/include/qt5/QtCore/qglobal.h \
+		/usr/local/include/qt5/QtCore/qconfig-bootstrapped.h \
+		/usr/local/include/qt5/QtCore/qconfig.h \
+		/usr/local/include/qt5/QtCore/qconfig-modules.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-core.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-concurrent.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-dbus.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-network.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-gui.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-widgets.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-declarative.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-printsupport.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-opengl.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-multimedia.h \
+		/usr/local/include/qt5/QtCore/qtcore-config.h \
+		/usr/local/include/qt5/QtCore/qsystemdetection.h \
+		/usr/local/include/qt5/QtCore/qprocessordetection.h \
+		/usr/local/include/qt5/QtCore/qcompilerdetection.h \
+		/usr/local/include/qt5/QtCore/qtypeinfo.h \
+		/usr/local/include/qt5/QtCore/qsysinfo.h \
+		/usr/local/include/qt5/QtCore/qlogging.h \
+		/usr/local/include/qt5/QtCore/qflags.h \
+		/usr/local/include/qt5/QtCore/qatomic.h \
+		/usr/local/include/qt5/QtCore/qbasicatomic.h \
+		/usr/local/include/qt5/QtCore/qatomic_bootstrap.h \
+		/usr/local/include/qt5/QtCore/qgenericatomic.h \
+		/usr/local/include/qt5/QtCore/qatomic_cxx11.h \
+		/usr/local/include/qt5/QtCore/qatomic_msvc.h \
+		/usr/local/include/qt5/QtCore/qglobalstatic.h \
+		/usr/local/include/qt5/QtCore/qmutex.h \
+		/usr/local/include/qt5/QtCore/qnumeric.h \
+		/usr/local/include/qt5/QtCore/qversiontagging.h \
+		/usr/local/include/qt5/QtCore/qobjectdefs_impl.h \
+		/usr/local/include/qt5/QtCore/qstring.h \
+		/usr/local/include/qt5/QtCore/qchar.h \
+		/usr/local/include/qt5/QtCore/qbytearray.h \
+		/usr/local/include/qt5/QtCore/qrefcount.h \
+		/usr/local/include/qt5/QtCore/qarraydata.h \
+		/usr/local/include/qt5/QtCore/qstringliteral.h \
+		/usr/local/include/qt5/QtCore/qstringalgorithms.h \
+		/usr/local/include/qt5/QtCore/qstringview.h \
+		/usr/local/include/qt5/QtCore/qstringbuilder.h \
+		/usr/local/include/qt5/QtCore/qlist.h \
+		/usr/local/include/qt5/QtCore/qalgorithms.h \
+		/usr/local/include/qt5/QtCore/qiterator.h \
+		/usr/local/include/qt5/QtCore/qhashfunctions.h \
+		/usr/local/include/qt5/QtCore/qpair.h \
+		/usr/local/include/qt5/QtCore/qvector.h \
+		/usr/local/include/qt5/QtCore/qpoint.h \
+		/usr/local/include/qt5/QtCore/qbytearraylist.h \
+		/usr/local/include/qt5/QtCore/qstringlist.h \
+		/usr/local/include/qt5/QtCore/qregexp.h \
+		/usr/local/include/qt5/QtCore/qstringmatcher.h \
+		/usr/local/include/qt5/QtCore/qcoreevent.h \
+		/usr/local/include/qt5/QtCore/qscopedpointer.h \
+		/usr/local/include/qt5/QtCore/qmetatype.h \
+		/usr/local/include/qt5/QtCore/qvarlengtharray.h \
+		/usr/local/include/qt5/QtCore/qcontainerfwd.h \
+		/usr/local/include/qt5/QtCore/qobject_impl.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o merestickythemegroup.o src/merestickythemegroup.cpp
+
+merestickythemeunit.o: src/merestickythemeunit.cpp src/merestickythemeunit.h \
 		/usr/local/include/qt5/QtCore/QUuid \
 		/usr/local/include/qt5/QtCore/quuid.h \
 		/usr/local/include/qt5/QtCore/qstring.h \
@@ -1093,13 +1525,22 @@ merestickytheme.o: src/merestickytheme.cpp src/merestickytheme.h \
 		/usr/local/include/qt5/QtGui/qrgb.h \
 		/usr/local/include/qt5/QtGui/qrgba64.h \
 		/usr/local/include/qt5/QtCore/QObject
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o merestickytheme.o src/merestickytheme.cpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o merestickythemeunit.o src/merestickythemeunit.cpp
+
+moc_merestickyconfig.o: moc_merestickyconfig.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_merestickyconfig.o moc_merestickyconfig.cpp
 
 moc_meresticky.o: moc_meresticky.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_meresticky.o moc_meresticky.cpp
 
 moc_merestickytheme.o: moc_merestickytheme.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_merestickytheme.o moc_merestickytheme.cpp
+
+moc_merestickythemegroup.o: moc_merestickythemegroup.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_merestickythemegroup.o moc_merestickythemegroup.cpp
+
+moc_merestickythemeunit.o: moc_merestickythemeunit.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_merestickythemeunit.o moc_merestickythemeunit.cpp
 
 ####### Install
 
@@ -1121,14 +1562,20 @@ uninstall_target: FORCE
 
 install_headers_/usr/local/include/mere/sticky: first FORCE
 	@test -d $(INSTALL_ROOT)/usr/local/include/mere/sticky || mkdir -p $(INSTALL_ROOT)/usr/local/include/mere/sticky
+	-$(QINSTALL) /usr/home/iklash/workspace/merelab/mere-sticky/mere-sticky-lib/src/merestickyconfig.h $(INSTALL_ROOT)/usr/local/include/mere/sticky/merestickyconfig.h
 	-$(QINSTALL) /usr/home/iklash/workspace/merelab/mere-sticky/mere-sticky-lib/src/merestickyglobal.h $(INSTALL_ROOT)/usr/local/include/mere/sticky/merestickyglobal.h
 	-$(QINSTALL) /usr/home/iklash/workspace/merelab/mere-sticky/mere-sticky-lib/src/meresticky.h $(INSTALL_ROOT)/usr/local/include/mere/sticky/meresticky.h
 	-$(QINSTALL) /usr/home/iklash/workspace/merelab/mere-sticky/mere-sticky-lib/src/merestickytheme.h $(INSTALL_ROOT)/usr/local/include/mere/sticky/merestickytheme.h
+	-$(QINSTALL) /usr/home/iklash/workspace/merelab/mere-sticky/mere-sticky-lib/src/merestickythemegroup.h $(INSTALL_ROOT)/usr/local/include/mere/sticky/merestickythemegroup.h
+	-$(QINSTALL) /usr/home/iklash/workspace/merelab/mere-sticky/mere-sticky-lib/src/merestickythemeunit.h $(INSTALL_ROOT)/usr/local/include/mere/sticky/merestickythemeunit.h
 
 uninstall_headers_/usr/local/include/mere/sticky: FORCE
+	-$(DEL_FILE) -r $(INSTALL_ROOT)/usr/local/include/mere/sticky/merestickythemeunit.h
+	-$(DEL_FILE) -r $(INSTALL_ROOT)/usr/local/include/mere/sticky/merestickythemegroup.h
 	-$(DEL_FILE) -r $(INSTALL_ROOT)/usr/local/include/mere/sticky/merestickytheme.h
 	-$(DEL_FILE) -r $(INSTALL_ROOT)/usr/local/include/mere/sticky/meresticky.h
 	-$(DEL_FILE) -r $(INSTALL_ROOT)/usr/local/include/mere/sticky/merestickyglobal.h
+	-$(DEL_FILE) -r $(INSTALL_ROOT)/usr/local/include/mere/sticky/merestickyconfig.h
 	-$(DEL_DIR) $(INSTALL_ROOT)/usr/local/include/mere/sticky/ 
 
 

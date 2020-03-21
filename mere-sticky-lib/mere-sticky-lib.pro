@@ -1,5 +1,5 @@
-include(../../mere-utils/mere-utils-lib/mere-utils-lib.pri)
-include(../../mere-config/mere-config-lib/mere-config-lib.pri)
+#include(../../mere-utils/mere-utils-lib/mere-utils-lib.pri)
+#include(../../mere-config/mere-config-lib/mere-config-lib.pri)
 
 QT      = core gui
 
@@ -28,6 +28,7 @@ HEADERS += \
     src/merestickythemeunit.h
 
 DESTDIR = $$PWD/../lib
+LIBS += -lmere-utils -lmere-config
 INCLUDEPATH += $$PWD/../include
 INCLUDEPATH += /usr/local/include
 

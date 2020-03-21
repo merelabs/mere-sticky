@@ -42,6 +42,6 @@ void MereStickyWin::init()
 
 void MereStickyWin::applyTheme(MereStickyTheme *theme)
 {
-    QColor color = theme->backgroundColor();
-    this->setStyleSheet("#MereStickyWin{background-color:" + color.name() + ";}");
+//    QColor color = theme->backgroundColor();
+//    this->setStyleSheet("#MereStickyWin{background-color:" + color.name() + ";}");
 }

@@ -1,7 +1,7 @@
 include(../mere-sticky-lib/mere-sticky-lib.pri)
-include(../../mere-widgets/mere-widgets-lib/mere-widgets-lib.pri)
-include(../../mere-utils/mere-utils-lib/mere-utils-lib.pri)
-include(../../mere-config/mere-config-lib/mere-config-lib.pri)
+#include(../../mere-widgets/mere-widgets-lib/mere-widgets-lib.pri)
+#include(../../mere-utils/mere-utils-lib/mere-utils-lib.pri)
+#include(../../mere-config/mere-config-lib/mere-config-lib.pri)
 
 QT      = core gui
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
@@ -39,7 +39,9 @@ RESOURCES += \
 OTHER_FILES += \
     ../etc/sticky.conf
 
-DESTDIR = $$PWD/../bin
+#DESTDIR = $$PWD/../bin
+
+LIBS += -lmere-widgets
 INCLUDEPATH += /usr/local/include
 
 #

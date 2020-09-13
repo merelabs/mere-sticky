@@ -1,5 +1,5 @@
 include(../mere-sticky-lib/mere-sticky-lib.pri)
-#include(../../mere-widgets/mere-widgets-lib/mere-widgets-lib.pri)
+include(../../mere-widgets/mere-widgets-lib/mere-widgets-lib.pri)
 #include(../../mere-utils/mere-utils-lib/mere-utils-lib.pri)
 #include(../../mere-config/mere-config-lib/mere-config-lib.pri)
 
@@ -41,7 +41,7 @@ OTHER_FILES += \
 
 #DESTDIR = $$PWD/../bin
 
-LIBS += -lmere-widgets
+LIBS += -L/usr/local/lib -lmere-widgets
 INCLUDEPATH += /usr/local/include
 
 #

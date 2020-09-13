@@ -5,7 +5,10 @@
 
 MereStickyApp::~MereStickyApp()
 {
+    qDebug() << QString("Closing down %1-%2 ...").arg(Mere::Sticky::AppName).arg(Mere::Sticky::AppVersion);
 
+    if (m_win)
+        delete m_win;
 }
 
 MereStickyApp::MereStickyApp(int &argc, char **argv)

@@ -1,5 +1,5 @@
-#include(../../mere-utils/mere-utils-lib/mere-utils-lib.pri)
-#include(../../mere-config/mere-config-lib/mere-config-lib.pri)
+include(../../mere-utils/mere-utils-lib/mere-utils-lib.pri)
+include(../../mere-config/mere-config-lib/mere-config-lib.pri)
 
 QT      = core gui
 
@@ -7,7 +7,7 @@ CONFIG += c++11
 CONFIG += SHARED
 
 TARGET   = mere-sticky
-VERSION  = 0.0.1b
+VERSION  = 0.0.1
 TEMPLATE = lib
 
 DEFINES += QT_DEPRECATED_WARNINGS MERE_STICKY_LIB
@@ -48,7 +48,7 @@ defineTest(copy) {
     export(QMAKE_POST_LINK)
 }
 
-copy($$HEADERS, $$PWD/../include/mere/sticky)
+#copy($$HEADERS, $$PWD/../include/mere/sticky)
 #
 # Install
 #

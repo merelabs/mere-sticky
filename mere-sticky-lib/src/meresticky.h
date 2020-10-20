@@ -1,7 +1,7 @@
 #ifndef MEREBOARD_H
 #define MEREBOARD_H
 
-#include "merestickyglobal.h"
+#include "stickyglobal.h"
 
 #include <QObject>
 #include <QProcess>

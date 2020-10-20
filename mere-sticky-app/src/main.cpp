@@ -1,8 +1,8 @@
-#include "merestickyapp.h"
+#include "stickyapp.h"
 
 int main(int argc, char *argv[])
 {
-    MereStickyApp app(argc, argv);
+    StickyApp app(argc, argv);
     app.init();
     app.start();
     return app.exec();

@@ -1,8 +1,8 @@
 include(../../mere-utils/mere-utils-lib/mere-utils-lib.pri)
-include(../../mere-config/mere-config-lib/mere-config-lib.pri)
+#include(../../mere-utils/mere-utils-lib/mere-store-lib.pri)
+#include(../../mere-config/mere-config-lib/mere-config-lib.pri)
 
-QT      = core gui
-
+QT      = core
 CONFIG += c++11
 CONFIG += SHARED
 
@@ -13,42 +13,53 @@ TEMPLATE = lib
 DEFINES += QT_DEPRECATED_WARNINGS MERE_STICKY_LIB
 
 SOURCES += \
+    src/domain/model/base.cpp \
+    src/domain/model/category.cpp \
+    src/domain/model/chirkut.cpp \
+    src/domain/model/config.cpp \
+    src/domain/model/task.cpp \
+    src/domain/model/theme.cpp \
+    src/domain/store/basestore.cpp \
+    src/domain/store/categorystore.cpp \
+    src/domain/store/chirkutstore.cpp \
+    src/domain/store/stickystore.cpp \
+    src/domain/store/taskstore.cpp \
+    src/domain/store/themestore.cpp \
     src/meresticky.cpp \
-    src/merestickyconfig.cpp \
-    src/merestickytheme.cpp \
-    src/merestickythemegroup.cpp \
-    src/merestickythemeunit.cpp
+    src/service/baseservice.cpp \
+    src/service/categoryservice.cpp \
+    src/service/chirkutservice.cpp \
+    src/service/stickyservice.cpp \
+    src/service/taskservice.cpp \
+    src/service/themeservice.cpp
 
 HEADERS += \
-    src/merestickyconfig.h \
-    src/merestickyglobal.h \
+    src/domain/model/base.h \
+    src/domain/model/category.h \
+    src/domain/model/chirkut.h \
+    src/domain/model/config.h \
+    src/domain/model/task.h \
+    src/domain/model/theme.h \
+    src/domain/store/basestore.h \
+    src/domain/store/categorystore.h \
+    src/domain/store/chirkutstore.h \
+    src/domain/store/stickystore.h \
+    src/domain/store/taskstore.h \
+    src/domain/store/themestore.h \
     src/meresticky.h \
-    src/merestickytheme.h \ \
-    src/merestickythemegroup.h \
-    src/merestickythemeunit.h
+    src/service/baseservice.h \
+    src/service/categoryservice.h \
+    src/service/chirkutservice.h \
+    src/service/stickyservice.h \
+    src/service/taskservice.h \
+    src/service/themeservice.h \
+    src/stickyglobal.h
 
-DESTDIR = $$PWD/../lib
-LIBS += -lmere-utils -lmere-config
-INCLUDEPATH += $$PWD/../include
 INCLUDEPATH += /usr/local/include
 
-defineTest(copy) {
-    source = $$1
-    target = $$2
+#LIBS += -lmere-utils
+LIBS += -lmere-store
 
-    for(file, source) {
-        sdir = $${dirname(file)}
-        sdir = $$replace(sdir, "src", "")
-        path = $${target}$${sdir}
-
-        QMAKE_POST_LINK += $$QMAKE_MKDIR $$quote($$path) $$escape_expand(\\n\\t)
-        QMAKE_POST_LINK += $$QMAKE_COPY $$quote($$file) $$quote($$path) $$escape_expand(\\n\\t)
-    }
-
-    export(QMAKE_POST_LINK)
-}
-
-#copy($$HEADERS, $$PWD/../include/mere/sticky)
 #
 # Install
 #

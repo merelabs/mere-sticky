@@ -1,11 +1,12 @@
 #include "stickyapp.h"
 #include "stickywin.h"
+#include "stickywinwrapper.h"
 
-#include "mere/sticky/domain/model/chirkut.h"
+#include "mere/sticky/domain/model/issue.h"
 #include "mere/sticky/domain/model/theme.h"
 #include "mere/sticky/domain/store/basestore.h"
 #include "mere/sticky/domain/store/themestore.h"
-#include "mere/sticky/domain/store/chirkutstore.h"
+#include "mere/sticky/domain/store/issuestore.h"
 #include "mere/sticky/service/baseservice.h"
 #include "mere/sticky/service/themeservice.h"
 
@@ -19,22 +20,19 @@ StickyApp::~StickyApp()
 }
 
 StickyApp::StickyApp(int &argc, char **argv)
-    : MereDefaultApp(argc, argv)
+    : Mere::DefaultApp(argc, argv)
 {
-    setObjectName("MereStickyApp");
-    setAppCode(Mere::Sticky::AppCode);
-    setApplicationName(Mere::Sticky::AppName);
-    setApplicationVersion(Mere::Sticky::AppVersion);
-
-    // Apply Styles
-    QFile qss(":/sticky/sticky.qss");
-    qss.open(QFile::ReadOnly);
-    QString style = QLatin1String(qss.readAll());
-    setStyleSheet(style);
+    setObjectName("MereStickyNoteApp");
+    setAppCode(APP_CODE);
+    setApplicationName(APP_NAME);
+    setApplicationDisplayName(APP_NAME);
+    setApplicationVersion(APP_VERSION);
 }
 
 void StickyApp::init()
 {
+    Mere::DefaultApp::init();
+
     {
         //
         Mere::Store::Store *s;
@@ -46,8 +44,8 @@ void StickyApp::init()
             s->close();
         }
 
-        BaseStore chirkut("chirkut");
-        s = &chirkut;
+        BaseStore issue("issue");
+        s = &issue;
         err = s->create();
         if (!err)
         {
@@ -59,12 +57,16 @@ void StickyApp::init()
             s->close();
         }
 
+        BaseStore task("task");
+        s = &task;
+        err = s->create();
+        s->close();
+
         BaseStore theme("theme");
         s = &theme;
         err = s->create();
         if (!err)
         {
-            qDebug()<< " R ASHA UCHIT NA";
             Theme criticalPriority;
             criticalPriority.setName("Critical");
             criticalPriority.setForeground("#ffffff");
@@ -101,29 +103,30 @@ void StickyApp::init()
         }
     }
 
-    QFuture<QList<Chirkut *> > future = QtConcurrent::run([=]{
+    QFuture<QList<Issue *> > future = QtConcurrent::run([=]{
         BaseService service;
 
-        QList<Chirkut *> chirkuts = service.list<ChirkutStore, Chirkut>();
+        QList<Issue *> chirkuts = service.list<IssueStore, Issue>();
         return chirkuts;
     });
 
     future.waitForFinished();
 
-    QList<Chirkut *> chirkuts = future.result();
-    qDebug() << "XXXNumber of Chirkut found:" << chirkuts.size();
-
-    MereDefaultApp::init();
-
-    if (chirkuts.isEmpty())
+    QList<Issue *> issues = future.result();
+    qDebug() << "Number of Chirkut found:" << issues.size();
+    if (issues.isEmpty())
     {
-        Chirkut *chirkut = new Chirkut();
-        chirkuts.append(chirkut);
+        Issue *issue = new Issue();
+        issues.append(issue);
     }
 
-    StickyWin *win = new StickyWin(*chirkuts.first());
+    StickyWin *win = new StickyWin(*issues.first());
     win->init();
     m_wins.append(win);
+
+//    StickyWinWrapper *wrapper = new StickyWinWrapper(*issues.first());
+//    wrapper->init();
+//    m_wrappers.append(wrapper);
 }
 
 void StickyApp::start()
@@ -134,5 +137,65 @@ void StickyApp::start()
         StickyWin *win = it.next();
         if (!win) continue;
         win->show();
+    }
+
+//    QListIterator<StickyWinWrapper *> it(m_wrappers);
+//    while (it.hasNext())
+//    {
+//        StickyWinWrapper *wrapper = it.next();
+//        if (!wrapper) continue;
+//        wrapper->show();
+//    }
+}
+
+void StickyApp::newNote()
+{
+    Issue *issue = new Issue();
+
+    StickyWin *win = new StickyWin(*issue);
+    win->init();
+    win->show();
+
+    m_wins.append(win);
+}
+
+void StickyApp::openNote(Issue &issue)
+{
+    StickyWin *win = new StickyWin(issue);
+    win->init();
+    win->show();
+
+    m_wins.append(win);
+}
+
+void StickyApp::closeNote(const Issue &issue)
+{
+    QMutableListIterator<Issue *> it(m_issues);
+    while (it.hasNext())
+    {
+        Issue *_issue = it.next();
+        if (!_issue) continue;
+
+        if (_issue->uuid() == issue.uuid())
+        {
+            it.remove();
+            break;
+        }
+    }
+}
+
+void StickyApp::closeNote(const StickyWin &win)
+{
+    QMutableListIterator<StickyWin *> it(m_wins);
+    while (it.hasNext())
+    {
+        StickyWin *_win = it.next();
+        if (!_win) continue;
+
+        if (_win == &win)
+        {
+            it.remove();
+            break;
+        }
     }
 }

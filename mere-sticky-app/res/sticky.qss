@@ -5,12 +5,14 @@ QScrollBar:vertical
     width: 8px;
     margin: 0;
 }
+
 QScrollBar::handle:vertical
 {
     border-radius: 4px;
     background: rgba(0, 0, 0, 25%);
     min-height: 0px;
 }
+
 QScrollBar::add-line:vertical
 {
     height: 0px;
@@ -20,6 +22,7 @@ QScrollBar::sub-line:vertical
 {
     height: 0px;
 }
+
 QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical
 {
     width: 0px;
@@ -29,15 +32,4 @@ QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical
 QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical
 {
     background: transparent;
-}
-
-QTextEdit
-{
-    background: transparent;
-}
-
-#MereStickyThemePicker
-{
-    border-radious: 8px;
-    background:white;
 }

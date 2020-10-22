@@ -1,26 +1,30 @@
 #ifndef MERESTICKYWIN_H
 #define MERESTICKYWIN_H
 
-#include "mere/widgets/mereresizeablewin.h"
+#include "mere/widgets/resizeablewin.h"
 
-class WinHeader;
-class NoteWidget;
+class SearchView;
+class StickyWinHeader;
+class NoteEditor;
 class Theme;
-class Chirkut;
+class Issue;
 
-class StickyWin : public MereResizeableWin
+class StickyWin : public Mere::Widgets::ResizeableWin
 {
     Q_OBJECT
 public:
     ~StickyWin();
-    explicit StickyWin(Chirkut &chirkut, QWidget *parent = nullptr);
+    explicit StickyWin(Issue &issue, QWidget *parent = nullptr);
 
     void init();
 
+    void keyPressEvent(QKeyEvent *e) override;
+    void resizeEvent(QResizeEvent* event) override;
+
 private:
-    void initHeaderUI();
-    void initContentUI();
-    void initFooterUI();
+    void initHeaderUI() override;
+    void initContentUI() override;
+    void initFooterUI() override;
 
     void resize();
 
@@ -31,10 +35,12 @@ private slots:
     void close();
 
 private:
-    Chirkut &m_chirkut;
+    Issue &m_chirkut;
 
-    WinHeader *m_titleWidget;
-    NoteWidget *m_noteWidget;
+    StickyWinHeader *m_titleWidget;
+    NoteEditor *m_noteEditor;
+
+    SearchView *m_searchView;
 };
 
 #endif // MERESTICKYWIN_H

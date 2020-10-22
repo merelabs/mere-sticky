@@ -5,7 +5,7 @@
 
 class Task;
 
-class TaskService : public BaseService
+class MERE_STICKY_LIBSPEC TaskService : public BaseService
 {
     Q_OBJECT
 public:
@@ -17,7 +17,7 @@ public:
     QUuid save(Task &task);
     QUuid create(Task &task);
     QUuid update(Task &task);
-    QUuid remove(Task &task);
+    bool remove(Task &task);
 
 signals:
     void ready();

@@ -4,7 +4,7 @@
 #include "baseservice.h"
 
 class Theme;
-class ThemeService : public BaseService
+class MERE_STICKY_LIBSPEC ThemeService : public BaseService
 {
     Q_OBJECT
 public:
@@ -16,7 +16,7 @@ public:
     QUuid save(Theme &theme);
     QUuid create(Theme &theme);
     QUuid update(Theme &theme);
-    QUuid remove(Theme &theme);
+    bool remove(Theme &theme);
 
 signals:
     void ready();

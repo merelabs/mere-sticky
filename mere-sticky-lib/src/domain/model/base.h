@@ -1,6 +1,7 @@
 #ifndef BASE_H
 #define BASE_H
 
+#include "../../stickyglobal.h"
 #include "mere/store/unit.h"
 
 #include <QDateTime>

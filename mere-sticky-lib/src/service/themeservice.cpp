@@ -37,6 +37,8 @@ QUuid ThemeService::create(Theme &theme)
         return 0;
     }
 
+    theme.setCreatedAt(QDateTime::currentDateTime());
+
     err = store.create(theme);
     if (err)
     {
@@ -62,6 +64,8 @@ QUuid ThemeService::update(Theme &theme)
         return 0;
     }
 
+    theme.setUpdatedAt(QDateTime::currentDateTime());
+
     err = store.update(theme);
     if (err)
     {
@@ -77,23 +81,21 @@ QUuid ThemeService::update(Theme &theme)
     return theme.uuid();
 }
 
-QUuid ThemeService::remove(Theme &theme)
+bool ThemeService::remove(Theme &theme)
 {
-    QUuid uuid;
-
     ThemeStore store;
     int err = store.open();
     if (err)
     {
         qDebug() << "Failed to open slice theme; check if it is created!";
-        return 0;
+        return false;
     }
 
     err = store.remove(theme);
     if (err)
     {
         qDebug() << "Failed to remove theme!";
-        return 0;
+        return false;
     }
 
     emit removed(theme);
@@ -101,5 +103,5 @@ QUuid ThemeService::remove(Theme &theme)
 
     qDebug() << "Theme removed:" << theme.uuid();
 
-    return uuid;
+    return true;
 }

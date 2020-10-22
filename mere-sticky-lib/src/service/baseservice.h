@@ -1,10 +1,12 @@
 #ifndef BASESERVICE_H
 #define BASESERVICE_H
 
+#include "../stickyglobal.h"
+
 #include <QUuid>
 #include <QObject>
 
-class BaseService : public QObject
+class MERE_STICKY_LIBSPEC BaseService : public QObject
 {
     Q_OBJECT
 public:

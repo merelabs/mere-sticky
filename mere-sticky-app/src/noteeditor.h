@@ -1,15 +1,14 @@
-#ifndef MERESTICKYNOTE_H
-#define MERESTICKYNOTE_H
+#ifndef NOTEEDITOR_H
+#define NOTEEDITOR_H
 
-#include "mere/widgets/merenoteeditor.h"
+#include "mere/widgets/noteeditor.h"
 
 #include <QDebug>
-
-class NoteEditor : public MereNoteEditor
+class NoteEditor : public Mere::Widgets::NoteEditor
 {
     Q_OBJECT
 public:
     explicit NoteEditor(QWidget *parent = nullptr);
 };
 
-#endif // MERESTICKYNOTE_H
+#endif // NOTEEDITOR_H

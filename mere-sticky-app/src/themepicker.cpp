@@ -1,4 +1,5 @@
 #include "themepicker.h"
+#include "themelistwidget.h"
 #include "mere/sticky/domain/model/theme.h"
 #include "mere/sticky/domain/store/themestore.h"
 #include "mere/sticky/service/themeservice.h"
@@ -50,11 +51,7 @@ void ThemePicker::initUI()
 
     QPushButton *themeMenu = new QPushButton(this);
     themeMenu->setObjectName(QString::fromUtf8("stickyTitleLeftMenu"));
-
-    themeMenu->setMinimumSize(QSize(16, 16));
-    themeMenu->setMaximumSize(QSize(16, 16));
     themeMenu->setFlat(true);
-
     layout()->addWidget(themeMenu);
 
     QMenu *priority= new QMenu(this);
@@ -70,5 +67,19 @@ void ThemePicker::initUI()
         priority->addAction(themeOneAction);
     }
 
+    priority->addSeparator();
+
+    QWidgetAction *manageThemeAction = new QWidgetAction(priority);
+    manageThemeAction->setText("Options");
+    connect(manageThemeAction, SIGNAL(triggered(const bool)), this, SLOT(manageTheme()));
+    priority->addAction(manageThemeAction);
+
     themeMenu->setMenu(priority);
+}
+
+void ThemePicker::manageTheme()
+{
+    ThemeListWidget *themeListWidget = new ThemeListWidget();
+//    themeListWidget->init();
+    themeListWidget->show();
 }

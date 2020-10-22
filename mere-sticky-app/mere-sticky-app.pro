@@ -20,30 +20,38 @@ DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += src/main.cpp \
-    src/checklistwidget.cpp \
+    src/issuelineview.cpp \
+    src/issueview.cpp \
     src/noteeditor.cpp \
-    src/notewidget.cpp \
-    src/searchwidget.cpp \
+    src/searchview.cpp \
     src/stickyapp.cpp \
     src/stickywin.cpp \
+    src/stickywinheader.cpp \
+    src/stickywinwrapper.cpp \
+    src/tasklistview.cpp \
     src/taskview.cpp \
     src/taskwidget.cpp \
     src/themeaction.cpp \
+    src/themelistwidget.cpp \
     src/themepicker.cpp \
-    src/winheader.cpp
+    src/themeview.cpp
 
 HEADERS += \
-    src/checklistwidget.h \
+    src/issuelineview.h \
+    src/issueview.h \
     src/noteeditor.h \
-    src/notewidget.h \
-    src/searchwidget.h \
+    src/searchview.h \
     src/stickyapp.h \
     src/stickywin.h \
+    src/stickywinheader.h \
+    src/stickywinwrapper.h \
+    src/tasklistview.h \
     src/taskview.h \
     src/taskwidget.h \
     src/themeaction.h \
+    src/themelistwidget.h \
     src/themepicker.h \
-    src/winheader.h
+    src/themeview.h
 
 RESOURCES += \
     res/sticky.qrc

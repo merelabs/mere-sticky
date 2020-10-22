@@ -1,7 +1,6 @@
 #ifndef THEME_H
 #define THEME_H
 
-#include "../../stickyglobal.h"
 #include "base.h"
 
 class MERE_STICKY_LIBSPEC Theme : public Base

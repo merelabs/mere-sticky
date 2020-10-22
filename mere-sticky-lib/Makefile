@@ -17,7 +17,7 @@ CXX           = clang++
 DEFINES       = -DQT_DEPRECATED_WARNINGS -DMERE_STICKY_LIB -DQT_NO_DEBUG -DQT_CORE_LIB
 CFLAGS        = -pipe -O2 -Wall -Wextra -pthread -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -O2 -std=gnu++11 -Wall -Wextra -pthread -fPIC $(DEFINES)
-INCPATH       = -I. -I/usr/home/iklash/workspace/mere-utils/mere-utils-lib/include -I/usr/local/include -I/usr/local/include/qt5 -I/usr/local/include/qt5/QtCore -I. -I/usr/local/include -I/usr/local/lib/qt5/mkspecs/freebsd-clang
+INCPATH       = -I. -I/usr/local/include -I/usr/local/include/qt5 -I/usr/local/include/qt5/QtCore -I. -I/usr/local/include -I/usr/local/lib/qt5/mkspecs/freebsd-clang
 QMAKE         = /usr/local/lib/qt5/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -40,7 +40,7 @@ DISTNAME      = mere-sticky0.0.1
 DISTDIR = /usr/home/iklash/workspace/mere-sticky/mere-sticky-lib/.tmp/mere-sticky0.0.1
 LINK          = clang++
 LFLAGS        = -pthread -Wl,-rpath,/usr/local/lib/qt5 -shared -Wl,-soname,libmere-sticky.so.0
-LIBS          = $(SUBLIBS) -L/usr/home/iklash/workspace/mere-utils/mere-utils-lib/../lib -lmere-utils -lmere-store /usr/local/lib/qt5/libQt5Core.so  -L/usr/local/lib 
+LIBS          = $(SUBLIBS) -lmere-utils -lmere-store /usr/local/lib/qt5/libQt5Core.so  -L/usr/local/lib 
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -54,66 +54,70 @@ OBJECTS_DIR   = ./
 
 SOURCES       = src/domain/model/base.cpp \
 		src/domain/model/category.cpp \
-		src/domain/model/chirkut.cpp \
 		src/domain/model/config.cpp \
+		src/domain/model/issue.cpp \
 		src/domain/model/task.cpp \
 		src/domain/model/theme.cpp \
 		src/domain/store/basestore.cpp \
 		src/domain/store/categorystore.cpp \
-		src/domain/store/chirkutstore.cpp \
+		src/domain/store/issuestore.cpp \
 		src/domain/store/stickystore.cpp \
 		src/domain/store/taskstore.cpp \
 		src/domain/store/themestore.cpp \
 		src/meresticky.cpp \
 		src/service/baseservice.cpp \
 		src/service/categoryservice.cpp \
-		src/service/chirkutservice.cpp \
+		src/service/issueservice.cpp \
+		src/service/searchservice.cpp \
 		src/service/stickyservice.cpp \
 		src/service/taskservice.cpp \
 		src/service/themeservice.cpp moc_config.cpp \
 		moc_basestore.cpp \
 		moc_categorystore.cpp \
-		moc_chirkutstore.cpp \
+		moc_issuestore.cpp \
 		moc_stickystore.cpp \
 		moc_taskstore.cpp \
 		moc_themestore.cpp \
 		moc_meresticky.cpp \
 		moc_baseservice.cpp \
 		moc_categoryservice.cpp \
-		moc_chirkutservice.cpp \
+		moc_issueservice.cpp \
+		moc_searchservice.cpp \
 		moc_stickyservice.cpp \
 		moc_taskservice.cpp \
 		moc_themeservice.cpp
 OBJECTS       = base.o \
 		category.o \
-		chirkut.o \
 		config.o \
+		issue.o \
 		task.o \
 		theme.o \
 		basestore.o \
 		categorystore.o \
-		chirkutstore.o \
+		issuestore.o \
 		stickystore.o \
 		taskstore.o \
 		themestore.o \
 		meresticky.o \
 		baseservice.o \
 		categoryservice.o \
-		chirkutservice.o \
+		issueservice.o \
+		searchservice.o \
 		stickyservice.o \
 		taskservice.o \
 		themeservice.o \
 		moc_config.o \
 		moc_basestore.o \
 		moc_categorystore.o \
-		moc_chirkutstore.o \
+		moc_issuestore.o \
 		moc_stickystore.o \
 		moc_taskstore.o \
 		moc_themestore.o \
 		moc_meresticky.o \
 		moc_baseservice.o \
 		moc_categoryservice.o \
-		moc_chirkutservice.o \
+		moc_issueservice.o \
+		moc_searchservice.o \
 		moc_stickyservice.o \
 		moc_taskservice.o \
 		moc_themeservice.o
@@ -250,39 +254,41 @@ DIST          = /usr/local/lib/qt5/mkspecs/features/spec_pre.prf \
 		/usr/local/lib/qt5/mkspecs/features/lex.prf \
 		mere-sticky-lib.pro src/domain/model/base.h \
 		src/domain/model/category.h \
-		src/domain/model/chirkut.h \
 		src/domain/model/config.h \
+		src/domain/model/issue.h \
 		src/domain/model/task.h \
 		src/domain/model/theme.h \
 		src/domain/store/basestore.h \
 		src/domain/store/categorystore.h \
-		src/domain/store/chirkutstore.h \
+		src/domain/store/issuestore.h \
 		src/domain/store/stickystore.h \
 		src/domain/store/taskstore.h \
 		src/domain/store/themestore.h \
 		src/meresticky.h \
 		src/service/baseservice.h \
 		src/service/categoryservice.h \
-		src/service/chirkutservice.h \
+		src/service/issueservice.h \
+		src/service/searchservice.h \
 		src/service/stickyservice.h \
 		src/service/taskservice.h \
 		src/service/themeservice.h \
 		src/stickyglobal.h src/domain/model/base.cpp \
 		src/domain/model/category.cpp \
-		src/domain/model/chirkut.cpp \
 		src/domain/model/config.cpp \
+		src/domain/model/issue.cpp \
 		src/domain/model/task.cpp \
 		src/domain/model/theme.cpp \
 		src/domain/store/basestore.cpp \
 		src/domain/store/categorystore.cpp \
-		src/domain/store/chirkutstore.cpp \
+		src/domain/store/issuestore.cpp \
 		src/domain/store/stickystore.cpp \
 		src/domain/store/taskstore.cpp \
 		src/domain/store/themestore.cpp \
 		src/meresticky.cpp \
 		src/service/baseservice.cpp \
 		src/service/categoryservice.cpp \
-		src/service/chirkutservice.cpp \
+		src/service/issueservice.cpp \
+		src/service/searchservice.cpp \
 		src/service/stickyservice.cpp \
 		src/service/taskservice.cpp \
 		src/service/themeservice.cpp
@@ -594,8 +600,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/local/lib/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents src/domain/model/base.h src/domain/model/category.h src/domain/model/chirkut.h src/domain/model/config.h src/domain/model/task.h src/domain/model/theme.h src/domain/store/basestore.h src/domain/store/categorystore.h src/domain/store/chirkutstore.h src/domain/store/stickystore.h src/domain/store/taskstore.h src/domain/store/themestore.h src/meresticky.h src/service/baseservice.h src/service/categoryservice.h src/service/chirkutservice.h src/service/stickyservice.h src/service/taskservice.h src/service/themeservice.h src/stickyglobal.h $(DISTDIR)/
-	$(COPY_FILE) --parents src/domain/model/base.cpp src/domain/model/category.cpp src/domain/model/chirkut.cpp src/domain/model/config.cpp src/domain/model/task.cpp src/domain/model/theme.cpp src/domain/store/basestore.cpp src/domain/store/categorystore.cpp src/domain/store/chirkutstore.cpp src/domain/store/stickystore.cpp src/domain/store/taskstore.cpp src/domain/store/themestore.cpp src/meresticky.cpp src/service/baseservice.cpp src/service/categoryservice.cpp src/service/chirkutservice.cpp src/service/stickyservice.cpp src/service/taskservice.cpp src/service/themeservice.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents src/domain/model/base.h src/domain/model/category.h src/domain/model/config.h src/domain/model/issue.h src/domain/model/task.h src/domain/model/theme.h src/domain/store/basestore.h src/domain/store/categorystore.h src/domain/store/issuestore.h src/domain/store/stickystore.h src/domain/store/taskstore.h src/domain/store/themestore.h src/meresticky.h src/service/baseservice.h src/service/categoryservice.h src/service/issueservice.h src/service/searchservice.h src/service/stickyservice.h src/service/taskservice.h src/service/themeservice.h src/stickyglobal.h $(DISTDIR)/
+	$(COPY_FILE) --parents src/domain/model/base.cpp src/domain/model/category.cpp src/domain/model/config.cpp src/domain/model/issue.cpp src/domain/model/task.cpp src/domain/model/theme.cpp src/domain/store/basestore.cpp src/domain/store/categorystore.cpp src/domain/store/issuestore.cpp src/domain/store/stickystore.cpp src/domain/store/taskstore.cpp src/domain/store/themestore.cpp src/meresticky.cpp src/service/baseservice.cpp src/service/categoryservice.cpp src/service/issueservice.cpp src/service/searchservice.cpp src/service/stickyservice.cpp src/service/taskservice.cpp src/service/themeservice.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -628,9 +634,9 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/local/lib/qt5/mkspecs/features/data/dummy.cpp
 	clang++ -pipe -O2 -std=gnu++11 -Wall -Wextra -dM -E -o moc_predefs.h /usr/local/lib/qt5/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_config.cpp moc_basestore.cpp moc_categorystore.cpp moc_chirkutstore.cpp moc_stickystore.cpp moc_taskstore.cpp moc_themestore.cpp moc_meresticky.cpp moc_baseservice.cpp moc_categoryservice.cpp moc_chirkutservice.cpp moc_stickyservice.cpp moc_taskservice.cpp moc_themeservice.cpp
+compiler_moc_header_make_all: moc_config.cpp moc_basestore.cpp moc_categorystore.cpp moc_issuestore.cpp moc_stickystore.cpp moc_taskstore.cpp moc_themestore.cpp moc_meresticky.cpp moc_baseservice.cpp moc_categoryservice.cpp moc_issueservice.cpp moc_searchservice.cpp moc_stickyservice.cpp moc_taskservice.cpp moc_themeservice.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_config.cpp moc_basestore.cpp moc_categorystore.cpp moc_chirkutstore.cpp moc_stickystore.cpp moc_taskstore.cpp moc_themestore.cpp moc_meresticky.cpp moc_baseservice.cpp moc_categoryservice.cpp moc_chirkutservice.cpp moc_stickyservice.cpp moc_taskservice.cpp moc_themeservice.cpp
+	-$(DEL_FILE) moc_config.cpp moc_basestore.cpp moc_categorystore.cpp moc_issuestore.cpp moc_stickystore.cpp moc_taskstore.cpp moc_themestore.cpp moc_meresticky.cpp moc_baseservice.cpp moc_categoryservice.cpp moc_issueservice.cpp moc_searchservice.cpp moc_stickyservice.cpp moc_taskservice.cpp moc_themeservice.cpp
 moc_config.cpp: src/domain/model/config.h \
 		/usr/local/include/qt5/QtCore/QObject \
 		/usr/local/include/qt5/QtCore/qobject.h \
@@ -696,17 +702,10 @@ moc_config.cpp: src/domain/model/config.h \
 		/usr/local/include/qt5/QtCore/qobject_impl.h \
 		moc_predefs.h \
 		/usr/local/lib/qt5/bin/moc
-	/usr/local/lib/qt5/bin/moc $(DEFINES) --include /usr/home/iklash/workspace/mere-sticky/mere-sticky-lib/moc_predefs.h -I/usr/local/lib/qt5/mkspecs/freebsd-clang -I/usr/home/iklash/workspace/mere-sticky/mere-sticky-lib -I/usr/home/iklash/workspace/mere-utils/mere-utils-lib/include -I/usr/local/include -I/usr/local/include/qt5 -I/usr/local/include/qt5/QtCore -I/usr/include/c++/v1 -I/usr/lib/clang/10.0.1/include -I/usr/include src/domain/model/config.h -o moc_config.cpp
+	/usr/local/lib/qt5/bin/moc $(DEFINES) --include /usr/home/iklash/workspace/mere-sticky/mere-sticky-lib/moc_predefs.h -I/usr/local/lib/qt5/mkspecs/freebsd-clang -I/usr/home/iklash/workspace/mere-sticky/mere-sticky-lib -I/usr/local/include -I/usr/local/include/qt5 -I/usr/local/include/qt5/QtCore -I/usr/include/c++/v1 -I/usr/lib/clang/10.0.1/include -I/usr/include src/domain/model/config.h -o moc_config.cpp
 
 moc_basestore.cpp: src/domain/store/basestore.h \
-		/usr/local/include/mere/store/store/unitstore.h \
-		/usr/local/include/mere/store/store/entitystore.h \
-		/usr/local/include/mere/store/store/mapstore.h \
-		/usr/local/include/mere/store/store/pairstore.h \
-		/usr/local/include/mere/store/store/persistentstore.h \
-		/usr/local/include/mere/store/store/basestore.h \
-		/usr/local/include/mere/store/store/store.h \
-		/usr/local/include/mere/store/global.h \
+		src/stickyglobal.h \
 		/usr/local/include/qt5/QtCore/qglobal.h \
 		/usr/local/include/qt5/QtCore/qconfig-bootstrapped.h \
 		/usr/local/include/qt5/QtCore/qconfig.h \
@@ -737,6 +736,14 @@ moc_basestore.cpp: src/domain/store/basestore.h \
 		/usr/local/include/qt5/QtCore/qmutex.h \
 		/usr/local/include/qt5/QtCore/qnumeric.h \
 		/usr/local/include/qt5/QtCore/qversiontagging.h \
+		/usr/local/include/mere/store/store/unitstore.h \
+		/usr/local/include/mere/store/store/entitystore.h \
+		/usr/local/include/mere/store/store/mapstore.h \
+		/usr/local/include/mere/store/store/pairstore.h \
+		/usr/local/include/mere/store/store/persistentstore.h \
+		/usr/local/include/mere/store/store/basestore.h \
+		/usr/local/include/mere/store/store/store.h \
+		/usr/local/include/mere/store/global.h \
 		/usr/local/include/qt5/QtCore/QDebug \
 		/usr/local/include/qt5/QtCore/qdebug.h \
 		/usr/local/include/qt5/QtCore/qalgorithms.h \
@@ -813,18 +820,11 @@ moc_basestore.cpp: src/domain/store/basestore.h \
 		/usr/local/include/mere/store/index/indexer.h \
 		moc_predefs.h \
 		/usr/local/lib/qt5/bin/moc
-	/usr/local/lib/qt5/bin/moc $(DEFINES) --include /usr/home/iklash/workspace/mere-sticky/mere-sticky-lib/moc_predefs.h -I/usr/local/lib/qt5/mkspecs/freebsd-clang -I/usr/home/iklash/workspace/mere-sticky/mere-sticky-lib -I/usr/home/iklash/workspace/mere-utils/mere-utils-lib/include -I/usr/local/include -I/usr/local/include/qt5 -I/usr/local/include/qt5/QtCore -I/usr/include/c++/v1 -I/usr/lib/clang/10.0.1/include -I/usr/include src/domain/store/basestore.h -o moc_basestore.cpp
+	/usr/local/lib/qt5/bin/moc $(DEFINES) --include /usr/home/iklash/workspace/mere-sticky/mere-sticky-lib/moc_predefs.h -I/usr/local/lib/qt5/mkspecs/freebsd-clang -I/usr/home/iklash/workspace/mere-sticky/mere-sticky-lib -I/usr/local/include -I/usr/local/include/qt5 -I/usr/local/include/qt5/QtCore -I/usr/include/c++/v1 -I/usr/lib/clang/10.0.1/include -I/usr/include src/domain/store/basestore.h -o moc_basestore.cpp
 
 moc_categorystore.cpp: src/domain/store/categorystore.h \
 		src/domain/store/basestore.h \
-		/usr/local/include/mere/store/store/unitstore.h \
-		/usr/local/include/mere/store/store/entitystore.h \
-		/usr/local/include/mere/store/store/mapstore.h \
-		/usr/local/include/mere/store/store/pairstore.h \
-		/usr/local/include/mere/store/store/persistentstore.h \
-		/usr/local/include/mere/store/store/basestore.h \
-		/usr/local/include/mere/store/store/store.h \
-		/usr/local/include/mere/store/global.h \
+		src/stickyglobal.h \
 		/usr/local/include/qt5/QtCore/qglobal.h \
 		/usr/local/include/qt5/QtCore/qconfig-bootstrapped.h \
 		/usr/local/include/qt5/QtCore/qconfig.h \
@@ -855,6 +855,14 @@ moc_categorystore.cpp: src/domain/store/categorystore.h \
 		/usr/local/include/qt5/QtCore/qmutex.h \
 		/usr/local/include/qt5/QtCore/qnumeric.h \
 		/usr/local/include/qt5/QtCore/qversiontagging.h \
+		/usr/local/include/mere/store/store/unitstore.h \
+		/usr/local/include/mere/store/store/entitystore.h \
+		/usr/local/include/mere/store/store/mapstore.h \
+		/usr/local/include/mere/store/store/pairstore.h \
+		/usr/local/include/mere/store/store/persistentstore.h \
+		/usr/local/include/mere/store/store/basestore.h \
+		/usr/local/include/mere/store/store/store.h \
+		/usr/local/include/mere/store/global.h \
 		/usr/local/include/qt5/QtCore/QDebug \
 		/usr/local/include/qt5/QtCore/qdebug.h \
 		/usr/local/include/qt5/QtCore/qalgorithms.h \
@@ -931,18 +939,11 @@ moc_categorystore.cpp: src/domain/store/categorystore.h \
 		/usr/local/include/mere/store/index/indexer.h \
 		moc_predefs.h \
 		/usr/local/lib/qt5/bin/moc
-	/usr/local/lib/qt5/bin/moc $(DEFINES) --include /usr/home/iklash/workspace/mere-sticky/mere-sticky-lib/moc_predefs.h -I/usr/local/lib/qt5/mkspecs/freebsd-clang -I/usr/home/iklash/workspace/mere-sticky/mere-sticky-lib -I/usr/home/iklash/workspace/mere-utils/mere-utils-lib/include -I/usr/local/include -I/usr/local/include/qt5 -I/usr/local/include/qt5/QtCore -I/usr/include/c++/v1 -I/usr/lib/clang/10.0.1/include -I/usr/include src/domain/store/categorystore.h -o moc_categorystore.cpp
+	/usr/local/lib/qt5/bin/moc $(DEFINES) --include /usr/home/iklash/workspace/mere-sticky/mere-sticky-lib/moc_predefs.h -I/usr/local/lib/qt5/mkspecs/freebsd-clang -I/usr/home/iklash/workspace/mere-sticky/mere-sticky-lib -I/usr/local/include -I/usr/local/include/qt5 -I/usr/local/include/qt5/QtCore -I/usr/include/c++/v1 -I/usr/lib/clang/10.0.1/include -I/usr/include src/domain/store/categorystore.h -o moc_categorystore.cpp
 
-moc_chirkutstore.cpp: src/domain/store/chirkutstore.h \
+moc_issuestore.cpp: src/domain/store/issuestore.h \
 		src/domain/store/basestore.h \
-		/usr/local/include/mere/store/store/unitstore.h \
-		/usr/local/include/mere/store/store/entitystore.h \
-		/usr/local/include/mere/store/store/mapstore.h \
-		/usr/local/include/mere/store/store/pairstore.h \
-		/usr/local/include/mere/store/store/persistentstore.h \
-		/usr/local/include/mere/store/store/basestore.h \
-		/usr/local/include/mere/store/store/store.h \
-		/usr/local/include/mere/store/global.h \
+		src/stickyglobal.h \
 		/usr/local/include/qt5/QtCore/qglobal.h \
 		/usr/local/include/qt5/QtCore/qconfig-bootstrapped.h \
 		/usr/local/include/qt5/QtCore/qconfig.h \
@@ -973,6 +974,14 @@ moc_chirkutstore.cpp: src/domain/store/chirkutstore.h \
 		/usr/local/include/qt5/QtCore/qmutex.h \
 		/usr/local/include/qt5/QtCore/qnumeric.h \
 		/usr/local/include/qt5/QtCore/qversiontagging.h \
+		/usr/local/include/mere/store/store/unitstore.h \
+		/usr/local/include/mere/store/store/entitystore.h \
+		/usr/local/include/mere/store/store/mapstore.h \
+		/usr/local/include/mere/store/store/pairstore.h \
+		/usr/local/include/mere/store/store/persistentstore.h \
+		/usr/local/include/mere/store/store/basestore.h \
+		/usr/local/include/mere/store/store/store.h \
+		/usr/local/include/mere/store/global.h \
 		/usr/local/include/qt5/QtCore/QDebug \
 		/usr/local/include/qt5/QtCore/qdebug.h \
 		/usr/local/include/qt5/QtCore/qalgorithms.h \
@@ -1049,18 +1058,11 @@ moc_chirkutstore.cpp: src/domain/store/chirkutstore.h \
 		/usr/local/include/mere/store/index/indexer.h \
 		moc_predefs.h \
 		/usr/local/lib/qt5/bin/moc
-	/usr/local/lib/qt5/bin/moc $(DEFINES) --include /usr/home/iklash/workspace/mere-sticky/mere-sticky-lib/moc_predefs.h -I/usr/local/lib/qt5/mkspecs/freebsd-clang -I/usr/home/iklash/workspace/mere-sticky/mere-sticky-lib -I/usr/home/iklash/workspace/mere-utils/mere-utils-lib/include -I/usr/local/include -I/usr/local/include/qt5 -I/usr/local/include/qt5/QtCore -I/usr/include/c++/v1 -I/usr/lib/clang/10.0.1/include -I/usr/include src/domain/store/chirkutstore.h -o moc_chirkutstore.cpp
+	/usr/local/lib/qt5/bin/moc $(DEFINES) --include /usr/home/iklash/workspace/mere-sticky/mere-sticky-lib/moc_predefs.h -I/usr/local/lib/qt5/mkspecs/freebsd-clang -I/usr/home/iklash/workspace/mere-sticky/mere-sticky-lib -I/usr/local/include -I/usr/local/include/qt5 -I/usr/local/include/qt5/QtCore -I/usr/include/c++/v1 -I/usr/lib/clang/10.0.1/include -I/usr/include src/domain/store/issuestore.h -o moc_issuestore.cpp
 
 moc_stickystore.cpp: src/domain/store/stickystore.h \
 		src/domain/store/basestore.h \
-		/usr/local/include/mere/store/store/unitstore.h \
-		/usr/local/include/mere/store/store/entitystore.h \
-		/usr/local/include/mere/store/store/mapstore.h \
-		/usr/local/include/mere/store/store/pairstore.h \
-		/usr/local/include/mere/store/store/persistentstore.h \
-		/usr/local/include/mere/store/store/basestore.h \
-		/usr/local/include/mere/store/store/store.h \
-		/usr/local/include/mere/store/global.h \
+		src/stickyglobal.h \
 		/usr/local/include/qt5/QtCore/qglobal.h \
 		/usr/local/include/qt5/QtCore/qconfig-bootstrapped.h \
 		/usr/local/include/qt5/QtCore/qconfig.h \
@@ -1091,6 +1093,14 @@ moc_stickystore.cpp: src/domain/store/stickystore.h \
 		/usr/local/include/qt5/QtCore/qmutex.h \
 		/usr/local/include/qt5/QtCore/qnumeric.h \
 		/usr/local/include/qt5/QtCore/qversiontagging.h \
+		/usr/local/include/mere/store/store/unitstore.h \
+		/usr/local/include/mere/store/store/entitystore.h \
+		/usr/local/include/mere/store/store/mapstore.h \
+		/usr/local/include/mere/store/store/pairstore.h \
+		/usr/local/include/mere/store/store/persistentstore.h \
+		/usr/local/include/mere/store/store/basestore.h \
+		/usr/local/include/mere/store/store/store.h \
+		/usr/local/include/mere/store/global.h \
 		/usr/local/include/qt5/QtCore/QDebug \
 		/usr/local/include/qt5/QtCore/qdebug.h \
 		/usr/local/include/qt5/QtCore/qalgorithms.h \
@@ -1167,18 +1177,11 @@ moc_stickystore.cpp: src/domain/store/stickystore.h \
 		/usr/local/include/mere/store/index/indexer.h \
 		moc_predefs.h \
 		/usr/local/lib/qt5/bin/moc
-	/usr/local/lib/qt5/bin/moc $(DEFINES) --include /usr/home/iklash/workspace/mere-sticky/mere-sticky-lib/moc_predefs.h -I/usr/local/lib/qt5/mkspecs/freebsd-clang -I/usr/home/iklash/workspace/mere-sticky/mere-sticky-lib -I/usr/home/iklash/workspace/mere-utils/mere-utils-lib/include -I/usr/local/include -I/usr/local/include/qt5 -I/usr/local/include/qt5/QtCore -I/usr/include/c++/v1 -I/usr/lib/clang/10.0.1/include -I/usr/include src/domain/store/stickystore.h -o moc_stickystore.cpp
+	/usr/local/lib/qt5/bin/moc $(DEFINES) --include /usr/home/iklash/workspace/mere-sticky/mere-sticky-lib/moc_predefs.h -I/usr/local/lib/qt5/mkspecs/freebsd-clang -I/usr/home/iklash/workspace/mere-sticky/mere-sticky-lib -I/usr/local/include -I/usr/local/include/qt5 -I/usr/local/include/qt5/QtCore -I/usr/include/c++/v1 -I/usr/lib/clang/10.0.1/include -I/usr/include src/domain/store/stickystore.h -o moc_stickystore.cpp
 
 moc_taskstore.cpp: src/domain/store/taskstore.h \
 		src/domain/store/basestore.h \
-		/usr/local/include/mere/store/store/unitstore.h \
-		/usr/local/include/mere/store/store/entitystore.h \
-		/usr/local/include/mere/store/store/mapstore.h \
-		/usr/local/include/mere/store/store/pairstore.h \
-		/usr/local/include/mere/store/store/persistentstore.h \
-		/usr/local/include/mere/store/store/basestore.h \
-		/usr/local/include/mere/store/store/store.h \
-		/usr/local/include/mere/store/global.h \
+		src/stickyglobal.h \
 		/usr/local/include/qt5/QtCore/qglobal.h \
 		/usr/local/include/qt5/QtCore/qconfig-bootstrapped.h \
 		/usr/local/include/qt5/QtCore/qconfig.h \
@@ -1209,6 +1212,14 @@ moc_taskstore.cpp: src/domain/store/taskstore.h \
 		/usr/local/include/qt5/QtCore/qmutex.h \
 		/usr/local/include/qt5/QtCore/qnumeric.h \
 		/usr/local/include/qt5/QtCore/qversiontagging.h \
+		/usr/local/include/mere/store/store/unitstore.h \
+		/usr/local/include/mere/store/store/entitystore.h \
+		/usr/local/include/mere/store/store/mapstore.h \
+		/usr/local/include/mere/store/store/pairstore.h \
+		/usr/local/include/mere/store/store/persistentstore.h \
+		/usr/local/include/mere/store/store/basestore.h \
+		/usr/local/include/mere/store/store/store.h \
+		/usr/local/include/mere/store/global.h \
 		/usr/local/include/qt5/QtCore/QDebug \
 		/usr/local/include/qt5/QtCore/qdebug.h \
 		/usr/local/include/qt5/QtCore/qalgorithms.h \
@@ -1285,18 +1296,11 @@ moc_taskstore.cpp: src/domain/store/taskstore.h \
 		/usr/local/include/mere/store/index/indexer.h \
 		moc_predefs.h \
 		/usr/local/lib/qt5/bin/moc
-	/usr/local/lib/qt5/bin/moc $(DEFINES) --include /usr/home/iklash/workspace/mere-sticky/mere-sticky-lib/moc_predefs.h -I/usr/local/lib/qt5/mkspecs/freebsd-clang -I/usr/home/iklash/workspace/mere-sticky/mere-sticky-lib -I/usr/home/iklash/workspace/mere-utils/mere-utils-lib/include -I/usr/local/include -I/usr/local/include/qt5 -I/usr/local/include/qt5/QtCore -I/usr/include/c++/v1 -I/usr/lib/clang/10.0.1/include -I/usr/include src/domain/store/taskstore.h -o moc_taskstore.cpp
+	/usr/local/lib/qt5/bin/moc $(DEFINES) --include /usr/home/iklash/workspace/mere-sticky/mere-sticky-lib/moc_predefs.h -I/usr/local/lib/qt5/mkspecs/freebsd-clang -I/usr/home/iklash/workspace/mere-sticky/mere-sticky-lib -I/usr/local/include -I/usr/local/include/qt5 -I/usr/local/include/qt5/QtCore -I/usr/include/c++/v1 -I/usr/lib/clang/10.0.1/include -I/usr/include src/domain/store/taskstore.h -o moc_taskstore.cpp
 
 moc_themestore.cpp: src/domain/store/themestore.h \
 		src/domain/store/basestore.h \
-		/usr/local/include/mere/store/store/unitstore.h \
-		/usr/local/include/mere/store/store/entitystore.h \
-		/usr/local/include/mere/store/store/mapstore.h \
-		/usr/local/include/mere/store/store/pairstore.h \
-		/usr/local/include/mere/store/store/persistentstore.h \
-		/usr/local/include/mere/store/store/basestore.h \
-		/usr/local/include/mere/store/store/store.h \
-		/usr/local/include/mere/store/global.h \
+		src/stickyglobal.h \
 		/usr/local/include/qt5/QtCore/qglobal.h \
 		/usr/local/include/qt5/QtCore/qconfig-bootstrapped.h \
 		/usr/local/include/qt5/QtCore/qconfig.h \
@@ -1327,6 +1331,14 @@ moc_themestore.cpp: src/domain/store/themestore.h \
 		/usr/local/include/qt5/QtCore/qmutex.h \
 		/usr/local/include/qt5/QtCore/qnumeric.h \
 		/usr/local/include/qt5/QtCore/qversiontagging.h \
+		/usr/local/include/mere/store/store/unitstore.h \
+		/usr/local/include/mere/store/store/entitystore.h \
+		/usr/local/include/mere/store/store/mapstore.h \
+		/usr/local/include/mere/store/store/pairstore.h \
+		/usr/local/include/mere/store/store/persistentstore.h \
+		/usr/local/include/mere/store/store/basestore.h \
+		/usr/local/include/mere/store/store/store.h \
+		/usr/local/include/mere/store/global.h \
 		/usr/local/include/qt5/QtCore/QDebug \
 		/usr/local/include/qt5/QtCore/qdebug.h \
 		/usr/local/include/qt5/QtCore/qalgorithms.h \
@@ -1403,7 +1415,7 @@ moc_themestore.cpp: src/domain/store/themestore.h \
 		/usr/local/include/mere/store/index/indexer.h \
 		moc_predefs.h \
 		/usr/local/lib/qt5/bin/moc
-	/usr/local/lib/qt5/bin/moc $(DEFINES) --include /usr/home/iklash/workspace/mere-sticky/mere-sticky-lib/moc_predefs.h -I/usr/local/lib/qt5/mkspecs/freebsd-clang -I/usr/home/iklash/workspace/mere-sticky/mere-sticky-lib -I/usr/home/iklash/workspace/mere-utils/mere-utils-lib/include -I/usr/local/include -I/usr/local/include/qt5 -I/usr/local/include/qt5/QtCore -I/usr/include/c++/v1 -I/usr/lib/clang/10.0.1/include -I/usr/include src/domain/store/themestore.h -o moc_themestore.cpp
+	/usr/local/lib/qt5/bin/moc $(DEFINES) --include /usr/home/iklash/workspace/mere-sticky/mere-sticky-lib/moc_predefs.h -I/usr/local/lib/qt5/mkspecs/freebsd-clang -I/usr/home/iklash/workspace/mere-sticky/mere-sticky-lib -I/usr/local/include -I/usr/local/include/qt5 -I/usr/local/include/qt5/QtCore -I/usr/include/c++/v1 -I/usr/lib/clang/10.0.1/include -I/usr/include src/domain/store/themestore.h -o moc_themestore.cpp
 
 moc_meresticky.cpp: src/meresticky.h \
 		src/stickyglobal.h \
@@ -1476,13 +1488,10 @@ moc_meresticky.cpp: src/meresticky.h \
 		/usr/local/include/qt5/QtCore/qhash.h \
 		moc_predefs.h \
 		/usr/local/lib/qt5/bin/moc
-	/usr/local/lib/qt5/bin/moc $(DEFINES) --include /usr/home/iklash/workspace/mere-sticky/mere-sticky-lib/moc_predefs.h -I/usr/local/lib/qt5/mkspecs/freebsd-clang -I/usr/home/iklash/workspace/mere-sticky/mere-sticky-lib -I/usr/home/iklash/workspace/mere-utils/mere-utils-lib/include -I/usr/local/include -I/usr/local/include/qt5 -I/usr/local/include/qt5/QtCore -I/usr/include/c++/v1 -I/usr/lib/clang/10.0.1/include -I/usr/include src/meresticky.h -o moc_meresticky.cpp
+	/usr/local/lib/qt5/bin/moc $(DEFINES) --include /usr/home/iklash/workspace/mere-sticky/mere-sticky-lib/moc_predefs.h -I/usr/local/lib/qt5/mkspecs/freebsd-clang -I/usr/home/iklash/workspace/mere-sticky/mere-sticky-lib -I/usr/local/include -I/usr/local/include/qt5 -I/usr/local/include/qt5/QtCore -I/usr/include/c++/v1 -I/usr/lib/clang/10.0.1/include -I/usr/include src/meresticky.h -o moc_meresticky.cpp
 
 moc_baseservice.cpp: src/service/baseservice.h \
-		/usr/local/include/qt5/QtCore/QUuid \
-		/usr/local/include/qt5/QtCore/quuid.h \
-		/usr/local/include/qt5/QtCore/qstring.h \
-		/usr/local/include/qt5/QtCore/qchar.h \
+		src/stickyglobal.h \
 		/usr/local/include/qt5/QtCore/qglobal.h \
 		/usr/local/include/qt5/QtCore/qconfig-bootstrapped.h \
 		/usr/local/include/qt5/QtCore/qconfig.h \
@@ -1513,6 +1522,10 @@ moc_baseservice.cpp: src/service/baseservice.h \
 		/usr/local/include/qt5/QtCore/qmutex.h \
 		/usr/local/include/qt5/QtCore/qnumeric.h \
 		/usr/local/include/qt5/QtCore/qversiontagging.h \
+		/usr/local/include/qt5/QtCore/QUuid \
+		/usr/local/include/qt5/QtCore/quuid.h \
+		/usr/local/include/qt5/QtCore/qstring.h \
+		/usr/local/include/qt5/QtCore/qchar.h \
 		/usr/local/include/qt5/QtCore/qbytearray.h \
 		/usr/local/include/qt5/QtCore/qrefcount.h \
 		/usr/local/include/qt5/QtCore/qnamespace.h \
@@ -1545,14 +1558,11 @@ moc_baseservice.cpp: src/service/baseservice.h \
 		/usr/local/include/qt5/QtCore/qobject_impl.h \
 		moc_predefs.h \
 		/usr/local/lib/qt5/bin/moc
-	/usr/local/lib/qt5/bin/moc $(DEFINES) --include /usr/home/iklash/workspace/mere-sticky/mere-sticky-lib/moc_predefs.h -I/usr/local/lib/qt5/mkspecs/freebsd-clang -I/usr/home/iklash/workspace/mere-sticky/mere-sticky-lib -I/usr/home/iklash/workspace/mere-utils/mere-utils-lib/include -I/usr/local/include -I/usr/local/include/qt5 -I/usr/local/include/qt5/QtCore -I/usr/include/c++/v1 -I/usr/lib/clang/10.0.1/include -I/usr/include src/service/baseservice.h -o moc_baseservice.cpp
+	/usr/local/lib/qt5/bin/moc $(DEFINES) --include /usr/home/iklash/workspace/mere-sticky/mere-sticky-lib/moc_predefs.h -I/usr/local/lib/qt5/mkspecs/freebsd-clang -I/usr/home/iklash/workspace/mere-sticky/mere-sticky-lib -I/usr/local/include -I/usr/local/include/qt5 -I/usr/local/include/qt5/QtCore -I/usr/include/c++/v1 -I/usr/lib/clang/10.0.1/include -I/usr/include src/service/baseservice.h -o moc_baseservice.cpp
 
 moc_categoryservice.cpp: src/service/categoryservice.h \
 		src/service/baseservice.h \
-		/usr/local/include/qt5/QtCore/QUuid \
-		/usr/local/include/qt5/QtCore/quuid.h \
-		/usr/local/include/qt5/QtCore/qstring.h \
-		/usr/local/include/qt5/QtCore/qchar.h \
+		src/stickyglobal.h \
 		/usr/local/include/qt5/QtCore/qglobal.h \
 		/usr/local/include/qt5/QtCore/qconfig-bootstrapped.h \
 		/usr/local/include/qt5/QtCore/qconfig.h \
@@ -1583,6 +1593,10 @@ moc_categoryservice.cpp: src/service/categoryservice.h \
 		/usr/local/include/qt5/QtCore/qmutex.h \
 		/usr/local/include/qt5/QtCore/qnumeric.h \
 		/usr/local/include/qt5/QtCore/qversiontagging.h \
+		/usr/local/include/qt5/QtCore/QUuid \
+		/usr/local/include/qt5/QtCore/quuid.h \
+		/usr/local/include/qt5/QtCore/qstring.h \
+		/usr/local/include/qt5/QtCore/qchar.h \
 		/usr/local/include/qt5/QtCore/qbytearray.h \
 		/usr/local/include/qt5/QtCore/qrefcount.h \
 		/usr/local/include/qt5/QtCore/qnamespace.h \
@@ -1615,14 +1629,11 @@ moc_categoryservice.cpp: src/service/categoryservice.h \
 		/usr/local/include/qt5/QtCore/qobject_impl.h \
 		moc_predefs.h \
 		/usr/local/lib/qt5/bin/moc
-	/usr/local/lib/qt5/bin/moc $(DEFINES) --include /usr/home/iklash/workspace/mere-sticky/mere-sticky-lib/moc_predefs.h -I/usr/local/lib/qt5/mkspecs/freebsd-clang -I/usr/home/iklash/workspace/mere-sticky/mere-sticky-lib -I/usr/home/iklash/workspace/mere-utils/mere-utils-lib/include -I/usr/local/include -I/usr/local/include/qt5 -I/usr/local/include/qt5/QtCore -I/usr/include/c++/v1 -I/usr/lib/clang/10.0.1/include -I/usr/include src/service/categoryservice.h -o moc_categoryservice.cpp
+	/usr/local/lib/qt5/bin/moc $(DEFINES) --include /usr/home/iklash/workspace/mere-sticky/mere-sticky-lib/moc_predefs.h -I/usr/local/lib/qt5/mkspecs/freebsd-clang -I/usr/home/iklash/workspace/mere-sticky/mere-sticky-lib -I/usr/local/include -I/usr/local/include/qt5 -I/usr/local/include/qt5/QtCore -I/usr/include/c++/v1 -I/usr/lib/clang/10.0.1/include -I/usr/include src/service/categoryservice.h -o moc_categoryservice.cpp
 
-moc_chirkutservice.cpp: src/service/chirkutservice.h \
+moc_issueservice.cpp: src/service/issueservice.h \
 		src/service/baseservice.h \
-		/usr/local/include/qt5/QtCore/QUuid \
-		/usr/local/include/qt5/QtCore/quuid.h \
-		/usr/local/include/qt5/QtCore/qstring.h \
-		/usr/local/include/qt5/QtCore/qchar.h \
+		src/stickyglobal.h \
 		/usr/local/include/qt5/QtCore/qglobal.h \
 		/usr/local/include/qt5/QtCore/qconfig-bootstrapped.h \
 		/usr/local/include/qt5/QtCore/qconfig.h \
@@ -1653,6 +1664,10 @@ moc_chirkutservice.cpp: src/service/chirkutservice.h \
 		/usr/local/include/qt5/QtCore/qmutex.h \
 		/usr/local/include/qt5/QtCore/qnumeric.h \
 		/usr/local/include/qt5/QtCore/qversiontagging.h \
+		/usr/local/include/qt5/QtCore/QUuid \
+		/usr/local/include/qt5/QtCore/quuid.h \
+		/usr/local/include/qt5/QtCore/qstring.h \
+		/usr/local/include/qt5/QtCore/qchar.h \
 		/usr/local/include/qt5/QtCore/qbytearray.h \
 		/usr/local/include/qt5/QtCore/qrefcount.h \
 		/usr/local/include/qt5/QtCore/qnamespace.h \
@@ -1685,7 +1700,78 @@ moc_chirkutservice.cpp: src/service/chirkutservice.h \
 		/usr/local/include/qt5/QtCore/qobject_impl.h \
 		moc_predefs.h \
 		/usr/local/lib/qt5/bin/moc
-	/usr/local/lib/qt5/bin/moc $(DEFINES) --include /usr/home/iklash/workspace/mere-sticky/mere-sticky-lib/moc_predefs.h -I/usr/local/lib/qt5/mkspecs/freebsd-clang -I/usr/home/iklash/workspace/mere-sticky/mere-sticky-lib -I/usr/home/iklash/workspace/mere-utils/mere-utils-lib/include -I/usr/local/include -I/usr/local/include/qt5 -I/usr/local/include/qt5/QtCore -I/usr/include/c++/v1 -I/usr/lib/clang/10.0.1/include -I/usr/include src/service/chirkutservice.h -o moc_chirkutservice.cpp
+	/usr/local/lib/qt5/bin/moc $(DEFINES) --include /usr/home/iklash/workspace/mere-sticky/mere-sticky-lib/moc_predefs.h -I/usr/local/lib/qt5/mkspecs/freebsd-clang -I/usr/home/iklash/workspace/mere-sticky/mere-sticky-lib -I/usr/local/include -I/usr/local/include/qt5 -I/usr/local/include/qt5/QtCore -I/usr/include/c++/v1 -I/usr/lib/clang/10.0.1/include -I/usr/include src/service/issueservice.h -o moc_issueservice.cpp
+
+moc_searchservice.cpp: src/service/searchservice.h \
+		src/service/baseservice.h \
+		src/stickyglobal.h \
+		/usr/local/include/qt5/QtCore/qglobal.h \
+		/usr/local/include/qt5/QtCore/qconfig-bootstrapped.h \
+		/usr/local/include/qt5/QtCore/qconfig.h \
+		/usr/local/include/qt5/QtCore/qconfig-modules.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-core.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-dbus.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-network.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-gui.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-widgets.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-concurrent.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-declarative.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-printsupport.h \
+		/usr/local/include/qt5/QtCore/qtcore-config.h \
+		/usr/local/include/qt5/QtCore/qsystemdetection.h \
+		/usr/local/include/qt5/QtCore/qprocessordetection.h \
+		/usr/local/include/qt5/QtCore/qcompilerdetection.h \
+		/usr/local/include/qt5/QtCore/qtypeinfo.h \
+		/usr/local/include/qt5/QtCore/qsysinfo.h \
+		/usr/local/include/qt5/QtCore/qlogging.h \
+		/usr/local/include/qt5/QtCore/qflags.h \
+		/usr/local/include/qt5/QtCore/qatomic.h \
+		/usr/local/include/qt5/QtCore/qbasicatomic.h \
+		/usr/local/include/qt5/QtCore/qatomic_bootstrap.h \
+		/usr/local/include/qt5/QtCore/qgenericatomic.h \
+		/usr/local/include/qt5/QtCore/qatomic_cxx11.h \
+		/usr/local/include/qt5/QtCore/qatomic_msvc.h \
+		/usr/local/include/qt5/QtCore/qglobalstatic.h \
+		/usr/local/include/qt5/QtCore/qmutex.h \
+		/usr/local/include/qt5/QtCore/qnumeric.h \
+		/usr/local/include/qt5/QtCore/qversiontagging.h \
+		/usr/local/include/qt5/QtCore/QUuid \
+		/usr/local/include/qt5/QtCore/quuid.h \
+		/usr/local/include/qt5/QtCore/qstring.h \
+		/usr/local/include/qt5/QtCore/qchar.h \
+		/usr/local/include/qt5/QtCore/qbytearray.h \
+		/usr/local/include/qt5/QtCore/qrefcount.h \
+		/usr/local/include/qt5/QtCore/qnamespace.h \
+		/usr/local/include/qt5/QtCore/qarraydata.h \
+		/usr/local/include/qt5/QtCore/qstringliteral.h \
+		/usr/local/include/qt5/QtCore/qstringalgorithms.h \
+		/usr/local/include/qt5/QtCore/qstringview.h \
+		/usr/local/include/qt5/QtCore/qstringbuilder.h \
+		/usr/local/include/qt5/QtCore/QObject \
+		/usr/local/include/qt5/QtCore/qobject.h \
+		/usr/local/include/qt5/QtCore/qobjectdefs.h \
+		/usr/local/include/qt5/QtCore/qobjectdefs_impl.h \
+		/usr/local/include/qt5/QtCore/qlist.h \
+		/usr/local/include/qt5/QtCore/qalgorithms.h \
+		/usr/local/include/qt5/QtCore/qiterator.h \
+		/usr/local/include/qt5/QtCore/qhashfunctions.h \
+		/usr/local/include/qt5/QtCore/qpair.h \
+		/usr/local/include/qt5/QtCore/qvector.h \
+		/usr/local/include/qt5/QtCore/qcontainertools_impl.h \
+		/usr/local/include/qt5/QtCore/qpoint.h \
+		/usr/local/include/qt5/QtCore/qbytearraylist.h \
+		/usr/local/include/qt5/QtCore/qstringlist.h \
+		/usr/local/include/qt5/QtCore/qregexp.h \
+		/usr/local/include/qt5/QtCore/qstringmatcher.h \
+		/usr/local/include/qt5/QtCore/qcoreevent.h \
+		/usr/local/include/qt5/QtCore/qscopedpointer.h \
+		/usr/local/include/qt5/QtCore/qmetatype.h \
+		/usr/local/include/qt5/QtCore/qvarlengtharray.h \
+		/usr/local/include/qt5/QtCore/qcontainerfwd.h \
+		/usr/local/include/qt5/QtCore/qobject_impl.h \
+		moc_predefs.h \
+		/usr/local/lib/qt5/bin/moc
+	/usr/local/lib/qt5/bin/moc $(DEFINES) --include /usr/home/iklash/workspace/mere-sticky/mere-sticky-lib/moc_predefs.h -I/usr/local/lib/qt5/mkspecs/freebsd-clang -I/usr/home/iklash/workspace/mere-sticky/mere-sticky-lib -I/usr/local/include -I/usr/local/include/qt5 -I/usr/local/include/qt5/QtCore -I/usr/include/c++/v1 -I/usr/lib/clang/10.0.1/include -I/usr/include src/service/searchservice.h -o moc_searchservice.cpp
 
 moc_stickyservice.cpp: src/service/stickyservice.h \
 		/usr/local/include/qt5/QtCore/QObject \
@@ -1752,14 +1838,11 @@ moc_stickyservice.cpp: src/service/stickyservice.h \
 		/usr/local/include/qt5/QtCore/qobject_impl.h \
 		moc_predefs.h \
 		/usr/local/lib/qt5/bin/moc
-	/usr/local/lib/qt5/bin/moc $(DEFINES) --include /usr/home/iklash/workspace/mere-sticky/mere-sticky-lib/moc_predefs.h -I/usr/local/lib/qt5/mkspecs/freebsd-clang -I/usr/home/iklash/workspace/mere-sticky/mere-sticky-lib -I/usr/home/iklash/workspace/mere-utils/mere-utils-lib/include -I/usr/local/include -I/usr/local/include/qt5 -I/usr/local/include/qt5/QtCore -I/usr/include/c++/v1 -I/usr/lib/clang/10.0.1/include -I/usr/include src/service/stickyservice.h -o moc_stickyservice.cpp
+	/usr/local/lib/qt5/bin/moc $(DEFINES) --include /usr/home/iklash/workspace/mere-sticky/mere-sticky-lib/moc_predefs.h -I/usr/local/lib/qt5/mkspecs/freebsd-clang -I/usr/home/iklash/workspace/mere-sticky/mere-sticky-lib -I/usr/local/include -I/usr/local/include/qt5 -I/usr/local/include/qt5/QtCore -I/usr/include/c++/v1 -I/usr/lib/clang/10.0.1/include -I/usr/include src/service/stickyservice.h -o moc_stickyservice.cpp
 
 moc_taskservice.cpp: src/service/taskservice.h \
 		src/service/baseservice.h \
-		/usr/local/include/qt5/QtCore/QUuid \
-		/usr/local/include/qt5/QtCore/quuid.h \
-		/usr/local/include/qt5/QtCore/qstring.h \
-		/usr/local/include/qt5/QtCore/qchar.h \
+		src/stickyglobal.h \
 		/usr/local/include/qt5/QtCore/qglobal.h \
 		/usr/local/include/qt5/QtCore/qconfig-bootstrapped.h \
 		/usr/local/include/qt5/QtCore/qconfig.h \
@@ -1790,6 +1873,10 @@ moc_taskservice.cpp: src/service/taskservice.h \
 		/usr/local/include/qt5/QtCore/qmutex.h \
 		/usr/local/include/qt5/QtCore/qnumeric.h \
 		/usr/local/include/qt5/QtCore/qversiontagging.h \
+		/usr/local/include/qt5/QtCore/QUuid \
+		/usr/local/include/qt5/QtCore/quuid.h \
+		/usr/local/include/qt5/QtCore/qstring.h \
+		/usr/local/include/qt5/QtCore/qchar.h \
 		/usr/local/include/qt5/QtCore/qbytearray.h \
 		/usr/local/include/qt5/QtCore/qrefcount.h \
 		/usr/local/include/qt5/QtCore/qnamespace.h \
@@ -1822,14 +1909,11 @@ moc_taskservice.cpp: src/service/taskservice.h \
 		/usr/local/include/qt5/QtCore/qobject_impl.h \
 		moc_predefs.h \
 		/usr/local/lib/qt5/bin/moc
-	/usr/local/lib/qt5/bin/moc $(DEFINES) --include /usr/home/iklash/workspace/mere-sticky/mere-sticky-lib/moc_predefs.h -I/usr/local/lib/qt5/mkspecs/freebsd-clang -I/usr/home/iklash/workspace/mere-sticky/mere-sticky-lib -I/usr/home/iklash/workspace/mere-utils/mere-utils-lib/include -I/usr/local/include -I/usr/local/include/qt5 -I/usr/local/include/qt5/QtCore -I/usr/include/c++/v1 -I/usr/lib/clang/10.0.1/include -I/usr/include src/service/taskservice.h -o moc_taskservice.cpp
+	/usr/local/lib/qt5/bin/moc $(DEFINES) --include /usr/home/iklash/workspace/mere-sticky/mere-sticky-lib/moc_predefs.h -I/usr/local/lib/qt5/mkspecs/freebsd-clang -I/usr/home/iklash/workspace/mere-sticky/mere-sticky-lib -I/usr/local/include -I/usr/local/include/qt5 -I/usr/local/include/qt5/QtCore -I/usr/include/c++/v1 -I/usr/lib/clang/10.0.1/include -I/usr/include src/service/taskservice.h -o moc_taskservice.cpp
 
 moc_themeservice.cpp: src/service/themeservice.h \
 		src/service/baseservice.h \
-		/usr/local/include/qt5/QtCore/QUuid \
-		/usr/local/include/qt5/QtCore/quuid.h \
-		/usr/local/include/qt5/QtCore/qstring.h \
-		/usr/local/include/qt5/QtCore/qchar.h \
+		src/stickyglobal.h \
 		/usr/local/include/qt5/QtCore/qglobal.h \
 		/usr/local/include/qt5/QtCore/qconfig-bootstrapped.h \
 		/usr/local/include/qt5/QtCore/qconfig.h \
@@ -1860,6 +1944,10 @@ moc_themeservice.cpp: src/service/themeservice.h \
 		/usr/local/include/qt5/QtCore/qmutex.h \
 		/usr/local/include/qt5/QtCore/qnumeric.h \
 		/usr/local/include/qt5/QtCore/qversiontagging.h \
+		/usr/local/include/qt5/QtCore/QUuid \
+		/usr/local/include/qt5/QtCore/quuid.h \
+		/usr/local/include/qt5/QtCore/qstring.h \
+		/usr/local/include/qt5/QtCore/qchar.h \
 		/usr/local/include/qt5/QtCore/qbytearray.h \
 		/usr/local/include/qt5/QtCore/qrefcount.h \
 		/usr/local/include/qt5/QtCore/qnamespace.h \
@@ -1892,7 +1980,7 @@ moc_themeservice.cpp: src/service/themeservice.h \
 		/usr/local/include/qt5/QtCore/qobject_impl.h \
 		moc_predefs.h \
 		/usr/local/lib/qt5/bin/moc
-	/usr/local/lib/qt5/bin/moc $(DEFINES) --include /usr/home/iklash/workspace/mere-sticky/mere-sticky-lib/moc_predefs.h -I/usr/local/lib/qt5/mkspecs/freebsd-clang -I/usr/home/iklash/workspace/mere-sticky/mere-sticky-lib -I/usr/home/iklash/workspace/mere-utils/mere-utils-lib/include -I/usr/local/include -I/usr/local/include/qt5 -I/usr/local/include/qt5/QtCore -I/usr/include/c++/v1 -I/usr/lib/clang/10.0.1/include -I/usr/include src/service/themeservice.h -o moc_themeservice.cpp
+	/usr/local/lib/qt5/bin/moc $(DEFINES) --include /usr/home/iklash/workspace/mere-sticky/mere-sticky-lib/moc_predefs.h -I/usr/local/lib/qt5/mkspecs/freebsd-clang -I/usr/home/iklash/workspace/mere-sticky/mere-sticky-lib -I/usr/local/include -I/usr/local/include/qt5 -I/usr/local/include/qt5/QtCore -I/usr/include/c++/v1 -I/usr/lib/clang/10.0.1/include -I/usr/include src/service/themeservice.h -o moc_themeservice.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -1909,8 +1997,7 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean
 ####### Compile
 
 base.o: src/domain/model/base.cpp src/domain/model/base.h \
-		/usr/local/include/mere/store/unit.h \
-		/usr/local/include/mere/store/global.h \
+		src/stickyglobal.h \
 		/usr/local/include/qt5/QtCore/qglobal.h \
 		/usr/local/include/qt5/QtCore/qconfig-bootstrapped.h \
 		/usr/local/include/qt5/QtCore/qconfig.h \
@@ -1941,6 +2028,8 @@ base.o: src/domain/model/base.cpp src/domain/model/base.h \
 		/usr/local/include/qt5/QtCore/qmutex.h \
 		/usr/local/include/qt5/QtCore/qnumeric.h \
 		/usr/local/include/qt5/QtCore/qversiontagging.h \
+		/usr/local/include/mere/store/unit.h \
+		/usr/local/include/mere/store/global.h \
 		/usr/local/include/qt5/QtCore/QDebug \
 		/usr/local/include/qt5/QtCore/qdebug.h \
 		/usr/local/include/qt5/QtCore/qalgorithms.h \
@@ -1998,6 +2087,7 @@ base.o: src/domain/model/base.cpp src/domain/model/base.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o base.o src/domain/model/base.cpp
 
 category.o: src/domain/model/category.cpp src/domain/model/category.h \
+		src/domain/model/base.h \
 		src/stickyglobal.h \
 		/usr/local/include/qt5/QtCore/qglobal.h \
 		/usr/local/include/qt5/QtCore/qconfig-bootstrapped.h \
@@ -2029,7 +2119,6 @@ category.o: src/domain/model/category.cpp src/domain/model/category.h \
 		/usr/local/include/qt5/QtCore/qmutex.h \
 		/usr/local/include/qt5/QtCore/qnumeric.h \
 		/usr/local/include/qt5/QtCore/qversiontagging.h \
-		src/domain/model/base.h \
 		/usr/local/include/mere/store/unit.h \
 		/usr/local/include/mere/store/global.h \
 		/usr/local/include/qt5/QtCore/QDebug \
@@ -2087,97 +2176,6 @@ category.o: src/domain/model/category.cpp src/domain/model/category.h \
 		/usr/local/include/qt5/QtCore/QDateTime \
 		/usr/local/include/qt5/QtCore/qdatetime.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o category.o src/domain/model/category.cpp
-
-chirkut.o: src/domain/model/chirkut.cpp src/domain/model/chirkut.h \
-		src/stickyglobal.h \
-		/usr/local/include/qt5/QtCore/qglobal.h \
-		/usr/local/include/qt5/QtCore/qconfig-bootstrapped.h \
-		/usr/local/include/qt5/QtCore/qconfig.h \
-		/usr/local/include/qt5/QtCore/qconfig-modules.h \
-		/usr/local/include/qt5/QtCore/modules/qconfig-core.h \
-		/usr/local/include/qt5/QtCore/modules/qconfig-dbus.h \
-		/usr/local/include/qt5/QtCore/modules/qconfig-network.h \
-		/usr/local/include/qt5/QtCore/modules/qconfig-gui.h \
-		/usr/local/include/qt5/QtCore/modules/qconfig-widgets.h \
-		/usr/local/include/qt5/QtCore/modules/qconfig-concurrent.h \
-		/usr/local/include/qt5/QtCore/modules/qconfig-declarative.h \
-		/usr/local/include/qt5/QtCore/modules/qconfig-printsupport.h \
-		/usr/local/include/qt5/QtCore/qtcore-config.h \
-		/usr/local/include/qt5/QtCore/qsystemdetection.h \
-		/usr/local/include/qt5/QtCore/qprocessordetection.h \
-		/usr/local/include/qt5/QtCore/qcompilerdetection.h \
-		/usr/local/include/qt5/QtCore/qtypeinfo.h \
-		/usr/local/include/qt5/QtCore/qsysinfo.h \
-		/usr/local/include/qt5/QtCore/qlogging.h \
-		/usr/local/include/qt5/QtCore/qflags.h \
-		/usr/local/include/qt5/QtCore/qatomic.h \
-		/usr/local/include/qt5/QtCore/qbasicatomic.h \
-		/usr/local/include/qt5/QtCore/qatomic_bootstrap.h \
-		/usr/local/include/qt5/QtCore/qgenericatomic.h \
-		/usr/local/include/qt5/QtCore/qatomic_cxx11.h \
-		/usr/local/include/qt5/QtCore/qatomic_msvc.h \
-		/usr/local/include/qt5/QtCore/qglobalstatic.h \
-		/usr/local/include/qt5/QtCore/qmutex.h \
-		/usr/local/include/qt5/QtCore/qnumeric.h \
-		/usr/local/include/qt5/QtCore/qversiontagging.h \
-		src/domain/model/base.h \
-		/usr/local/include/mere/store/unit.h \
-		/usr/local/include/mere/store/global.h \
-		/usr/local/include/qt5/QtCore/QDebug \
-		/usr/local/include/qt5/QtCore/qdebug.h \
-		/usr/local/include/qt5/QtCore/qalgorithms.h \
-		/usr/local/include/qt5/QtCore/qhash.h \
-		/usr/local/include/qt5/QtCore/qchar.h \
-		/usr/local/include/qt5/QtCore/qiterator.h \
-		/usr/local/include/qt5/QtCore/qlist.h \
-		/usr/local/include/qt5/QtCore/qrefcount.h \
-		/usr/local/include/qt5/QtCore/qarraydata.h \
-		/usr/local/include/qt5/QtCore/qhashfunctions.h \
-		/usr/local/include/qt5/QtCore/qstring.h \
-		/usr/local/include/qt5/QtCore/qbytearray.h \
-		/usr/local/include/qt5/QtCore/qnamespace.h \
-		/usr/local/include/qt5/QtCore/qstringliteral.h \
-		/usr/local/include/qt5/QtCore/qstringalgorithms.h \
-		/usr/local/include/qt5/QtCore/qstringview.h \
-		/usr/local/include/qt5/QtCore/qstringbuilder.h \
-		/usr/local/include/qt5/QtCore/qpair.h \
-		/usr/local/include/qt5/QtCore/qvector.h \
-		/usr/local/include/qt5/QtCore/qcontainertools_impl.h \
-		/usr/local/include/qt5/QtCore/qpoint.h \
-		/usr/local/include/qt5/QtCore/qbytearraylist.h \
-		/usr/local/include/qt5/QtCore/qstringlist.h \
-		/usr/local/include/qt5/QtCore/qregexp.h \
-		/usr/local/include/qt5/QtCore/qstringmatcher.h \
-		/usr/local/include/qt5/QtCore/qmap.h \
-		/usr/local/include/qt5/QtCore/qtextstream.h \
-		/usr/local/include/qt5/QtCore/qiodevice.h \
-		/usr/local/include/qt5/QtCore/qobject.h \
-		/usr/local/include/qt5/QtCore/qobjectdefs.h \
-		/usr/local/include/qt5/QtCore/qobjectdefs_impl.h \
-		/usr/local/include/qt5/QtCore/qcoreevent.h \
-		/usr/local/include/qt5/QtCore/qscopedpointer.h \
-		/usr/local/include/qt5/QtCore/qmetatype.h \
-		/usr/local/include/qt5/QtCore/qvarlengtharray.h \
-		/usr/local/include/qt5/QtCore/qcontainerfwd.h \
-		/usr/local/include/qt5/QtCore/qobject_impl.h \
-		/usr/local/include/qt5/QtCore/qlocale.h \
-		/usr/local/include/qt5/QtCore/qvariant.h \
-		/usr/local/include/qt5/QtCore/qshareddata.h \
-		/usr/local/include/qt5/QtCore/qset.h \
-		/usr/local/include/qt5/QtCore/qcontiguouscache.h \
-		/usr/local/include/qt5/QtCore/qsharedpointer.h \
-		/usr/local/include/qt5/QtCore/qsharedpointer_impl.h \
-		/usr/local/include/mere/store/unitref.h \
-		/usr/local/include/mere/store/ref.h \
-		/usr/local/include/qt5/QtCore/QUuid \
-		/usr/local/include/qt5/QtCore/quuid.h \
-		/usr/local/include/qt5/QtCore/QString \
-		/usr/local/include/qt5/QtCore/QVariant \
-		/usr/local/include/mere/store/link.h \
-		/usr/local/include/qt5/QtCore/QMap \
-		/usr/local/include/qt5/QtCore/QDateTime \
-		/usr/local/include/qt5/QtCore/qdatetime.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o chirkut.o src/domain/model/chirkut.cpp
 
 config.o: src/domain/model/config.cpp src/domain/model/config.h \
 		/usr/local/include/qt5/QtCore/QObject \
@@ -2244,7 +2242,8 @@ config.o: src/domain/model/config.cpp src/domain/model/config.h \
 		/usr/local/include/qt5/QtCore/qobject_impl.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o config.o src/domain/model/config.cpp
 
-task.o: src/domain/model/task.cpp src/domain/model/task.h \
+issue.o: src/domain/model/issue.cpp src/domain/model/issue.h \
+		src/domain/model/base.h \
 		src/stickyglobal.h \
 		/usr/local/include/qt5/QtCore/qglobal.h \
 		/usr/local/include/qt5/QtCore/qconfig-bootstrapped.h \
@@ -2276,7 +2275,97 @@ task.o: src/domain/model/task.cpp src/domain/model/task.h \
 		/usr/local/include/qt5/QtCore/qmutex.h \
 		/usr/local/include/qt5/QtCore/qnumeric.h \
 		/usr/local/include/qt5/QtCore/qversiontagging.h \
+		/usr/local/include/mere/store/unit.h \
+		/usr/local/include/mere/store/global.h \
+		/usr/local/include/qt5/QtCore/QDebug \
+		/usr/local/include/qt5/QtCore/qdebug.h \
+		/usr/local/include/qt5/QtCore/qalgorithms.h \
+		/usr/local/include/qt5/QtCore/qhash.h \
+		/usr/local/include/qt5/QtCore/qchar.h \
+		/usr/local/include/qt5/QtCore/qiterator.h \
+		/usr/local/include/qt5/QtCore/qlist.h \
+		/usr/local/include/qt5/QtCore/qrefcount.h \
+		/usr/local/include/qt5/QtCore/qarraydata.h \
+		/usr/local/include/qt5/QtCore/qhashfunctions.h \
+		/usr/local/include/qt5/QtCore/qstring.h \
+		/usr/local/include/qt5/QtCore/qbytearray.h \
+		/usr/local/include/qt5/QtCore/qnamespace.h \
+		/usr/local/include/qt5/QtCore/qstringliteral.h \
+		/usr/local/include/qt5/QtCore/qstringalgorithms.h \
+		/usr/local/include/qt5/QtCore/qstringview.h \
+		/usr/local/include/qt5/QtCore/qstringbuilder.h \
+		/usr/local/include/qt5/QtCore/qpair.h \
+		/usr/local/include/qt5/QtCore/qvector.h \
+		/usr/local/include/qt5/QtCore/qcontainertools_impl.h \
+		/usr/local/include/qt5/QtCore/qpoint.h \
+		/usr/local/include/qt5/QtCore/qbytearraylist.h \
+		/usr/local/include/qt5/QtCore/qstringlist.h \
+		/usr/local/include/qt5/QtCore/qregexp.h \
+		/usr/local/include/qt5/QtCore/qstringmatcher.h \
+		/usr/local/include/qt5/QtCore/qmap.h \
+		/usr/local/include/qt5/QtCore/qtextstream.h \
+		/usr/local/include/qt5/QtCore/qiodevice.h \
+		/usr/local/include/qt5/QtCore/qobject.h \
+		/usr/local/include/qt5/QtCore/qobjectdefs.h \
+		/usr/local/include/qt5/QtCore/qobjectdefs_impl.h \
+		/usr/local/include/qt5/QtCore/qcoreevent.h \
+		/usr/local/include/qt5/QtCore/qscopedpointer.h \
+		/usr/local/include/qt5/QtCore/qmetatype.h \
+		/usr/local/include/qt5/QtCore/qvarlengtharray.h \
+		/usr/local/include/qt5/QtCore/qcontainerfwd.h \
+		/usr/local/include/qt5/QtCore/qobject_impl.h \
+		/usr/local/include/qt5/QtCore/qlocale.h \
+		/usr/local/include/qt5/QtCore/qvariant.h \
+		/usr/local/include/qt5/QtCore/qshareddata.h \
+		/usr/local/include/qt5/QtCore/qset.h \
+		/usr/local/include/qt5/QtCore/qcontiguouscache.h \
+		/usr/local/include/qt5/QtCore/qsharedpointer.h \
+		/usr/local/include/qt5/QtCore/qsharedpointer_impl.h \
+		/usr/local/include/mere/store/unitref.h \
+		/usr/local/include/mere/store/ref.h \
+		/usr/local/include/qt5/QtCore/QUuid \
+		/usr/local/include/qt5/QtCore/quuid.h \
+		/usr/local/include/qt5/QtCore/QString \
+		/usr/local/include/qt5/QtCore/QVariant \
+		/usr/local/include/mere/store/link.h \
+		/usr/local/include/qt5/QtCore/QMap \
+		/usr/local/include/qt5/QtCore/QDateTime \
+		/usr/local/include/qt5/QtCore/qdatetime.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o issue.o src/domain/model/issue.cpp
+
+task.o: src/domain/model/task.cpp src/domain/model/task.h \
 		src/domain/model/base.h \
+		src/stickyglobal.h \
+		/usr/local/include/qt5/QtCore/qglobal.h \
+		/usr/local/include/qt5/QtCore/qconfig-bootstrapped.h \
+		/usr/local/include/qt5/QtCore/qconfig.h \
+		/usr/local/include/qt5/QtCore/qconfig-modules.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-core.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-dbus.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-network.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-gui.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-widgets.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-concurrent.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-declarative.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-printsupport.h \
+		/usr/local/include/qt5/QtCore/qtcore-config.h \
+		/usr/local/include/qt5/QtCore/qsystemdetection.h \
+		/usr/local/include/qt5/QtCore/qprocessordetection.h \
+		/usr/local/include/qt5/QtCore/qcompilerdetection.h \
+		/usr/local/include/qt5/QtCore/qtypeinfo.h \
+		/usr/local/include/qt5/QtCore/qsysinfo.h \
+		/usr/local/include/qt5/QtCore/qlogging.h \
+		/usr/local/include/qt5/QtCore/qflags.h \
+		/usr/local/include/qt5/QtCore/qatomic.h \
+		/usr/local/include/qt5/QtCore/qbasicatomic.h \
+		/usr/local/include/qt5/QtCore/qatomic_bootstrap.h \
+		/usr/local/include/qt5/QtCore/qgenericatomic.h \
+		/usr/local/include/qt5/QtCore/qatomic_cxx11.h \
+		/usr/local/include/qt5/QtCore/qatomic_msvc.h \
+		/usr/local/include/qt5/QtCore/qglobalstatic.h \
+		/usr/local/include/qt5/QtCore/qmutex.h \
+		/usr/local/include/qt5/QtCore/qnumeric.h \
+		/usr/local/include/qt5/QtCore/qversiontagging.h \
 		/usr/local/include/mere/store/unit.h \
 		/usr/local/include/mere/store/global.h \
 		/usr/local/include/qt5/QtCore/QDebug \
@@ -2336,6 +2425,7 @@ task.o: src/domain/model/task.cpp src/domain/model/task.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o task.o src/domain/model/task.cpp
 
 theme.o: src/domain/model/theme.cpp src/domain/model/theme.h \
+		src/domain/model/base.h \
 		src/stickyglobal.h \
 		/usr/local/include/qt5/QtCore/qglobal.h \
 		/usr/local/include/qt5/QtCore/qconfig-bootstrapped.h \
@@ -2367,7 +2457,6 @@ theme.o: src/domain/model/theme.cpp src/domain/model/theme.h \
 		/usr/local/include/qt5/QtCore/qmutex.h \
 		/usr/local/include/qt5/QtCore/qnumeric.h \
 		/usr/local/include/qt5/QtCore/qversiontagging.h \
-		src/domain/model/base.h \
 		/usr/local/include/mere/store/unit.h \
 		/usr/local/include/mere/store/global.h \
 		/usr/local/include/qt5/QtCore/QDebug \
@@ -2427,14 +2516,7 @@ theme.o: src/domain/model/theme.cpp src/domain/model/theme.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o theme.o src/domain/model/theme.cpp
 
 basestore.o: src/domain/store/basestore.cpp src/domain/store/basestore.h \
-		/usr/local/include/mere/store/store/unitstore.h \
-		/usr/local/include/mere/store/store/entitystore.h \
-		/usr/local/include/mere/store/store/mapstore.h \
-		/usr/local/include/mere/store/store/pairstore.h \
-		/usr/local/include/mere/store/store/persistentstore.h \
-		/usr/local/include/mere/store/store/basestore.h \
-		/usr/local/include/mere/store/store/store.h \
-		/usr/local/include/mere/store/global.h \
+		src/stickyglobal.h \
 		/usr/local/include/qt5/QtCore/qglobal.h \
 		/usr/local/include/qt5/QtCore/qconfig-bootstrapped.h \
 		/usr/local/include/qt5/QtCore/qconfig.h \
@@ -2465,6 +2547,14 @@ basestore.o: src/domain/store/basestore.cpp src/domain/store/basestore.h \
 		/usr/local/include/qt5/QtCore/qmutex.h \
 		/usr/local/include/qt5/QtCore/qnumeric.h \
 		/usr/local/include/qt5/QtCore/qversiontagging.h \
+		/usr/local/include/mere/store/store/unitstore.h \
+		/usr/local/include/mere/store/store/entitystore.h \
+		/usr/local/include/mere/store/store/mapstore.h \
+		/usr/local/include/mere/store/store/pairstore.h \
+		/usr/local/include/mere/store/store/persistentstore.h \
+		/usr/local/include/mere/store/store/basestore.h \
+		/usr/local/include/mere/store/store/store.h \
+		/usr/local/include/mere/store/global.h \
 		/usr/local/include/qt5/QtCore/QDebug \
 		/usr/local/include/qt5/QtCore/qdebug.h \
 		/usr/local/include/qt5/QtCore/qalgorithms.h \
@@ -2543,14 +2633,7 @@ basestore.o: src/domain/store/basestore.cpp src/domain/store/basestore.h \
 
 categorystore.o: src/domain/store/categorystore.cpp src/domain/store/categorystore.h \
 		src/domain/store/basestore.h \
-		/usr/local/include/mere/store/store/unitstore.h \
-		/usr/local/include/mere/store/store/entitystore.h \
-		/usr/local/include/mere/store/store/mapstore.h \
-		/usr/local/include/mere/store/store/pairstore.h \
-		/usr/local/include/mere/store/store/persistentstore.h \
-		/usr/local/include/mere/store/store/basestore.h \
-		/usr/local/include/mere/store/store/store.h \
-		/usr/local/include/mere/store/global.h \
+		src/stickyglobal.h \
 		/usr/local/include/qt5/QtCore/qglobal.h \
 		/usr/local/include/qt5/QtCore/qconfig-bootstrapped.h \
 		/usr/local/include/qt5/QtCore/qconfig.h \
@@ -2581,6 +2664,14 @@ categorystore.o: src/domain/store/categorystore.cpp src/domain/store/categorysto
 		/usr/local/include/qt5/QtCore/qmutex.h \
 		/usr/local/include/qt5/QtCore/qnumeric.h \
 		/usr/local/include/qt5/QtCore/qversiontagging.h \
+		/usr/local/include/mere/store/store/unitstore.h \
+		/usr/local/include/mere/store/store/entitystore.h \
+		/usr/local/include/mere/store/store/mapstore.h \
+		/usr/local/include/mere/store/store/pairstore.h \
+		/usr/local/include/mere/store/store/persistentstore.h \
+		/usr/local/include/mere/store/store/basestore.h \
+		/usr/local/include/mere/store/store/store.h \
+		/usr/local/include/mere/store/global.h \
 		/usr/local/include/qt5/QtCore/QDebug \
 		/usr/local/include/qt5/QtCore/qdebug.h \
 		/usr/local/include/qt5/QtCore/qalgorithms.h \
@@ -2657,16 +2748,9 @@ categorystore.o: src/domain/store/categorystore.cpp src/domain/store/categorysto
 		/usr/local/include/mere/store/index/indexer.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o categorystore.o src/domain/store/categorystore.cpp
 
-chirkutstore.o: src/domain/store/chirkutstore.cpp src/domain/store/chirkutstore.h \
+issuestore.o: src/domain/store/issuestore.cpp src/domain/store/issuestore.h \
 		src/domain/store/basestore.h \
-		/usr/local/include/mere/store/store/unitstore.h \
-		/usr/local/include/mere/store/store/entitystore.h \
-		/usr/local/include/mere/store/store/mapstore.h \
-		/usr/local/include/mere/store/store/pairstore.h \
-		/usr/local/include/mere/store/store/persistentstore.h \
-		/usr/local/include/mere/store/store/basestore.h \
-		/usr/local/include/mere/store/store/store.h \
-		/usr/local/include/mere/store/global.h \
+		src/stickyglobal.h \
 		/usr/local/include/qt5/QtCore/qglobal.h \
 		/usr/local/include/qt5/QtCore/qconfig-bootstrapped.h \
 		/usr/local/include/qt5/QtCore/qconfig.h \
@@ -2697,6 +2781,14 @@ chirkutstore.o: src/domain/store/chirkutstore.cpp src/domain/store/chirkutstore.
 		/usr/local/include/qt5/QtCore/qmutex.h \
 		/usr/local/include/qt5/QtCore/qnumeric.h \
 		/usr/local/include/qt5/QtCore/qversiontagging.h \
+		/usr/local/include/mere/store/store/unitstore.h \
+		/usr/local/include/mere/store/store/entitystore.h \
+		/usr/local/include/mere/store/store/mapstore.h \
+		/usr/local/include/mere/store/store/pairstore.h \
+		/usr/local/include/mere/store/store/persistentstore.h \
+		/usr/local/include/mere/store/store/basestore.h \
+		/usr/local/include/mere/store/store/store.h \
+		/usr/local/include/mere/store/global.h \
 		/usr/local/include/qt5/QtCore/QDebug \
 		/usr/local/include/qt5/QtCore/qdebug.h \
 		/usr/local/include/qt5/QtCore/qalgorithms.h \
@@ -2771,18 +2863,11 @@ chirkutstore.o: src/domain/store/chirkutstore.cpp src/domain/store/chirkutstore.
 		/usr/local/include/mere/store/value.h \
 		/usr/local/include/mere/store/engine/engine.h \
 		/usr/local/include/mere/store/index/indexer.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o chirkutstore.o src/domain/store/chirkutstore.cpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o issuestore.o src/domain/store/issuestore.cpp
 
 stickystore.o: src/domain/store/stickystore.cpp src/domain/store/stickystore.h \
 		src/domain/store/basestore.h \
-		/usr/local/include/mere/store/store/unitstore.h \
-		/usr/local/include/mere/store/store/entitystore.h \
-		/usr/local/include/mere/store/store/mapstore.h \
-		/usr/local/include/mere/store/store/pairstore.h \
-		/usr/local/include/mere/store/store/persistentstore.h \
-		/usr/local/include/mere/store/store/basestore.h \
-		/usr/local/include/mere/store/store/store.h \
-		/usr/local/include/mere/store/global.h \
+		src/stickyglobal.h \
 		/usr/local/include/qt5/QtCore/qglobal.h \
 		/usr/local/include/qt5/QtCore/qconfig-bootstrapped.h \
 		/usr/local/include/qt5/QtCore/qconfig.h \
@@ -2813,6 +2898,14 @@ stickystore.o: src/domain/store/stickystore.cpp src/domain/store/stickystore.h \
 		/usr/local/include/qt5/QtCore/qmutex.h \
 		/usr/local/include/qt5/QtCore/qnumeric.h \
 		/usr/local/include/qt5/QtCore/qversiontagging.h \
+		/usr/local/include/mere/store/store/unitstore.h \
+		/usr/local/include/mere/store/store/entitystore.h \
+		/usr/local/include/mere/store/store/mapstore.h \
+		/usr/local/include/mere/store/store/pairstore.h \
+		/usr/local/include/mere/store/store/persistentstore.h \
+		/usr/local/include/mere/store/store/basestore.h \
+		/usr/local/include/mere/store/store/store.h \
+		/usr/local/include/mere/store/global.h \
 		/usr/local/include/qt5/QtCore/QDebug \
 		/usr/local/include/qt5/QtCore/qdebug.h \
 		/usr/local/include/qt5/QtCore/qalgorithms.h \
@@ -2891,14 +2984,7 @@ stickystore.o: src/domain/store/stickystore.cpp src/domain/store/stickystore.h \
 
 taskstore.o: src/domain/store/taskstore.cpp src/domain/store/taskstore.h \
 		src/domain/store/basestore.h \
-		/usr/local/include/mere/store/store/unitstore.h \
-		/usr/local/include/mere/store/store/entitystore.h \
-		/usr/local/include/mere/store/store/mapstore.h \
-		/usr/local/include/mere/store/store/pairstore.h \
-		/usr/local/include/mere/store/store/persistentstore.h \
-		/usr/local/include/mere/store/store/basestore.h \
-		/usr/local/include/mere/store/store/store.h \
-		/usr/local/include/mere/store/global.h \
+		src/stickyglobal.h \
 		/usr/local/include/qt5/QtCore/qglobal.h \
 		/usr/local/include/qt5/QtCore/qconfig-bootstrapped.h \
 		/usr/local/include/qt5/QtCore/qconfig.h \
@@ -2929,6 +3015,14 @@ taskstore.o: src/domain/store/taskstore.cpp src/domain/store/taskstore.h \
 		/usr/local/include/qt5/QtCore/qmutex.h \
 		/usr/local/include/qt5/QtCore/qnumeric.h \
 		/usr/local/include/qt5/QtCore/qversiontagging.h \
+		/usr/local/include/mere/store/store/unitstore.h \
+		/usr/local/include/mere/store/store/entitystore.h \
+		/usr/local/include/mere/store/store/mapstore.h \
+		/usr/local/include/mere/store/store/pairstore.h \
+		/usr/local/include/mere/store/store/persistentstore.h \
+		/usr/local/include/mere/store/store/basestore.h \
+		/usr/local/include/mere/store/store/store.h \
+		/usr/local/include/mere/store/global.h \
 		/usr/local/include/qt5/QtCore/QDebug \
 		/usr/local/include/qt5/QtCore/qdebug.h \
 		/usr/local/include/qt5/QtCore/qalgorithms.h \
@@ -3007,14 +3101,7 @@ taskstore.o: src/domain/store/taskstore.cpp src/domain/store/taskstore.h \
 
 themestore.o: src/domain/store/themestore.cpp src/domain/store/themestore.h \
 		src/domain/store/basestore.h \
-		/usr/local/include/mere/store/store/unitstore.h \
-		/usr/local/include/mere/store/store/entitystore.h \
-		/usr/local/include/mere/store/store/mapstore.h \
-		/usr/local/include/mere/store/store/pairstore.h \
-		/usr/local/include/mere/store/store/persistentstore.h \
-		/usr/local/include/mere/store/store/basestore.h \
-		/usr/local/include/mere/store/store/store.h \
-		/usr/local/include/mere/store/global.h \
+		src/stickyglobal.h \
 		/usr/local/include/qt5/QtCore/qglobal.h \
 		/usr/local/include/qt5/QtCore/qconfig-bootstrapped.h \
 		/usr/local/include/qt5/QtCore/qconfig.h \
@@ -3045,6 +3132,14 @@ themestore.o: src/domain/store/themestore.cpp src/domain/store/themestore.h \
 		/usr/local/include/qt5/QtCore/qmutex.h \
 		/usr/local/include/qt5/QtCore/qnumeric.h \
 		/usr/local/include/qt5/QtCore/qversiontagging.h \
+		/usr/local/include/mere/store/store/unitstore.h \
+		/usr/local/include/mere/store/store/entitystore.h \
+		/usr/local/include/mere/store/store/mapstore.h \
+		/usr/local/include/mere/store/store/pairstore.h \
+		/usr/local/include/mere/store/store/persistentstore.h \
+		/usr/local/include/mere/store/store/basestore.h \
+		/usr/local/include/mere/store/store/store.h \
+		/usr/local/include/mere/store/global.h \
 		/usr/local/include/qt5/QtCore/QDebug \
 		/usr/local/include/qt5/QtCore/qdebug.h \
 		/usr/local/include/qt5/QtCore/qalgorithms.h \
@@ -3193,10 +3288,7 @@ meresticky.o: src/meresticky.cpp src/meresticky.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o meresticky.o src/meresticky.cpp
 
 baseservice.o: src/service/baseservice.cpp src/service/baseservice.h \
-		/usr/local/include/qt5/QtCore/QUuid \
-		/usr/local/include/qt5/QtCore/quuid.h \
-		/usr/local/include/qt5/QtCore/qstring.h \
-		/usr/local/include/qt5/QtCore/qchar.h \
+		src/stickyglobal.h \
 		/usr/local/include/qt5/QtCore/qglobal.h \
 		/usr/local/include/qt5/QtCore/qconfig-bootstrapped.h \
 		/usr/local/include/qt5/QtCore/qconfig.h \
@@ -3227,6 +3319,10 @@ baseservice.o: src/service/baseservice.cpp src/service/baseservice.h \
 		/usr/local/include/qt5/QtCore/qmutex.h \
 		/usr/local/include/qt5/QtCore/qnumeric.h \
 		/usr/local/include/qt5/QtCore/qversiontagging.h \
+		/usr/local/include/qt5/QtCore/QUuid \
+		/usr/local/include/qt5/QtCore/quuid.h \
+		/usr/local/include/qt5/QtCore/qstring.h \
+		/usr/local/include/qt5/QtCore/qchar.h \
 		/usr/local/include/qt5/QtCore/qbytearray.h \
 		/usr/local/include/qt5/QtCore/qrefcount.h \
 		/usr/local/include/qt5/QtCore/qnamespace.h \
@@ -3261,10 +3357,7 @@ baseservice.o: src/service/baseservice.cpp src/service/baseservice.h \
 
 categoryservice.o: src/service/categoryservice.cpp src/service/categoryservice.h \
 		src/service/baseservice.h \
-		/usr/local/include/qt5/QtCore/QUuid \
-		/usr/local/include/qt5/QtCore/quuid.h \
-		/usr/local/include/qt5/QtCore/qstring.h \
-		/usr/local/include/qt5/QtCore/qchar.h \
+		src/stickyglobal.h \
 		/usr/local/include/qt5/QtCore/qglobal.h \
 		/usr/local/include/qt5/QtCore/qconfig-bootstrapped.h \
 		/usr/local/include/qt5/QtCore/qconfig.h \
@@ -3295,6 +3388,10 @@ categoryservice.o: src/service/categoryservice.cpp src/service/categoryservice.h
 		/usr/local/include/qt5/QtCore/qmutex.h \
 		/usr/local/include/qt5/QtCore/qnumeric.h \
 		/usr/local/include/qt5/QtCore/qversiontagging.h \
+		/usr/local/include/qt5/QtCore/QUuid \
+		/usr/local/include/qt5/QtCore/quuid.h \
+		/usr/local/include/qt5/QtCore/qstring.h \
+		/usr/local/include/qt5/QtCore/qchar.h \
 		/usr/local/include/qt5/QtCore/qbytearray.h \
 		/usr/local/include/qt5/QtCore/qrefcount.h \
 		/usr/local/include/qt5/QtCore/qnamespace.h \
@@ -3326,7 +3423,6 @@ categoryservice.o: src/service/categoryservice.cpp src/service/categoryservice.h
 		/usr/local/include/qt5/QtCore/qcontainerfwd.h \
 		/usr/local/include/qt5/QtCore/qobject_impl.h \
 		src/domain/model/category.h \
-		src/stickyglobal.h \
 		src/domain/model/base.h \
 		/usr/local/include/mere/store/unit.h \
 		/usr/local/include/mere/store/global.h \
@@ -3382,12 +3478,9 @@ categoryservice.o: src/service/categoryservice.cpp src/service/categoryservice.h
 		/usr/local/include/mere/store/index/indexer.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o categoryservice.o src/service/categoryservice.cpp
 
-chirkutservice.o: src/service/chirkutservice.cpp src/service/chirkutservice.h \
+issueservice.o: src/service/issueservice.cpp src/service/issueservice.h \
 		src/service/baseservice.h \
-		/usr/local/include/qt5/QtCore/QUuid \
-		/usr/local/include/qt5/QtCore/quuid.h \
-		/usr/local/include/qt5/QtCore/qstring.h \
-		/usr/local/include/qt5/QtCore/qchar.h \
+		src/stickyglobal.h \
 		/usr/local/include/qt5/QtCore/qglobal.h \
 		/usr/local/include/qt5/QtCore/qconfig-bootstrapped.h \
 		/usr/local/include/qt5/QtCore/qconfig.h \
@@ -3418,6 +3511,10 @@ chirkutservice.o: src/service/chirkutservice.cpp src/service/chirkutservice.h \
 		/usr/local/include/qt5/QtCore/qmutex.h \
 		/usr/local/include/qt5/QtCore/qnumeric.h \
 		/usr/local/include/qt5/QtCore/qversiontagging.h \
+		/usr/local/include/qt5/QtCore/QUuid \
+		/usr/local/include/qt5/QtCore/quuid.h \
+		/usr/local/include/qt5/QtCore/qstring.h \
+		/usr/local/include/qt5/QtCore/qchar.h \
 		/usr/local/include/qt5/QtCore/qbytearray.h \
 		/usr/local/include/qt5/QtCore/qrefcount.h \
 		/usr/local/include/qt5/QtCore/qnamespace.h \
@@ -3448,8 +3545,8 @@ chirkutservice.o: src/service/chirkutservice.cpp src/service/chirkutservice.h \
 		/usr/local/include/qt5/QtCore/qvarlengtharray.h \
 		/usr/local/include/qt5/QtCore/qcontainerfwd.h \
 		/usr/local/include/qt5/QtCore/qobject_impl.h \
-		src/domain/model/chirkut.h \
-		src/stickyglobal.h \
+		src/service/taskservice.h \
+		src/domain/model/issue.h \
 		src/domain/model/base.h \
 		/usr/local/include/mere/store/unit.h \
 		/usr/local/include/mere/store/global.h \
@@ -3474,7 +3571,8 @@ chirkutservice.o: src/service/chirkutservice.cpp src/service/chirkutservice.h \
 		/usr/local/include/qt5/QtCore/QMap \
 		/usr/local/include/qt5/QtCore/QDateTime \
 		/usr/local/include/qt5/QtCore/qdatetime.h \
-		src/domain/store/chirkutstore.h \
+		src/domain/model/task.h \
+		src/domain/store/issuestore.h \
 		src/domain/store/basestore.h \
 		/usr/local/include/mere/store/store/unitstore.h \
 		/usr/local/include/mere/store/store/entitystore.h \
@@ -3503,7 +3601,77 @@ chirkutservice.o: src/service/chirkutservice.cpp src/service/chirkutservice.h \
 		/usr/local/include/mere/store/value.h \
 		/usr/local/include/mere/store/engine/engine.h \
 		/usr/local/include/mere/store/index/indexer.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o chirkutservice.o src/service/chirkutservice.cpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o issueservice.o src/service/issueservice.cpp
+
+searchservice.o: src/service/searchservice.cpp src/service/searchservice.h \
+		src/service/baseservice.h \
+		src/stickyglobal.h \
+		/usr/local/include/qt5/QtCore/qglobal.h \
+		/usr/local/include/qt5/QtCore/qconfig-bootstrapped.h \
+		/usr/local/include/qt5/QtCore/qconfig.h \
+		/usr/local/include/qt5/QtCore/qconfig-modules.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-core.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-dbus.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-network.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-gui.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-widgets.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-concurrent.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-declarative.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-printsupport.h \
+		/usr/local/include/qt5/QtCore/qtcore-config.h \
+		/usr/local/include/qt5/QtCore/qsystemdetection.h \
+		/usr/local/include/qt5/QtCore/qprocessordetection.h \
+		/usr/local/include/qt5/QtCore/qcompilerdetection.h \
+		/usr/local/include/qt5/QtCore/qtypeinfo.h \
+		/usr/local/include/qt5/QtCore/qsysinfo.h \
+		/usr/local/include/qt5/QtCore/qlogging.h \
+		/usr/local/include/qt5/QtCore/qflags.h \
+		/usr/local/include/qt5/QtCore/qatomic.h \
+		/usr/local/include/qt5/QtCore/qbasicatomic.h \
+		/usr/local/include/qt5/QtCore/qatomic_bootstrap.h \
+		/usr/local/include/qt5/QtCore/qgenericatomic.h \
+		/usr/local/include/qt5/QtCore/qatomic_cxx11.h \
+		/usr/local/include/qt5/QtCore/qatomic_msvc.h \
+		/usr/local/include/qt5/QtCore/qglobalstatic.h \
+		/usr/local/include/qt5/QtCore/qmutex.h \
+		/usr/local/include/qt5/QtCore/qnumeric.h \
+		/usr/local/include/qt5/QtCore/qversiontagging.h \
+		/usr/local/include/qt5/QtCore/QUuid \
+		/usr/local/include/qt5/QtCore/quuid.h \
+		/usr/local/include/qt5/QtCore/qstring.h \
+		/usr/local/include/qt5/QtCore/qchar.h \
+		/usr/local/include/qt5/QtCore/qbytearray.h \
+		/usr/local/include/qt5/QtCore/qrefcount.h \
+		/usr/local/include/qt5/QtCore/qnamespace.h \
+		/usr/local/include/qt5/QtCore/qarraydata.h \
+		/usr/local/include/qt5/QtCore/qstringliteral.h \
+		/usr/local/include/qt5/QtCore/qstringalgorithms.h \
+		/usr/local/include/qt5/QtCore/qstringview.h \
+		/usr/local/include/qt5/QtCore/qstringbuilder.h \
+		/usr/local/include/qt5/QtCore/QObject \
+		/usr/local/include/qt5/QtCore/qobject.h \
+		/usr/local/include/qt5/QtCore/qobjectdefs.h \
+		/usr/local/include/qt5/QtCore/qobjectdefs_impl.h \
+		/usr/local/include/qt5/QtCore/qlist.h \
+		/usr/local/include/qt5/QtCore/qalgorithms.h \
+		/usr/local/include/qt5/QtCore/qiterator.h \
+		/usr/local/include/qt5/QtCore/qhashfunctions.h \
+		/usr/local/include/qt5/QtCore/qpair.h \
+		/usr/local/include/qt5/QtCore/qvector.h \
+		/usr/local/include/qt5/QtCore/qcontainertools_impl.h \
+		/usr/local/include/qt5/QtCore/qpoint.h \
+		/usr/local/include/qt5/QtCore/qbytearraylist.h \
+		/usr/local/include/qt5/QtCore/qstringlist.h \
+		/usr/local/include/qt5/QtCore/qregexp.h \
+		/usr/local/include/qt5/QtCore/qstringmatcher.h \
+		/usr/local/include/qt5/QtCore/qcoreevent.h \
+		/usr/local/include/qt5/QtCore/qscopedpointer.h \
+		/usr/local/include/qt5/QtCore/qmetatype.h \
+		/usr/local/include/qt5/QtCore/qvarlengtharray.h \
+		/usr/local/include/qt5/QtCore/qcontainerfwd.h \
+		/usr/local/include/qt5/QtCore/qobject_impl.h \
+		src/service/issueservice.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o searchservice.o src/service/searchservice.cpp
 
 stickyservice.o: src/service/stickyservice.cpp src/service/stickyservice.h \
 		/usr/local/include/qt5/QtCore/QObject \
@@ -3572,10 +3740,7 @@ stickyservice.o: src/service/stickyservice.cpp src/service/stickyservice.h \
 
 taskservice.o: src/service/taskservice.cpp src/service/taskservice.h \
 		src/service/baseservice.h \
-		/usr/local/include/qt5/QtCore/QUuid \
-		/usr/local/include/qt5/QtCore/quuid.h \
-		/usr/local/include/qt5/QtCore/qstring.h \
-		/usr/local/include/qt5/QtCore/qchar.h \
+		src/stickyglobal.h \
 		/usr/local/include/qt5/QtCore/qglobal.h \
 		/usr/local/include/qt5/QtCore/qconfig-bootstrapped.h \
 		/usr/local/include/qt5/QtCore/qconfig.h \
@@ -3606,6 +3771,10 @@ taskservice.o: src/service/taskservice.cpp src/service/taskservice.h \
 		/usr/local/include/qt5/QtCore/qmutex.h \
 		/usr/local/include/qt5/QtCore/qnumeric.h \
 		/usr/local/include/qt5/QtCore/qversiontagging.h \
+		/usr/local/include/qt5/QtCore/QUuid \
+		/usr/local/include/qt5/QtCore/quuid.h \
+		/usr/local/include/qt5/QtCore/qstring.h \
+		/usr/local/include/qt5/QtCore/qchar.h \
 		/usr/local/include/qt5/QtCore/qbytearray.h \
 		/usr/local/include/qt5/QtCore/qrefcount.h \
 		/usr/local/include/qt5/QtCore/qnamespace.h \
@@ -3637,7 +3806,6 @@ taskservice.o: src/service/taskservice.cpp src/service/taskservice.h \
 		/usr/local/include/qt5/QtCore/qcontainerfwd.h \
 		/usr/local/include/qt5/QtCore/qobject_impl.h \
 		src/domain/model/task.h \
-		src/stickyglobal.h \
 		src/domain/model/base.h \
 		/usr/local/include/mere/store/unit.h \
 		/usr/local/include/mere/store/global.h \
@@ -3695,10 +3863,7 @@ taskservice.o: src/service/taskservice.cpp src/service/taskservice.h \
 
 themeservice.o: src/service/themeservice.cpp src/service/themeservice.h \
 		src/service/baseservice.h \
-		/usr/local/include/qt5/QtCore/QUuid \
-		/usr/local/include/qt5/QtCore/quuid.h \
-		/usr/local/include/qt5/QtCore/qstring.h \
-		/usr/local/include/qt5/QtCore/qchar.h \
+		src/stickyglobal.h \
 		/usr/local/include/qt5/QtCore/qglobal.h \
 		/usr/local/include/qt5/QtCore/qconfig-bootstrapped.h \
 		/usr/local/include/qt5/QtCore/qconfig.h \
@@ -3729,6 +3894,10 @@ themeservice.o: src/service/themeservice.cpp src/service/themeservice.h \
 		/usr/local/include/qt5/QtCore/qmutex.h \
 		/usr/local/include/qt5/QtCore/qnumeric.h \
 		/usr/local/include/qt5/QtCore/qversiontagging.h \
+		/usr/local/include/qt5/QtCore/QUuid \
+		/usr/local/include/qt5/QtCore/quuid.h \
+		/usr/local/include/qt5/QtCore/qstring.h \
+		/usr/local/include/qt5/QtCore/qchar.h \
 		/usr/local/include/qt5/QtCore/qbytearray.h \
 		/usr/local/include/qt5/QtCore/qrefcount.h \
 		/usr/local/include/qt5/QtCore/qnamespace.h \
@@ -3760,7 +3929,6 @@ themeservice.o: src/service/themeservice.cpp src/service/themeservice.h \
 		/usr/local/include/qt5/QtCore/qcontainerfwd.h \
 		/usr/local/include/qt5/QtCore/qobject_impl.h \
 		src/domain/model/theme.h \
-		src/stickyglobal.h \
 		src/domain/model/base.h \
 		/usr/local/include/mere/store/unit.h \
 		/usr/local/include/mere/store/global.h \
@@ -3825,8 +3993,8 @@ moc_basestore.o: moc_basestore.cpp
 moc_categorystore.o: moc_categorystore.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_categorystore.o moc_categorystore.cpp
 
-moc_chirkutstore.o: moc_chirkutstore.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_chirkutstore.o moc_chirkutstore.cpp
+moc_issuestore.o: moc_issuestore.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_issuestore.o moc_issuestore.cpp
 
 moc_stickystore.o: moc_stickystore.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_stickystore.o moc_stickystore.cpp
@@ -3846,8 +4014,11 @@ moc_baseservice.o: moc_baseservice.cpp
 moc_categoryservice.o: moc_categoryservice.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_categoryservice.o moc_categoryservice.cpp
 
-moc_chirkutservice.o: moc_chirkutservice.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_chirkutservice.o moc_chirkutservice.cpp
+moc_issueservice.o: moc_issueservice.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_issueservice.o moc_issueservice.cpp
+
+moc_searchservice.o: moc_searchservice.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_searchservice.o moc_searchservice.cpp
 
 moc_stickyservice.o: moc_stickyservice.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_stickyservice.o moc_stickyservice.cpp
@@ -3880,16 +4051,16 @@ install_headers_/usr/local/include/mere/sticky/domain/model: first FORCE
 	@test -d $(INSTALL_ROOT)/usr/local/include/mere/sticky/domain/model || mkdir -p $(INSTALL_ROOT)/usr/local/include/mere/sticky/domain/model
 	$(QINSTALL) /usr/home/iklash/workspace/mere-sticky/mere-sticky-lib/src/domain/model/base.h $(INSTALL_ROOT)/usr/local/include/mere/sticky/domain/model/base.h
 	$(QINSTALL) /usr/home/iklash/workspace/mere-sticky/mere-sticky-lib/src/domain/model/category.h $(INSTALL_ROOT)/usr/local/include/mere/sticky/domain/model/category.h
-	$(QINSTALL) /usr/home/iklash/workspace/mere-sticky/mere-sticky-lib/src/domain/model/chirkut.h $(INSTALL_ROOT)/usr/local/include/mere/sticky/domain/model/chirkut.h
 	$(QINSTALL) /usr/home/iklash/workspace/mere-sticky/mere-sticky-lib/src/domain/model/config.h $(INSTALL_ROOT)/usr/local/include/mere/sticky/domain/model/config.h
+	$(QINSTALL) /usr/home/iklash/workspace/mere-sticky/mere-sticky-lib/src/domain/model/issue.h $(INSTALL_ROOT)/usr/local/include/mere/sticky/domain/model/issue.h
 	$(QINSTALL) /usr/home/iklash/workspace/mere-sticky/mere-sticky-lib/src/domain/model/task.h $(INSTALL_ROOT)/usr/local/include/mere/sticky/domain/model/task.h
 	$(QINSTALL) /usr/home/iklash/workspace/mere-sticky/mere-sticky-lib/src/domain/model/theme.h $(INSTALL_ROOT)/usr/local/include/mere/sticky/domain/model/theme.h
 
 uninstall_headers_/usr/local/include/mere/sticky/domain/model: FORCE
 	-$(DEL_FILE) -r $(INSTALL_ROOT)/usr/local/include/mere/sticky/domain/model/theme.h
 	-$(DEL_FILE) -r $(INSTALL_ROOT)/usr/local/include/mere/sticky/domain/model/task.h
+	-$(DEL_FILE) -r $(INSTALL_ROOT)/usr/local/include/mere/sticky/domain/model/issue.h
 	-$(DEL_FILE) -r $(INSTALL_ROOT)/usr/local/include/mere/sticky/domain/model/config.h
-	-$(DEL_FILE) -r $(INSTALL_ROOT)/usr/local/include/mere/sticky/domain/model/chirkut.h
 	-$(DEL_FILE) -r $(INSTALL_ROOT)/usr/local/include/mere/sticky/domain/model/category.h
 	-$(DEL_FILE) -r $(INSTALL_ROOT)/usr/local/include/mere/sticky/domain/model/base.h
 	-$(DEL_DIR) $(INSTALL_ROOT)/usr/local/include/mere/sticky/domain/model/ 
@@ -3899,7 +4070,7 @@ install_headers_/usr/local/include/mere/sticky/domain/store: first FORCE
 	@test -d $(INSTALL_ROOT)/usr/local/include/mere/sticky/domain/store || mkdir -p $(INSTALL_ROOT)/usr/local/include/mere/sticky/domain/store
 	$(QINSTALL) /usr/home/iklash/workspace/mere-sticky/mere-sticky-lib/src/domain/store/basestore.h $(INSTALL_ROOT)/usr/local/include/mere/sticky/domain/store/basestore.h
 	$(QINSTALL) /usr/home/iklash/workspace/mere-sticky/mere-sticky-lib/src/domain/store/categorystore.h $(INSTALL_ROOT)/usr/local/include/mere/sticky/domain/store/categorystore.h
-	$(QINSTALL) /usr/home/iklash/workspace/mere-sticky/mere-sticky-lib/src/domain/store/chirkutstore.h $(INSTALL_ROOT)/usr/local/include/mere/sticky/domain/store/chirkutstore.h
+	$(QINSTALL) /usr/home/iklash/workspace/mere-sticky/mere-sticky-lib/src/domain/store/issuestore.h $(INSTALL_ROOT)/usr/local/include/mere/sticky/domain/store/issuestore.h
 	$(QINSTALL) /usr/home/iklash/workspace/mere-sticky/mere-sticky-lib/src/domain/store/stickystore.h $(INSTALL_ROOT)/usr/local/include/mere/sticky/domain/store/stickystore.h
 	$(QINSTALL) /usr/home/iklash/workspace/mere-sticky/mere-sticky-lib/src/domain/store/taskstore.h $(INSTALL_ROOT)/usr/local/include/mere/sticky/domain/store/taskstore.h
 	$(QINSTALL) /usr/home/iklash/workspace/mere-sticky/mere-sticky-lib/src/domain/store/themestore.h $(INSTALL_ROOT)/usr/local/include/mere/sticky/domain/store/themestore.h
@@ -3908,7 +4079,7 @@ uninstall_headers_/usr/local/include/mere/sticky/domain/store: FORCE
 	-$(DEL_FILE) -r $(INSTALL_ROOT)/usr/local/include/mere/sticky/domain/store/themestore.h
 	-$(DEL_FILE) -r $(INSTALL_ROOT)/usr/local/include/mere/sticky/domain/store/taskstore.h
 	-$(DEL_FILE) -r $(INSTALL_ROOT)/usr/local/include/mere/sticky/domain/store/stickystore.h
-	-$(DEL_FILE) -r $(INSTALL_ROOT)/usr/local/include/mere/sticky/domain/store/chirkutstore.h
+	-$(DEL_FILE) -r $(INSTALL_ROOT)/usr/local/include/mere/sticky/domain/store/issuestore.h
 	-$(DEL_FILE) -r $(INSTALL_ROOT)/usr/local/include/mere/sticky/domain/store/categorystore.h
 	-$(DEL_FILE) -r $(INSTALL_ROOT)/usr/local/include/mere/sticky/domain/store/basestore.h
 	-$(DEL_DIR) $(INSTALL_ROOT)/usr/local/include/mere/sticky/domain/store/ 
@@ -3929,7 +4100,8 @@ install_headers_/usr/local/include/mere/sticky/service: first FORCE
 	@test -d $(INSTALL_ROOT)/usr/local/include/mere/sticky/service || mkdir -p $(INSTALL_ROOT)/usr/local/include/mere/sticky/service
 	$(QINSTALL) /usr/home/iklash/workspace/mere-sticky/mere-sticky-lib/src/service/baseservice.h $(INSTALL_ROOT)/usr/local/include/mere/sticky/service/baseservice.h
 	$(QINSTALL) /usr/home/iklash/workspace/mere-sticky/mere-sticky-lib/src/service/categoryservice.h $(INSTALL_ROOT)/usr/local/include/mere/sticky/service/categoryservice.h
-	$(QINSTALL) /usr/home/iklash/workspace/mere-sticky/mere-sticky-lib/src/service/chirkutservice.h $(INSTALL_ROOT)/usr/local/include/mere/sticky/service/chirkutservice.h
+	$(QINSTALL) /usr/home/iklash/workspace/mere-sticky/mere-sticky-lib/src/service/issueservice.h $(INSTALL_ROOT)/usr/local/include/mere/sticky/service/issueservice.h
+	$(QINSTALL) /usr/home/iklash/workspace/mere-sticky/mere-sticky-lib/src/service/searchservice.h $(INSTALL_ROOT)/usr/local/include/mere/sticky/service/searchservice.h
 	$(QINSTALL) /usr/home/iklash/workspace/mere-sticky/mere-sticky-lib/src/service/stickyservice.h $(INSTALL_ROOT)/usr/local/include/mere/sticky/service/stickyservice.h
 	$(QINSTALL) /usr/home/iklash/workspace/mere-sticky/mere-sticky-lib/src/service/taskservice.h $(INSTALL_ROOT)/usr/local/include/mere/sticky/service/taskservice.h
 	$(QINSTALL) /usr/home/iklash/workspace/mere-sticky/mere-sticky-lib/src/service/themeservice.h $(INSTALL_ROOT)/usr/local/include/mere/sticky/service/themeservice.h
@@ -3938,7 +4110,8 @@ uninstall_headers_/usr/local/include/mere/sticky/service: FORCE
 	-$(DEL_FILE) -r $(INSTALL_ROOT)/usr/local/include/mere/sticky/service/themeservice.h
 	-$(DEL_FILE) -r $(INSTALL_ROOT)/usr/local/include/mere/sticky/service/taskservice.h
 	-$(DEL_FILE) -r $(INSTALL_ROOT)/usr/local/include/mere/sticky/service/stickyservice.h
-	-$(DEL_FILE) -r $(INSTALL_ROOT)/usr/local/include/mere/sticky/service/chirkutservice.h
+	-$(DEL_FILE) -r $(INSTALL_ROOT)/usr/local/include/mere/sticky/service/searchservice.h
+	-$(DEL_FILE) -r $(INSTALL_ROOT)/usr/local/include/mere/sticky/service/issueservice.h
 	-$(DEL_FILE) -r $(INSTALL_ROOT)/usr/local/include/mere/sticky/service/categoryservice.h
 	-$(DEL_FILE) -r $(INSTALL_ROOT)/usr/local/include/mere/sticky/service/baseservice.h
 	-$(DEL_DIR) $(INSTALL_ROOT)/usr/local/include/mere/sticky/service/ 

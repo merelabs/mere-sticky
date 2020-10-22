@@ -1,9 +1,10 @@
 #ifndef BASESTORE_H
 #define BASESTORE_H
 
+#include "../../stickyglobal.h"
 #include "mere/store/store/unitstore.h"
 
-class BaseStore : public Mere::Store::UnitStore
+class MERE_STICKY_LIBSPEC BaseStore : public Mere::Store::UnitStore
 {
     Q_OBJECT
 public:

@@ -3,5 +3,9 @@
         <file>down.png</file>
         <file>sticky.qss</file>
         <file>sticky.conf</file>
+        <file>checklist.png</file>
+        <file>delete.png</file>
+        <file>detach.png</file>
+        <file>trush.png</file>
     </qresource>
 </RCC>

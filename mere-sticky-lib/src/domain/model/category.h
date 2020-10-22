@@ -1,7 +1,6 @@
 #ifndef CATEGORY_H
 #define CATEGORY_H
 
-#include "../../stickyglobal.h"
 #include "base.h"
 
 class MERE_STICKY_LIBSPEC Category : public Base

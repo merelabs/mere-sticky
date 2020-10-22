@@ -1,17 +1,16 @@
 #ifndef MERESTICKYWINHEADER_H
 #define MERESTICKYWINHEADER_H
 
-#include "mere/widgets/meresimplewinheader.h"
+#include "mere/widgets/simplewinheader.h"
+#include "mere/widgets/editablelabel.h"
 
 class Theme;
-class MereEditableLabel;
-
-class WinHeader : public MereSimpleWinHeader
+class StickyWinHeader : public Mere::Widgets::SimpleWinHeader
 {
     Q_OBJECT
 public:
-    ~WinHeader() override;
-    explicit WinHeader(QWidget *parent = nullptr);
+    ~StickyWinHeader() override;
+    explicit StickyWinHeader(QWidget *parent = nullptr);
 
     QString title() const;
     void setTitle(const QString &title);
@@ -25,7 +24,7 @@ signals:
     void themeSelected(const Theme &theme);
 
 private:
-    MereEditableLabel *m_title;
+    Mere::Widgets::EditableLabel *m_title;
 };
 
 #endif // MERESTICKYWINHEADER_H

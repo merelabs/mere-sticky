@@ -1,6 +1,5 @@
-#include "winheader.h"
+#include "stickywinheader.h"
 #include "mere/sticky/domain/model/theme.h"
-#include "mere/widgets/mereeditablelabel.h"
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
@@ -11,26 +10,20 @@
 #include <QPainter>
 #include <QStyleOption>
 
-WinHeader::~WinHeader()
+StickyWinHeader::~StickyWinHeader()
 {
 }
 
-WinHeader::WinHeader(QWidget *parent)
-    : MereSimpleWinHeader(parent)
+StickyWinHeader::StickyWinHeader(QWidget *parent)
+    : Mere::Widgets::SimpleWinHeader(parent)
 {
     setObjectName(QString::fromUtf8("MereStickyWinHeader"));
-
-    setMaximumHeight(30);
-
-    QPalette p = palette();
-    p.setColor( QPalette::Background, QColor(0, 0, 0, 50));
-    setAutoFillBackground(true);
-    setPalette( p );
+    setContentsMargins(5, 5, 5, 5);
 
     initUI();
 }
 
-void WinHeader::initLeftPanel()
+void StickyWinHeader::initLeftPanel()
 {
     ThemePicker *themePicker = new ThemePicker(this);
     themePicker->setObjectName("MereStickyThemePicker");
@@ -41,9 +34,9 @@ void WinHeader::initLeftPanel()
     connect(themePicker, SIGNAL(themeSelected(const Theme&)), this, SIGNAL(themeSelected(const Theme&)));
 }
 
-void WinHeader::initCenterPanel()
+void StickyWinHeader::initCenterPanel()
 {
-    m_title = new MereEditableLabel(this);
+    m_title = new Mere::Widgets::EditableLabel(this);
     m_title->setObjectName(QString::fromUtf8("MereStickyTitle"));
     m_title->setText(QString::fromUtf8("Mere Sticky Notes"));
     m_title->setAlignment(Qt::AlignCenter);
@@ -53,17 +46,17 @@ void WinHeader::initCenterPanel()
     layout()->addWidget(m_title);
 }
 
-void WinHeader::initRightPanel()
+void StickyWinHeader::initRightPanel()
 {
-    MereSimpleWinHeader::initRightPanel();
+    Mere::Widgets::SimpleWinHeader::initRightPanel();
 }
 
-QString WinHeader::title() const
+QString StickyWinHeader::title() const
 {
     return m_title->text();
 }
 
-void WinHeader::setTitle(const QString &title)
+void StickyWinHeader::setTitle(const QString &title)
 {
     m_title->setText(title);
 }

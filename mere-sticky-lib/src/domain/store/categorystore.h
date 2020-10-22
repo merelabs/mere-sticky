@@ -3,7 +3,7 @@
 
 #include "basestore.h"
 
-class CategoryStore : public BaseStore
+class MERE_STICKY_LIBSPEC CategoryStore : public BaseStore
 {
     Q_OBJECT
 public:

@@ -37,6 +37,9 @@ QUuid TaskService::create(Task &task)
         return 0;
     }
 
+    task.setCreatedAt(QDateTime::currentDateTime());
+    task.setUpdatedAt(QDateTime::currentDateTime());
+
     err = store.create(task);
     if (err)
     {
@@ -62,6 +65,8 @@ QUuid TaskService::update(Task &task)
         return 0;
     }
 
+    task.setUpdatedAt(QDateTime::currentDateTime());
+
     err = store.update(task);
     if (err)
     {
@@ -77,23 +82,21 @@ QUuid TaskService::update(Task &task)
     return task.uuid();
 }
 
-QUuid TaskService::remove(Task &task)
+bool TaskService::remove(Task &task)
 {
-    QUuid uuid;
-
     TaskStore store;
     int err = store.open();
     if (err)
     {
         qDebug() << "Failed to open slice task; check if it is created!";
-        return 0;
+        return false;
     }
 
     err = store.remove(task);
     if (err)
     {
         qDebug() << "Failed to remove task!";
-        return 0;
+        return false;
     }
 
     emit removed(task);
@@ -101,5 +104,5 @@ QUuid TaskService::remove(Task &task)
 
     qDebug() << "Task removed:" << task.uuid();
 
-    return uuid;
+    return true;
 }

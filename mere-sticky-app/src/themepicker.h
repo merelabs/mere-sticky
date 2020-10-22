@@ -19,6 +19,9 @@ private:
 signals:
     void themeSelected(const Theme &theme);
 
+private slots:
+    void manageTheme();
+
 private:
 };
 

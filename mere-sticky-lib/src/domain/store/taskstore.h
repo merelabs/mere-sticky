@@ -3,7 +3,7 @@
 
 #include "basestore.h"
 
-class TaskStore : public BaseStore
+class MERE_STICKY_LIBSPEC TaskStore : public BaseStore
 {
     Q_OBJECT
 public:

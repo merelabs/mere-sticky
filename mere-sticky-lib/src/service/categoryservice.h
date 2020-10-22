@@ -4,7 +4,7 @@
 #include "baseservice.h"
 
 class Category;
-class CategoryService : public BaseService
+class MERE_STICKY_LIBSPEC CategoryService : public BaseService
 {
     Q_OBJECT
 public:

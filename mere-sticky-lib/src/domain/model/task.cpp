@@ -41,6 +41,16 @@ void Task::setPriority(const Priority &priority)
     m_priority = priority;
 }
 
+uint Task::order() const
+{
+    return m_order;
+}
+
+void Task::setOrder(const uint &order)
+{
+    m_order = order;
+}
+
 QMap<QString, QVariant> Task::attributes() const
 {
     QMap<QString, QVariant> attrs;

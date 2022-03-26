@@ -22,17 +22,10 @@ StickyApp::~StickyApp()
 StickyApp::StickyApp(int &argc, char **argv)
     : Mere::Widgets::DefaultApp(argc, argv)
 {
-    setObjectName("MereStickyNoteApp");
-    setAppCode(APP_CODE);
-    setApplicationName(APP_NAME);
-    setApplicationDisplayName(APP_NAME);
-    setApplicationVersion(APP_VERSION);
-
-
-//    setObjectName("StickyNoteApp");
-//    setAppCode(Mere::Sticky::AppCode.toStdString());
-//    setApplicationName(Mere::Sticky::AppName);
-//    setApplicationVersion(Mere::Sticky::AppVersion);
+    setObjectName("StickyNoteApp");
+    setAppCode(Mere::Sticky::AppCode.toStdString());
+    setApplicationName(Mere::Sticky::AppName);
+    setApplicationVersion(Mere::Sticky::AppVersion);
 }
 
 int StickyApp::init()

@@ -20,7 +20,7 @@ ThemeAction::ThemeAction(const Theme &theme, QWidget *parent)
     : QWidgetAction(parent),
       m_theme(theme)
 {
-    QString objectName = theme.uuid().toString(QUuid::WithoutBraces);
+    QString objectName = theme.id();//.toString(QUuid::WithoutBraces);
 
     QHBoxLayout *layout = new QHBoxLayout();
     layout->setContentsMargins(10, 6, 10, 6);

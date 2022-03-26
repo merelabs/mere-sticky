@@ -161,7 +161,7 @@ bool TaskListView::removeTask(const Task &task)
         Task *_task = it.next();
         if (!_task) continue;
 
-        if (_task->uuid() == task.uuid())
+        if (_task->id() == task.id())
         {
             it.remove();
             ok = true;

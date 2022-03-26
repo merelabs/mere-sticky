@@ -3,17 +3,42 @@
 
 #include "mere/widgets/defaultapp.h"
 
+
+namespace Mere
+{
+    namespace Sticky
+    {
+        #ifdef APP_CODE
+        const QString AppCode   = APP_CODE;
+        #else
+        const QString AppCode   = "sticky";
+        #endif
+
+        #ifdef APP_NAME
+        const QString AppName   = APP_NAME;
+        #else
+        const QString AppName   = "mere-sticky";
+        #endif
+
+        #ifdef APP_VERSION
+        const QString AppVersion= APP_VERSION;
+        #else
+        const QString AppVersion= "0.0.0b";
+        #endif
+    }
+}
+
 class StickyWin;
 class Issue;
 class StickyWinWrapper;
 
-class StickyApp : public Mere::DefaultApp
+class StickyApp : public Mere::Widgets::DefaultApp
 {
 public:
     ~StickyApp();
     StickyApp(int &argc, char **argv);
 
-    void init() override;
+    int init() override;
     void start();
 
     void newNote();

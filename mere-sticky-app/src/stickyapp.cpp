@@ -20,18 +20,24 @@ StickyApp::~StickyApp()
 }
 
 StickyApp::StickyApp(int &argc, char **argv)
-    : Mere::DefaultApp(argc, argv)
+    : Mere::Widgets::DefaultApp(argc, argv)
 {
     setObjectName("MereStickyNoteApp");
     setAppCode(APP_CODE);
     setApplicationName(APP_NAME);
     setApplicationDisplayName(APP_NAME);
     setApplicationVersion(APP_VERSION);
+
+
+//    setObjectName("StickyNoteApp");
+//    setAppCode(Mere::Sticky::AppCode.toStdString());
+//    setApplicationName(Mere::Sticky::AppName);
+//    setApplicationVersion(Mere::Sticky::AppVersion);
 }
 
-void StickyApp::init()
+int StickyApp::init()
 {
-    Mere::DefaultApp::init();
+    Mere::Widgets::DefaultApp::init();
 
     {
         //
@@ -127,6 +133,8 @@ void StickyApp::init()
 //    StickyWinWrapper *wrapper = new StickyWinWrapper(*issues.first());
 //    wrapper->init();
 //    m_wrappers.append(wrapper);
+
+    return 0;
 }
 
 void StickyApp::start()
@@ -176,7 +184,7 @@ void StickyApp::closeNote(const Issue &issue)
         Issue *_issue = it.next();
         if (!_issue) continue;
 
-        if (_issue->uuid() == issue.uuid())
+        if (_issue->id() == issue.id())
         {
             it.remove();
             break;

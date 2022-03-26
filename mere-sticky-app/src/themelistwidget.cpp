@@ -122,7 +122,7 @@ bool ThemeListWidget::removeTheme(const Theme &theme)
         Theme *_theme = it.next();
         if (!_theme) continue;
 
-        if (_theme->uuid() == theme.uuid())
+        if (_theme->id() == theme.id())
         {
             it.remove();
             ok = true;
